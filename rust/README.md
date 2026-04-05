@@ -2,7 +2,7 @@
 
 A structured deep-dive into Rust, from installation to ownership mastery.
 
-Based on [The Rust Programming Language](https://doc.rust-lang.org/book/) (Chapters 1-4).
+Based on [The Rust Programming Language](https://doc.rust-lang.org/book/) (Chapters 1-5).
 
 ---
 
@@ -28,3 +28,9 @@ Based on [The Rust Programming Language](https://doc.rust-lang.org/book/) (Chapt
 |---|------|-------------|-----------|
 | 5 | [Ownership](05-ownership.md) | Stack vs heap, 3 rules, `String`, move, clone, `Copy` trait, ownership & functions | Ch. 4.1 |
 | 6 | [References, Borrowing & Slices](06-references-slices.md) | `&`, `&mut`, borrowing rules, dangling refs, `&str`, `&[T]` | Ch. 4.2-4.3 |
+
+### Block D: Structuring Data
+
+| # | Part | Key Concepts | Rust Book |
+|---|------|-------------|-----------|
+| 7 | [Structs](07-structs.md) | `struct`, field init shorthand, update syntax `..`, tuple structs, unit structs, `#[derive(Debug)]`, `dbg!`, methods, `&self`, associated functions, `impl` | Ch. 5 |
