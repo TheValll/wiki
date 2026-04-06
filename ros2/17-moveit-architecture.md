@@ -290,5 +290,67 @@ The following parts dive into the math and algorithms behind each component:
 
 ---
 
+## 17.9 — C++ Equivalent: MoveGroupInterface
+
+The Python example above can also be written in C++:
+
+```cpp
+#include <rclcpp/rclcpp.hpp>
+#include <moveit/move_group_interface/move_group_interface.h>
+
+int main(int argc, char** argv)
+{
+    rclcpp::init(argc, argv);
+    auto node = rclcpp::Node::make_shared("example_node");
+
+    // 1. Connect to MoveIt (planning group "arm" from SRDF)
+    moveit::planning_interface::MoveGroupInterface arm(node, "arm");
+
+    // 2. Set target: named pose "home"
+    arm.setNamedTarget("home");
+
+    // 3. Plan
+    moveit::planning_interface::MoveGroupInterface::Plan plan;
+    bool success = (arm.plan(plan) == moveit::core::MoveItErrorCode::SUCCESS);
+
+    if (success) {
+        // 4. Execute
+        arm.execute(plan);
+        RCLCPP_INFO(node->get_logger(), "Motion complete!");
+    } else {
+        RCLCPP_ERROR(node->get_logger(), "Planning failed");
+    }
+
+    rclcpp::shutdown();
+    return 0;
+}
+```
+
+CMakeLists.txt additions:
+```cmake
+find_package(moveit_ros_planning_interface REQUIRED)
+add_executable(move_to_home src/move_to_home.cpp)
+ament_target_dependencies(move_to_home rclcpp moveit_ros_planning_interface)
+```
+
+---
+
+## 17.10 — Quick Reference
+
+| Concept | Key Point |
+|---|---|
+| MoveIt2 | Motion planning framework — sits above ros2_control |
+| `move_group` node | Central orchestrator: planning + execution |
+| Planning group | Set of joints that move together (defined in SRDF) |
+| SRDF | Semantic info: groups, named poses, end effectors, disabled collisions |
+| ACM | Allowed Collision Matrix — skip known-safe collision pairs |
+| Planning scene | World model = URDF + SRDF + obstacles + ACM |
+| Plan flow | `set_goal → plan() → execute()` |
+| Action interface | `FollowJointTrajectory` — controller executes the trajectory |
+| C++ API | `MoveGroupInterface arm(node, "group")` → `setNamedTarget()` → `plan()` → `execute()` |
+| Python API | `MoveItPy(node_name="...")` → `get_planning_component("group")` |
+
+---
+
 **Prev:** [Part 16 — Transmissions, Sensors & GPIO](16-transmissions-sensors-gpio.md)
 **Next:** [Part 18 — Configuration Space](18-configuration-space.md)

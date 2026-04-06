@@ -296,5 +296,62 @@ The Controller Manager can then load this plugin **by name at runtime** — it d
 
 ---
 
+## 9.9 — The Math Behind Euler Integration
+
+### Why Euler integration and its limitations
+
+The `read()` function uses `position += velocity * dt`. This is **forward Euler** integration:
+
+```
+Exact integral:    p(t) = p(0) + ∫₀ᵗ v(τ) dτ
+
+Euler approx:      p(t) ≈ p(t-dt) + v(t) * dt
+
+Error per step:    O(dt²)  (local truncation error)
+Error after N steps: O(dt)  (global error)
+
+Example at 50Hz (dt=0.02s):
+  After 1 second (50 steps):
+    Global error ∝ dt = 0.02 → ~2% error
+
+  At 100Hz (dt=0.01s):
+    Global error ∝ 0.01 → ~1% error
+
+  Doubling the frequency halves the error.
+```
+
+### Better alternatives (for reference):
+
+```
+Method              | Error/step | Error/time | When to use
+--------------------|------------|------------|------------------
+Forward Euler       | O(dt²)    | O(dt)     | Simple, fast, good enough for most
+Trapezoidal (RK2)   | O(dt³)    | O(dt²)   | When higher accuracy needed
+Runge-Kutta 4 (RK4) | O(dt⁵)    | O(dt⁴)   | Precision simulation
+```
+
+For a 50Hz control loop with wheel odometry, Euler is sufficient — sensor noise dominates integration error.
+
+---
+
+## 9.10 — Quick Reference
+
+| Concept | Key Point |
+|---|---|
+| `SystemInterface` | Base class for multi-joint hardware (2 wheels) |
+| `ActuatorInterface` | Single joint |
+| `SensorInterface` | Read-only (encoder, IMU) |
+| Lifecycle | `on_init()` → `on_configure()` → `on_activate()` → read/write loop |
+| `on_init()` | Parse URDF params (`info_.hardware_parameters`) |
+| `on_configure()` | Open hardware connection (serial port) |
+| `on_activate()` | Reset state, ready to run |
+| `read()` | Called every cycle BEFORE controllers — update state arrays |
+| `write()` | Called every cycle AFTER controllers — send commands |
+| NaN check | Always check `std::isnan()` before sending to hardware |
+| Euler integration | `position += velocity * dt` — error ∝ dt |
+| Plugin macro | `PLUGINLIB_EXPORT_CLASS(MyHW, SystemInterface)` |
+
+---
+
 **Next:** [Part 10 — ros2_control URDF](10-ros2-control-urdf.md)
 

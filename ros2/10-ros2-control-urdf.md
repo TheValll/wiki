@@ -214,5 +214,24 @@ The Controller Manager reads the COMBINED output and uses:
 
 ---
 
+## 10.8 — Quick Reference
+
+| Concept | Key Point |
+|---|---|
+| `<ros2_control>` tag | Declares hardware type, plugin, params, and joint interfaces |
+| `type="system"` | Maps to `SystemInterface` (multi-joint) |
+| `<plugin>` | Plugin name in `namespace/ClassName` format |
+| `<param>` | Key-value strings passed to `on_init()` via `info_.hardware_parameters` |
+| `<command_interface>` | A `double` the controller can write to (e.g., velocity) |
+| `<state_interface>` | A `double` the hardware reports (e.g., position, velocity) |
+| Full interface name | `joint_name/interface_type` (e.g., `left_wheel/velocity`) |
+| Plugin XML | Registers library path + class name + base class with pluginlib |
+| CMake registration | `pluginlib_export_plugin_description_file(hardware_interface file.xml)` |
+| `add_library(SHARED)` | Creates a `.so`/`.dll` — not an executable |
+| `mock_components` | Fake hardware for testing without a real robot |
+| `dlopen()` | Runtime dynamic loading — Controller Manager loads your plugin at startup |
+
+---
+
 **Next:** [Part 11 — Controllers: DiffDrive](11-controllers-diffdrive.md)
 

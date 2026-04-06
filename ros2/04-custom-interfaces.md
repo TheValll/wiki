@@ -169,29 +169,55 @@ This IDL is what DDS actually understands. The code generators read this IDL to 
 
 ## 4.6 — Using Custom Interfaces in Code
 
-**C++ (`custom_interface_node.cpp`):**
+### Full C++ code — `custom_interface_node.cpp` (complete, compilable):
+
 ```cpp
-#include "custom_interfaces/msg/minimal_interface.hpp"  // auto-generated
+#include "rclcpp/rclcpp.hpp"
+#include "custom_interfaces/msg/minimal_interface.hpp"
 
-auto msg = custom_interfaces::msg::MinimalInterface();
-msg.a = 12.56;   // float64
-msg.b = true;     // bool
-msg.c = "Basic text";  // string
-publisher_->publish(msg);
+using namespace std::chrono_literals;
+
+class CustomInterfaceNode : public rclcpp::Node
+{
+    public:
+        CustomInterfaceNode() : Node("custom_interface_node")
+        {
+            publisher_ = this->create_publisher<custom_interfaces::msg::MinimalInterface>(
+                "custom_interface", 10);
+            timer_ = this->create_wall_timer(
+                500ms, std::bind(&CustomInterfaceNode::publish_example, this));
+            RCLCPP_INFO(this->get_logger(), "Custom interface node is running ...");
+        }
+
+    private:
+        void publish_example()
+        {
+            auto msg = custom_interfaces::msg::MinimalInterface();
+            msg.a = 12.56;        // float64
+            msg.b = true;          // bool
+            msg.c = "Basic text";  // string
+            publisher_->publish(msg);
+        }
+
+        rclcpp::Publisher<custom_interfaces::msg::MinimalInterface>::SharedPtr publisher_;
+        rclcpp::TimerBase::SharedPtr timer_;
+};
+
+int main(int argc, char **argv){
+    rclcpp::init(argc, argv);
+    auto node = std::make_shared<CustomInterfaceNode>();
+    rclcpp::spin(node);
+    rclcpp::shutdown();
+    return 0;
+}
 ```
 
-**Python (`custom_interface_node.py`):**
-```python
-from custom_interfaces.msg import MinimalInterface  # auto-generated
-
-msg = MinimalInterface()
-msg.a = 12.56
-msg.b = True
-msg.c = "Basic text"
-self.publisher_.publish(msg)
+CMakeLists.txt for this node:
+```cmake
+find_package(custom_interfaces REQUIRED)
+add_executable(custom_interface src/custom_interface_node.cpp)
+ament_target_dependencies(custom_interface rclcpp custom_interfaces)
 ```
-
-The API is nearly identical. The generated code handles all the CDR serialization.
 
 ---
 
@@ -250,6 +276,67 @@ ament_target_dependencies(my_node rclcpp custom_interfaces)
 ```
 
 `colcon build` uses these dependencies to determine build order: `custom_interfaces` is always built **before** packages that depend on it.
+
+---
+
+## 4.9 — The Math Behind Alignment and Padding
+
+### Why does the compiler add padding?
+
+Modern CPUs access memory in **word-aligned chunks** (4 or 8 bytes). Reading a `float64` (8 bytes) that starts at address 0x05 requires **two** memory reads instead of one:
+
+```
+Aligned access (fast, 1 read):
+  Address: 0x00  0x01  0x02  0x03  0x04  0x05  0x06  0x07
+  Data:    [=========== float64 (8 bytes) ==============]
+
+Misaligned access (slow, 2 reads + shift):
+  Address: 0x03  0x04  0x05  0x06  0x07 | 0x08  0x09  0x0A
+  Data:    [===== read 1 =====] + shift + [= read 2 =]
+
+Alignment rule: a type of size N must start at address divisible by N.
+  float64 (8 bytes) → address % 8 == 0
+  float32 (4 bytes) → address % 4 == 0
+  bool    (1 byte)  → any address
+```
+
+### CDR serialization size calculation
+
+To compute the wire size of a message:
+
+```
+For MinimalInterface { float64 a; bool b; string c = "Basic text"; }
+
+Wire size = sizeof(a) + sizeof(b) + padding + sizeof(string_length) + strlen(c) + 1
+
+  = 8 (float64)
+  + 1 (bool)
+  + 3 (padding to next 4-byte boundary)
+  + 4 (uint32 string length field)
+  + 10 (characters)
+  + 1 (null terminator)
+  = 27 bytes
+
+General formula for CDR:
+  total = Σ (field_size + padding_to_alignment)
+```
+
+---
+
+## 4.10 — Quick Reference
+
+| Concept | Key Point |
+|---|---|
+| `.msg` file | Defines message fields — one type + name per line |
+| `.srv` file | Request fields, `---` separator, response fields |
+| Code generation | `rosidl_generate_interfaces()` → C, C++, Python, type support |
+| IDL | Intermediate format — `.msg` → IDL → language-specific code |
+| Generated path | `install/pkg/include/pkg/msg/name.hpp` |
+| Include pattern | `#include "custom_interfaces/msg/minimal_interface.hpp"` |
+| Package dep | `<depend>custom_interfaces</depend>` in `package.xml` |
+| CMake dep | `find_package(custom_interfaces REQUIRED)` + `ament_target_dependencies(...)` |
+| Alignment | Type of N bytes must start at address `% N == 0` — compiler adds padding |
+| CDR wire size | Sum of fields + padding + string length headers |
 
 ---
 

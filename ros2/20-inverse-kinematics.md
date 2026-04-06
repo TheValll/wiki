@@ -659,5 +659,55 @@ The repo uses `CachedSrvKinematicsPlugin` which wraps another solver with a look
 
 ---
 
+## 20.12 — C++ Example: Pose Goal with IK
+
+```cpp
+#include <moveit/move_group_interface/move_group_interface.h>
+#include <geometry_msgs/msg/pose.hpp>
+
+// Set a Cartesian pose goal — MoveIt solves IK automatically
+geometry_msgs::msg::Pose target_pose;
+target_pose.position.x = 0.3;
+target_pose.position.y = 0.0;
+target_pose.position.z = 0.5;
+target_pose.orientation.w = 1.0;  // facing forward (quaternion)
+
+arm.setPoseTarget(target_pose);
+
+// Plan and execute
+moveit::planning_interface::MoveGroupInterface::Plan plan;
+bool success = (arm.plan(plan) == moveit::core::MoveItErrorCode::SUCCESS);
+if (success) arm.execute(plan);
+
+// You can also compute IK directly without planning:
+moveit::core::RobotStatePtr current_state = arm.getCurrentState();
+bool ik_found = current_state->setFromIK(
+    arm.getRobotModel()->getJointModelGroup("arm"),
+    target_pose,
+    0.1  // timeout in seconds
+);
+```
+
+---
+
+## 20.13 — Quick Reference
+
+| Concept | Key Point |
+|---|---|
+| Forward kinematics (FK) | Joint angles → end-effector pose: `T = T1 * T2 * ... * Tn` |
+| Inverse kinematics (IK) | End-effector pose → joint angles (may have 0, 1, or many solutions) |
+| DH convention | 4 parameters per joint: a, d, α, θ — builds each Tᵢ matrix |
+| Jacobian (J) | 6×n matrix: `ẋ = J * q̇` — maps joint velocities to Cartesian velocity |
+| Numerical IK | Newton-Raphson: `q_new = q + J⁺ * (x_goal - FK(q))` — iterative |
+| Pseudoinverse (J⁺) | `J⁺ = Jᵀ(JJᵀ)⁻¹` — least-norm solution for redundant robots |
+| Damped least squares | `J⁺ = Jᵀ(JJᵀ + λ²I)⁻¹` — stable near singularities |
+| Singularity | Jacobian loses rank → some Cartesian directions become impossible |
+| KDL | Default numerical IK solver in MoveIt (Newton-Raphson based) |
+| TRAC-IK | Better success rate than KDL (tries multiple seeds + SQP fallback) |
+| IKFast | Analytical solver — fastest and most reliable, but requires code generation |
+| C++ API | `arm.setPoseTarget(pose)` → MoveIt calls IK internally |
+
+---
+
 **Prev:** [Part 19 — Motion Planning Algorithms](19-motion-planning.md)
 **Next:** [Part 21 — Trajectory Generation](21-trajectory-generation.md)

@@ -242,6 +242,61 @@ This is **matrix multiplication** of 4x4 homogeneous transformation matrices:
 ```
 T = [ R  t ]    R = 3x3 rotation matrix
     [ 0  1 ]    t = 3x1 translation vector
+
+Full 4x4 matrix:
+    [ r11  r12  r13  tx ]
+T = [ r21  r22  r23  ty ]
+    [ r31  r32  r33  tz ]
+    [  0    0    0    1 ]
+```
+
+### RPY to rotation matrix
+
+The rotation matrix R is built from Roll (X), Pitch (Y), Yaw (Z):
+
+```
+R = Rz(yaw) * Ry(pitch) * Rx(roll)
+
+Rx(a) = [ 1    0       0    ]     Ry(b) = [ cos(b)  0  sin(b) ]
+        [ 0  cos(a)  -sin(a)]             [   0     1    0    ]
+        [ 0  sin(a)   cos(a)]             [-sin(b)  0  cos(b) ]
+
+Rz(c) = [ cos(c)  -sin(c)  0 ]
+        [ sin(c)   cos(c)  0 ]
+        [   0        0     1 ]
+```
+
+### Example: wheel rotation `rpy="${pi/2} 0 0"`
+
+```
+roll = pi/2, pitch = 0, yaw = 0
+
+Rx(pi/2) = [ 1   0    0  ]
+           [ 0   0   -1  ]
+           [ 0   1    0  ]
+
+This maps: Y → Z, Z → -Y (the cylinder flips from vertical to horizontal)
+```
+
+### Chaining transforms — how TF2 works
+
+To find the pose of `right_wheel_link` in the `base_footprint` frame:
+
+```
+T_footprint_wheel = T_footprint_base * T_base_wheel
+
+Where:
+  T_footprint_base = from URDF: base_joint (xyz="0 0 0.1", rpy="0 0 0")
+  T_base_wheel     = from URDF: base_right_wheel_joint (xyz="-0.15 -0.225 0")
+
+Multiplying 4x4 matrices:
+  T_footprint_wheel = [ I  | 0, 0, 0.1 ] * [ I  | -0.15, -0.225, 0 ]
+                      [ 0  |     1      ]   [ 0  |        1         ]
+
+                    = [ I  | -0.15, -0.225, 0.1 ]
+                      [ 0  |          1          ]
+
+Result: the right wheel is at (-0.15, -0.225, 0.1) relative to base_footprint.
 ```
 
 ---
@@ -262,6 +317,25 @@ The URDF includes Gazebo-specific plugins:
 ```
 
 This tells Gazebo: "This robot has differential drive — spinning the wheels should move it."
+
+---
+
+## 7.10 — Quick Reference
+
+| Concept | Key Point |
+|---|---|
+| URDF | XML description of a robot: links (bodies) + joints (connections) |
+| Link | Rigid body with visual, collision, and inertial properties |
+| Joint types | `fixed`, `continuous` (infinite rotation), `revolute` (limited), `prismatic` (linear) |
+| Xacro | XML macros — `<xacro:property>`, `<xacro:macro>`, `<xacro:include>` |
+| `origin xyz rpy` | Position (meters) + orientation (radians: roll/pitch/yaw) |
+| Inertia (box) | `Ixx = m/12 * (y² + z²)` — similar for Iyy, Izz |
+| Inertia (cylinder) | `Ixx = Iyy = m/12 * (3r² + h²)`, `Izz = m/2 * r²` |
+| Inertia (sphere) | `Ixx = Iyy = Izz = 2/5 * m * r²` |
+| TF2 | Transform tree — chains 4x4 matrices to find any frame relative to any other |
+| `R = Rz * Ry * Rx` | RPY → rotation matrix (applied in Z-Y-X order) |
+| robot_state_publisher | Reads URDF, publishes `/tf` transforms |
+| Gazebo plugin | `<gazebo><plugin>` — adds physics behavior (diff drive, sensors, etc.) |
 
 ---
 

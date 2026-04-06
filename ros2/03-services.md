@@ -55,23 +55,48 @@ int64 sum
 
 ## 3.4 — The Server (C++ deep-dive)
 
-From `cpp_pkg/src/server_node.cpp`:
+### Full C++ code — `server_node.cpp` (complete, compilable):
 
 ```cpp
-server_ = this->create_service<example_interfaces::srv::AddTwoInts>(
-    "add_two_ints",
-    std::bind(&ServerNode::callback_server, this, _1, _2));
+#include "rclcpp/rclcpp.hpp"
+#include "example_interfaces/srv/add_two_ints.hpp"
+
+using namespace std::placeholders;
+
+class ServerNode : public rclcpp::Node
+{
+    public:
+        ServerNode() : Node("server_node")
+        {
+            server_ = this->create_service<example_interfaces::srv::AddTwoInts>(
+                "add_two_ints",
+                std::bind(&ServerNode::callback_server, this, _1, _2));
+            RCLCPP_INFO(this->get_logger(), "Server node is running ...");
+        }
+
+    private:
+        void callback_server(
+            const example_interfaces::srv::AddTwoInts::Request::SharedPtr req,
+            const example_interfaces::srv::AddTwoInts::Response::SharedPtr res)
+        {
+            res->sum = req->a + req->b;
+        }
+
+        rclcpp::Service<example_interfaces::srv::AddTwoInts>::SharedPtr server_;
+};
+
+int main(int argc, char **argv){
+    rclcpp::init(argc, argv);
+    auto node = std::make_shared<ServerNode>();
+    rclcpp::spin(node);
+    rclcpp::shutdown();
+    return 0;
+}
 ```
 
 The callback receives **two** arguments:
-```cpp
-void callback_server(
-    const AddTwoInts::Request::SharedPtr req,    // _1 = the request
-    const AddTwoInts::Response::SharedPtr res)    // _2 = the response to fill
-{
-    res->sum = req->a + req->b;  // Fill in the response
-}
-```
+- `_1` = the **request** (read-only, filled by the client)
+- `_2` = the **response** (empty, you fill it in)
 
 ### What happens in memory when a request arrives:
 
@@ -105,30 +130,59 @@ Hidden topic: "add_two_ints/_response"  (server --> client)
 
 ## 3.5 — The Client (C++ deep-dive)
 
-From `cpp_pkg/src/client_node.cpp`:
+### Full C++ code — `client_node.cpp` (complete, compilable):
 
 ```cpp
-client_ = this->create_client<example_interfaces::srv::AddTwoInts>("add_two_ints");
-```
+#include "rclcpp/rclcpp.hpp"
+#include "example_interfaces/srv/add_two_ints.hpp"
 
-### The call sequence:
+using namespace std::chrono_literals;
+using namespace std::placeholders;
 
-```cpp
-void call_service(int a, int b)
+class ClientNode : public rclcpp::Node
 {
-    // 1. Wait until the server exists on the network
-    while (!client_->wait_for_service(1s)){
-        RCLCPP_WARN(this->get_logger(), "Waiting for the server ...");
-    }
+    public:
+        ClientNode() : Node("client_node")
+        {
+            client_ = this->create_client<example_interfaces::srv::AddTwoInts>(
+                "add_two_ints");
+            RCLCPP_INFO(this->get_logger(), "Client node is running ...");
+        }
 
-    // 2. Create the request object
-    auto req = std::make_shared<AddTwoInts::Request>();
-    req->a = a;
-    req->b = b;
+        void call_service(int a, int b)
+        {
+            while (!client_->wait_for_service(1s)){
+                RCLCPP_WARN(this->get_logger(), "Waiting for the server ...");
+            }
 
-    // 3. Send request ASYNCHRONOUSLY and register a callback for the response
-    client_->async_send_request(req,
-        std::bind(&ClientNode::callback_response, this, _1));
+            auto req = std::make_shared<example_interfaces::srv::AddTwoInts::Request>();
+            req->a = a;
+            req->b = b;
+
+            client_->async_send_request(req,
+                std::bind(&ClientNode::callback_response, this, _1));
+        }
+
+    private:
+        void callback_response(
+            rclcpp::Client<example_interfaces::srv::AddTwoInts>::SharedFuture future)
+        {
+            auto res = future.get();
+            RCLCPP_INFO(get_logger(), "Sum: %d", (int)res->sum);
+        }
+
+        rclcpp::Client<example_interfaces::srv::AddTwoInts>::SharedPtr client_;
+};
+
+int main(int argc, char **argv){
+    rclcpp::init(argc, argv);
+    auto node = std::make_shared<ClientNode>();
+    node->call_service(3, 7);
+    node->call_service(10, 3);
+    node->call_service(5, 4);
+    rclcpp::spin(node);
+    rclcpp::shutdown();
+    return 0;
 }
 ```
 
@@ -258,6 +312,83 @@ ros2 service list                              # List all active services
 ros2 service type /add_two_ints                # Show the service type
 ros2 service call /add_two_ints example_interfaces/srv/AddTwoInts "{a: 5, b: 3}"
 ```
+
+---
+
+## 3.10 — The Math Behind Service Latency
+
+### Round-trip time decomposition
+
+A service call's total latency can be broken down:
+
+```
+T_total = T_serialize_req + T_transport_req + T_deserialize_req
+        + T_compute
+        + T_serialize_res + T_transport_res + T_deserialize_res
+
+Simplified:
+  T_total = 2 * T_serialize + 2 * T_transport + T_compute
+
+Typical values (same machine, shared memory):
+  T_serialize   ≈ 1-10 μs    (depends on message size)
+  T_transport   ≈ 5-50 μs    (shared mem) or 0.1-1 ms (network)
+  T_compute     ≈ application-dependent
+
+Example — AddTwoInts on the same machine:
+  T_total ≈ 2*5μs + 2*20μs + 1μs ≈ 51 μs ≈ 0.05 ms
+```
+
+### Why async matters — throughput vs latency
+
+With **synchronous** calls (blocking), your maximum throughput is:
+
+```
+throughput_sync = 1 / T_total
+
+Example: T_total = 1ms → max 1000 calls/second
+```
+
+With **async** calls (non-blocking), you can have multiple requests in-flight:
+
+```
+throughput_async = N_concurrent / T_total
+
+Example: 10 concurrent requests, T_total = 1ms
+  → up to 10,000 calls/second
+```
+
+This is why `async_send_request` exists — it allows **pipelining** of requests while the spin loop continues processing other events.
+
+### Timeout math
+
+`wait_for_service(1s)` blocks for up to 1 second. If the server isn't found:
+
+```
+Total wait before giving up = N_retries * timeout
+
+If you retry forever (while loop), the client blocks indefinitely.
+In production, add a max retry count:
+
+  max_wait = max_retries * timeout_per_retry
+  Example: 5 retries * 1s = 5s max wait before error
+```
+
+---
+
+## 3.11 — Quick Reference
+
+| Concept | Key Point |
+|---|---|
+| Service | Request/response pattern — like a function call over the network |
+| Server | `create_service<Type>("name", callback)` — callback gets `(req, res)` |
+| Client | `create_client<Type>("name")` — calls `async_send_request(req, cb)` |
+| `_1, _2` placeholders | `std::bind` placeholders for the request and response |
+| Hidden topics | Service = 2 DDS topics: `name/_request` + `name/_response` |
+| Async pattern | **Required** to avoid deadlock — never block inside `spin()` |
+| Future | Container for a value that will arrive later — `.get()` retrieves it |
+| `wait_for_service(1s)` | Blocks until the server is discovered on DDS |
+| Round-trip time | `T ≈ 2*T_serialize + 2*T_transport + T_compute` |
+| Throughput | Sync: `1/T_total` — Async: `N_concurrent/T_total` |
 
 ---
 

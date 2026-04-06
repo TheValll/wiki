@@ -391,4 +391,22 @@ Each layer only talks to its neighbors. Swap any layer without touching the othe
 
 ---
 
+## 22.11 — Quick Reference
+
+| Concept | Key Point |
+|---|---|
+| Three-package pattern | `description` (URDF) + `config` (SRDF, YAML) + `bringup` (launch) |
+| MoveIt Setup Assistant | GUI to generate SRDF, config files, and launch files |
+| `move_group` node | Central MoveIt node — receives goals, plans, executes |
+| SRDF | Planning groups, named poses, end effectors, disabled collisions |
+| `kinematics.yaml` | IK solver config per planning group |
+| `joint_limits.yaml` | Velocity/acceleration limits per joint |
+| `moveit_controllers.yaml` | Maps planning groups to ros2_control controllers |
+| `FollowJointTrajectory` | Action interface between MoveIt and controllers |
+| Launch sequence | robot_state_publisher → ros2_control_node → spawners → move_group → RViz |
+| `ros2 control list_controllers` | Check that all controllers are `[active]` |
+| Full stack layers | Application → MoveIt → Controller interface → ros2_control → Hardware |
+
+---
+
 **Prev:** [Part 21 — Trajectory Generation](21-trajectory-generation.md)

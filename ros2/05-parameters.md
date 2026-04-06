@@ -21,22 +21,51 @@ A parameter is a **named configuration value** stored inside a node. Unlike topi
 
 ## 5.3 — The Code (C++ deep-dive)
 
-From `cpp_pkg/src/parameters_node.cpp`:
+### Full C++ code — `parameters_node.cpp` (complete, compilable):
 
 ```cpp
-ParametersNode() : Node("parameters_node")
-{
-    this->declare_parameter("message", "Simple publisher");  // Declare with default
-    publisher_ = this->create_publisher<String>("simple_topic", 10);
-    timer_ = this->create_wall_timer(500ms, std::bind(&ParametersNode::publish_example, this));
-}
+#include "rclcpp/rclcpp.hpp"
+#include "example_interfaces/msg/string.hpp"
 
-void publish_example()
+using namespace std::chrono_literals;
+
+class ParametersNode : public rclcpp::Node
 {
-    auto msg = example_interfaces::msg::String();
-    msg.data = this->get_parameter("message").as_string();  // Read at runtime
-    publisher_->publish(msg);
+    public:
+        ParametersNode() : Node("parameters_node")
+        {
+            this->declare_parameter("message", "Simple publisher");
+            publisher_ = this->create_publisher<example_interfaces::msg::String>(
+                "simple_topic", 10);
+            timer_ = this->create_wall_timer(
+                500ms, std::bind(&ParametersNode::publish_example, this));
+            RCLCPP_INFO(this->get_logger(), "Publisher with parameters has been started ...");
+        }
+
+    private:
+        void publish_example()
+        {
+            auto msg = example_interfaces::msg::String();
+            msg.data = this->get_parameter("message").as_string();
+            publisher_->publish(msg);
+        }
+
+        rclcpp::Publisher<example_interfaces::msg::String>::SharedPtr publisher_;
+        rclcpp::TimerBase::SharedPtr timer_;
+};
+
+int main(int argc, char **argv){
+    rclcpp::init(argc, argv);
+    auto node = std::make_shared<ParametersNode>();
+    rclcpp::spin(node);
+    rclcpp::shutdown();
+    return 0;
 }
+```
+
+Run with a parameter override:
+```bash
+ros2 run cpp_pkg parameters --ros-args -p message:="Hello from CLI"
 ```
 
 ### Step-by-step in memory:
@@ -191,6 +220,61 @@ msg.data = self.get_parameter("message").value  # .value instead of .as_string()
 ```
 
 The only difference is `.value` (Python) vs `.as_string()` (C++). Python uses duck typing, so `.value` returns whatever type was stored.
+
+---
+
+## 5.8 — The Math Behind Hash Maps
+
+### How `get_parameter` achieves O(1) lookup
+
+Parameters are stored in a `std::unordered_map<std::string, ParameterValue>` — a **hash map**.
+
+```
+Hash function: h(key) = hash("message") % bucket_count
+
+Example with 16 buckets:
+  h("message")    = hash("message") % 16 = 7
+  h("rate")       = hash("rate") % 16 = 3
+  h("debug_mode") = hash("debug_mode") % 16 = 7  ← collision!
+
+Bucket array:
+  [0] → empty
+  [1] → empty
+  [2] → empty
+  [3] → ("rate", 10.0)
+  ...
+  [7] → ("message", "Hello") → ("debug_mode", true)  ← chained
+  ...
+
+Lookup "message":
+  1. Compute hash: h("message") = 7
+  2. Go to bucket 7
+  3. Compare key: "message" == "message" → found!
+
+Average: O(1)
+Worst case (all keys collide): O(n) — but very rare with good hash functions
+```
+
+### Why not a sorted map?
+
+`std::map` (red-black tree) gives O(log n) lookup. With 10 parameters, the difference is negligible. But ROS2 uses `unordered_map` because parameter access happens **inside the real-time loop** (every timer callback), and O(1) is consistently fast.
+
+---
+
+## 5.9 — Quick Reference
+
+| Concept | Key Point |
+|---|---|
+| Parameter | Named config value stored inside a node (string, int, float, bool, array) |
+| Declare | `this->declare_parameter("name", default_value)` — must call before get |
+| Get | `this->get_parameter("name").as_string()` (or `.as_int()`, `.as_double()`, `.as_bool()`) |
+| YAML format | `node_name: { ros__parameters: { key: value } }` |
+| Priority | CLI override > YAML file > default in code |
+| Runtime change | `ros2 param set /node param value` — takes effect on next `get_parameter()` call |
+| Hidden services | Every node auto-creates `/node/set_parameters`, `/node/get_parameters`, etc. |
+| Storage | `std::unordered_map` — O(1) average lookup |
+| CLI list | `ros2 param list` |
+| CLI dump | `ros2 param dump /node` — YAML output of all params |
 
 ---
 

@@ -6,6 +6,12 @@ A structured deep-dive into ROS2, from basic concepts to ros2_control internals 
 
 ## Syllabus
 
+### Block 0: Setup
+
+| # | Part | Key Concepts |
+|---|------|-------------|
+| 0 | [Environment, Workspace & Essential Commands](00-environment-setup.md) | Workspace structure, colcon build, source, CLI commands, CMakeLists, package.xml |
+
 ### Block A: ROS2 Basics
 
 | # | Part | Key Concepts | Files |

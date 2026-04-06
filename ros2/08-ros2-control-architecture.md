@@ -262,5 +262,84 @@ Timeline:
 
 ---
 
+## 8.8 — The Math Behind Real-Time Control
+
+### Fixed-rate loop timing
+
+The control loop runs at a fixed frequency `f`:
+
+```
+f = update_rate = 50 Hz
+dt = 1/f = 1/50 = 0.02s = 20ms
+
+Each cycle budget:
+  t_read + t_update + t_write <= dt
+
+Example:
+  t_read   = 0.5ms  (read servo position via serial)
+  t_update = 0.1ms  (compute wheel velocities)
+  t_write  = 0.5ms  (send commands via serial)
+  t_total  = 1.1ms  << 20ms budget  ← OK, plenty of margin
+```
+
+### Jitter and stability
+
+**Jitter** = variation in the actual loop period. If the nominal period is 20ms but actual periods vary between 18ms and 22ms, jitter = 2ms.
+
+```
+Jitter ratio = jitter / dt
+
+Rule of thumb:
+  jitter_ratio < 10%  → acceptable for most robots
+  jitter_ratio < 1%   → required for high-precision servo control
+  jitter_ratio > 25%  → control loop is unreliable, may cause instability
+
+Example: 50Hz loop (dt=20ms)
+  jitter = 2ms → ratio = 10% → borderline acceptable
+  jitter = 5ms → ratio = 25% → PROBLEM: controllers assume constant dt
+
+Why it matters:
+  Euler integration: position += velocity * dt
+  If dt varies, the integration accumulates error proportional to jitter.
+  Odometry drift ∝ Σ|dt_actual - dt_nominal|
+```
+
+### Why shared memory (not topics)?
+
+The command/state interfaces are plain `double*` pointers — no serialization, no DDS, no copying:
+
+```
+Topic-based communication:
+  Controller → serialize → DDS → deserialize → Hardware
+  Overhead: ~50-500 μs per message
+
+Shared memory (ros2_control):
+  Controller → write double* → Hardware reads same pointer
+  Overhead: ~0.01 μs (just a memory load instruction)
+
+Speedup: 5000-50000x faster
+```
+
+This is why ros2_control can achieve real-time performance.
+
+---
+
+## 8.9 — Quick Reference
+
+| Concept | Key Point |
+|---|---|
+| ros2_control | Framework separating controllers from hardware interfaces |
+| Controller Manager | Node that runs the read → update → write loop |
+| Control loop | Fixed-rate: `dt = 1/update_rate`, default 50Hz = 20ms |
+| Command interface | `joint/type` (e.g., `left_wheel/velocity`) — controller writes, HW reads |
+| State interface | `joint/type` (e.g., `left_wheel/position`) — HW writes, controller reads |
+| Shared memory | Plain `double*` pointers — no DDS overhead |
+| Controller lifecycle | unconfigured → inactive → **active** (only active ones run) |
+| `spawner` | Helper that loads and activates a controller |
+| Jitter rule | Keep < 10% of `dt` for stable control |
+| `template_controllers.yaml` | Configures update rate, controller types, wheel params |
+
+---
+
 **Next:** [Part 9 — Hardware Interface](09-hardware-interface.md)
 

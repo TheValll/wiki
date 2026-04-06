@@ -712,5 +712,56 @@ Timeline:
 
 ---
 
+## 21.12 — C++ Example: Velocity Scaling and Cartesian Path
+
+```cpp
+#include <moveit/move_group_interface/move_group_interface.h>
+
+// Slow down execution (useful for approach/retreat)
+arm.setMaxVelocityScalingFactor(0.3);   // 30% of max joint velocity
+arm.setMaxAccelerationScalingFactor(0.3);
+
+// Cartesian path (straight line in task space)
+std::vector<geometry_msgs::msg::Pose> waypoints;
+waypoints.push_back(current_pose);
+
+auto target = current_pose;
+target.position.z -= 0.1;  // Move 10cm down
+waypoints.push_back(target);
+
+moveit_msgs::msg::RobotTrajectory trajectory;
+double fraction = arm.computeCartesianPath(
+    waypoints,
+    0.01,       // eef_step: max 1cm between interpolated points
+    0.0,        // jump_threshold: 0 = disable jump detection
+    trajectory
+);
+
+if (fraction > 0.99) {
+    arm.execute(trajectory);
+}
+```
+
+---
+
+## 21.13 — Quick Reference
+
+| Concept | Key Point |
+|---|---|
+| Path | Geometric: sequence of configs [q₀, q₁, ..., qₙ] — no timing |
+| Trajectory | Path + timing: q(t), q̇(t), q̈(t) at each point |
+| Trapezoidal profile | Accel → cruise → decel — simple, C¹ continuous |
+| TOPP-RA | Time-Optimal Path Parameterization — fastest legal timing for a given path |
+| Cubic spline | C² continuity — smooth position AND velocity transitions |
+| Quintic spline | C⁴ continuity — also smooth acceleration (used by controllers) |
+| SLERP | Spherical Linear Interpolation — smooth rotation between quaternions |
+| Velocity scaling | `setMaxVelocityScalingFactor(0.3)` — 30% of joint limits |
+| Cartesian path | `computeCartesianPath(waypoints, step)` — straight line in task space |
+| `eef_step` | Max distance between interpolated Cartesian points (meters) |
+| FollowJointTrajectory | Action: controller interpolates waypoints at 100Hz |
+| Full pipeline | Plan → smooth → time parameterize → execute |
+
+---
+
 **Prev:** [Part 20 — Inverse Kinematics](20-inverse-kinematics.md)
 **Next:** [Part 22 — MoveIt Bringup & Integration](22-moveit-bringup.md)

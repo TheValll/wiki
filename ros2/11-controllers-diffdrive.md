@@ -297,5 +297,57 @@ State interfaces:
 
 ---
 
+## 11.8 — Odometry Error Propagation
+
+### Why odometry drifts over time
+
+Odometry uses dead reckoning — it integrates small increments. Errors accumulate:
+
+```
+Error sources:
+  1. Wheel slip (wheels don't grip perfectly)
+  2. Wheel radius error (manufacturing tolerance)
+  3. Wheel separation error (L not exact)
+  4. Integration discretization (Euler method)
+  5. Encoder resolution (quantization)
+
+Position error growth:
+  σ_x(t) ≈ σ_x(0) + k * √t
+
+  The error grows with √t (random walk), not linearly.
+  After 10 seconds, error is √10 ≈ 3.2x the per-step error.
+  After 100 seconds, error is √100 = 10x.
+
+Heading error is worse:
+  σ_θ(t) ≈ k_θ * √t
+  And heading error causes position error to grow LINEARLY:
+    σ_x(t) ≈ v * σ_θ * t
+
+  A small heading error amplified over distance = large position drift.
+```
+
+This is why robots use **sensor fusion** (odometry + IMU + lidar/GPS) — odometry alone drifts too much for long-distance navigation.
+
+---
+
+## 11.9 — Quick Reference
+
+| Concept | Key Point |
+|---|---|
+| DiffDrive | Two wheels, independent speeds → linear + angular motion |
+| Forward kinematics | `v = r*(w_R+w_L)/2`, `ω = r*(w_R-w_L)/L` |
+| Inverse kinematics | `w_L = (v - ω*L/2)/r`, `w_R = (v + ω*L/2)/r` |
+| `wheel_separation` (L) | Distance between wheel centers (meters) |
+| `wheel_radius` (r) | Wheel radius (meters) |
+| `/cmd_vel` | Input topic: `Twist` msg with `linear.x` and `angular.z` |
+| `/odom` | Output topic: `Odometry` msg with pose + twist + covariance |
+| Odometry integration | `x += v*cos(θ)*dt`, `y += v*sin(θ)*dt`, `θ += ω*dt` |
+| Covariance | Diagonal matrix — uncertainty in [x, y, z, roll, pitch, yaw] |
+| Odometry drift | Position error ∝ √t, heading error makes it worse |
+| JointStateBroadcaster | Reads state interfaces → publishes `/joint_states` |
+| Velocity limits | `linear.x.max_velocity`, `angular.z.max_velocity` |
+
+---
+
 **Next:** [Part 12 — Hardware Driver: LX-225](12-lx225-driver.md)
 

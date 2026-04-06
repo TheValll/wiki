@@ -395,5 +395,22 @@ This is the **motion planning problem**. Part 19 covers the algorithms that solv
 
 ---
 
+## 18.10 — Quick Reference
+
+| Concept | Key Point |
+|---|---|
+| Configuration space (C-space) | Space of all possible joint configurations: q = (q1, q2, ..., qn) |
+| Dimension | = number of DOF. 6-DOF arm → 6D C-space |
+| C-obstacle | Region in C-space where robot collides with something |
+| C-free | C-space minus all C-obstacles — the safe region |
+| Collision checking | FCL library: GJK for convex shapes, BVH for meshes |
+| GJK algorithm | Tests if Minkowski difference of two shapes contains the origin |
+| Distance metric | Weighted Euclidean: `d = √(Σ wᵢ(qᵢ-q'ᵢ)²)` |
+| Wrap-around joints | Continuous joints: use `min(|Δq|, 2π - |Δq|)` |
+| Self-collision | Checked via ACM — skip pairs that can never collide |
+| Planning problem | Find path τ: [0,1] → C_free from q_start to q_goal |
+
+---
+
 **Prev:** [Part 17 — MoveIt Architecture](17-moveit-architecture.md)
 **Next:** [Part 19 — Motion Planning Algorithms](19-motion-planning.md)

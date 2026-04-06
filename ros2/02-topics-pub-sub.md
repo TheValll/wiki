@@ -36,12 +36,48 @@ Key properties:
 
 ## 2.3 — The Publisher (C++ deep-dive)
 
-From `cpp_pkg/src/publisher_node.cpp`:
+### Full C++ code — `publisher_node.cpp` (complete, compilable):
 
 ```cpp
-publisher_ = this->create_publisher<example_interfaces::msg::String>("simple_topic", 10);
-timer_ = this->create_wall_timer(500ms, std::bind(&PublisherNode::publish_example, this));
+#include "rclcpp/rclcpp.hpp"
+#include "example_interfaces/msg/string.hpp"
+
+using namespace std::chrono_literals;
+
+class PublisherNode : public rclcpp::Node
+{
+    public:
+        PublisherNode() : Node("publisher")
+        {
+            publisher_ = this->create_publisher<example_interfaces::msg::String>(
+                "simple_topic", 10);
+            timer_ = this->create_wall_timer(
+                500ms, std::bind(&PublisherNode::publish_example, this));
+            RCLCPP_INFO(this->get_logger(), "Publisher has been started ...");
+        }
+
+    private:
+        void publish_example()
+        {
+            auto msg = example_interfaces::msg::String();
+            msg.data = "Simple publisher";
+            publisher_->publish(msg);
+        }
+
+        rclcpp::Publisher<example_interfaces::msg::String>::SharedPtr publisher_;
+        rclcpp::TimerBase::SharedPtr timer_;
+};
+
+int main(int argc, char **argv){
+    rclcpp::init(argc, argv);
+    auto node = std::make_shared<PublisherNode>();
+    rclcpp::spin(node);
+    rclcpp::shutdown();
+    return 0;
+}
 ```
+
+### Breaking down `create_publisher`:
 
 ### Breaking down `create_publisher<String>("simple_topic", 10)`:
 
@@ -111,19 +147,40 @@ If the subscriber is too slow and the queue fills up, the **oldest messages are 
 
 ## 2.4 — The Subscriber (C++ deep-dive)
 
-From `cpp_pkg/src/subscriber_node.cpp`:
+### Full C++ code — `subscriber_node.cpp` (complete, compilable):
 
 ```cpp
-subscriber_ = this->create_subscription<example_interfaces::msg::String>(
-    "simple_topic", 10,
-    std::bind(&SubscriberNode::callback_topic, this, _1));
-```
+#include "rclcpp/rclcpp.hpp"
+#include "example_interfaces/msg/string.hpp"
 
-### The callback function:
-```cpp
-void callback_topic(const example_interfaces::msg::String::SharedPtr msg)
+using namespace std::placeholders;
+
+class SubscriberNode : public rclcpp::Node
 {
-    RCLCPP_INFO(this->get_logger(), "%s", msg->data.c_str());
+    public:
+        SubscriberNode() : Node("subscriber")
+        {
+            subscriber_ = this->create_subscription<example_interfaces::msg::String>(
+                "simple_topic", 10,
+                std::bind(&SubscriberNode::callback_topic, this, _1));
+            RCLCPP_INFO(this->get_logger(), "Subscriber has been started ...");
+        }
+
+    private:
+        void callback_topic(const example_interfaces::msg::String::SharedPtr msg)
+        {
+            RCLCPP_INFO(this->get_logger(), "%s", msg->data.c_str());
+        }
+
+        rclcpp::Subscription<example_interfaces::msg::String>::SharedPtr subscriber_;
+};
+
+int main(int argc, char **argv){
+    rclcpp::init(argc, argv);
+    auto node = std::make_shared<SubscriberNode>();
+    rclcpp::spin(node);
+    rclcpp::shutdown();
+    return 0;
 }
 ```
 
@@ -272,6 +329,109 @@ ros2 topic echo /simple_topic            # Print messages in real-time
 ros2 topic hz /simple_topic              # Measure publish rate
 ros2 topic pub /simple_topic example_interfaces/msg/String "data: hello"  # Publish from CLI
 ```
+
+---
+
+## 2.10 — The Math Behind Pub/Sub
+
+### Ring buffer — how the queue works
+
+The queue (depth `N`) is implemented as a **circular buffer** (ring buffer). It uses two pointers:
+
+```
+Memory layout (depth = 4):
+
+  write_idx
+      |
+  +---v---+-------+-------+-------+
+  | msg_3 | msg_0 | msg_1 | msg_2 |
+  +-------+-------+---^---+-------+
+                       |
+                   read_idx
+
+write_idx = (write_idx + 1) % N
+read_idx  = (read_idx  + 1) % N
+```
+
+- **No dynamic allocation** — the buffer is pre-allocated with fixed size `N`
+- When `write_idx` catches up with `read_idx`, the oldest message is **overwritten** (dropped)
+- This is O(1) for both read and write — no shifting, no copying the array
+
+### When are messages lost?
+
+Messages are dropped when the publisher is faster than the subscriber:
+
+```
+Let:
+  f_pub = publisher frequency (Hz)
+  f_sub = subscriber processing frequency (Hz)
+  N     = queue depth
+
+If f_pub > f_sub, messages accumulate in the queue.
+
+Time to fill the queue:
+  t_fill = N / (f_pub - f_sub)
+
+After t_fill, the oldest messages start being dropped.
+
+Example:
+  f_pub = 100 Hz, f_sub = 80 Hz, N = 10
+  t_fill = 10 / (100 - 80) = 0.5 seconds
+
+  After 0.5s, you lose 20 messages/second.
+
+Drop rate = f_pub - f_sub = 20 msg/s (when queue is full)
+```
+
+### Nyquist and sensor topics
+
+When subscribing to sensor data (camera, lidar, IMU), the **Nyquist-Shannon theorem** applies:
+
+```
+To reconstruct a signal of frequency f, you must sample at:
+
+  f_sample >= 2 * f_signal
+
+In ROS2 terms:
+  f_subscriber >= 2 * f_max_change
+
+Example: a motor vibrates at up to 50 Hz.
+  Your subscriber must process at >= 100 Hz to capture all dynamics.
+
+If f_sub < 2 * f_signal → aliasing (you see phantom low-frequency patterns
+                                     that don't exist in reality)
+```
+
+In practice, aim for `f_sub >= 5-10x f_signal` for comfortable margin. Set your queue depth based on how much latency you can tolerate:
+
+```
+Latency introduced by the queue:
+  t_latency_max = N / f_pub
+
+Example: N = 10, f_pub = 100 Hz
+  t_latency_max = 10 / 100 = 0.1 seconds = 100ms
+
+For real-time control, use N = 1 (latest message only, no buffering).
+```
+
+---
+
+## 2.11 — Quick Reference
+
+| Concept | Key Point |
+|---|---|
+| Topic | Named channel with a fixed message type, many-to-many |
+| Publisher | `create_publisher<Type>("topic", queue_depth)` |
+| Subscriber | `create_subscription<Type>("topic", depth, callback)` |
+| Queue depth | Ring buffer size — oldest dropped when full |
+| `std::bind(fn, this, _1)` | Creates a callable that binds `this` and leaves 1 arg open |
+| CDR serialization | Language-independent binary format — C++ and Python interop |
+| QoS Reliable | Re-sends lost messages (like TCP) — for commands |
+| QoS Best Effort | Fire-and-forget (like UDP) — for sensor streams |
+| Transient Local | Late-joining subscribers get the last published message |
+| Message loss | Occurs when `f_pub > f_sub` and queue fills in `N/(f_pub - f_sub)` seconds |
+| Nyquist rule | Subscribe at `>= 2x` the signal frequency to avoid aliasing |
+| Queue latency | `t_max = N / f_pub` — use depth 1 for real-time control |
 
 ---
 

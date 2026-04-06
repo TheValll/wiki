@@ -231,4 +231,23 @@ Putting it all together, here is the complete boot sequence when you launch ros2
 
 ---
 
+## 7. Quick Reference
+
+| Concept | Key Point |
+|---|---|
+| Lifecycle states | Unconfigured → Inactive → **Active** → Inactive → Finalized |
+| `on_init()` | Parse config, declare params — called once at load |
+| `on_configure()` | Open connections, create pubs/subs, allocate memory |
+| `on_activate()` | Interfaces become available — init runtime state |
+| `on_deactivate()` | Stop commanding — interfaces released after this |
+| `on_cleanup()` | Close connections, free resources → back to Unconfigured |
+| `on_error()` | Unrecoverable failure → Finalized |
+| Return `ERROR` | Aborts the transition — stays in current state |
+| Interface availability | `state_interfaces_` only valid between `on_activate()` and `on_deactivate()` |
+| HardwareInfo | Struct from URDF: joints, sensors, GPIOs, params, plugin name |
+| CLI transitions | `ros2 control set_controller_state name active/inactive` |
+| Atomic switch | `ros2 control switch_controllers --deactivate A --activate B` |
+
+---
+
 **Next:** [Part 16 — Transmissions, Sensors & GPIO](16-transmissions-sensors-gpio.md)

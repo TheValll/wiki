@@ -232,5 +232,57 @@ All interfaces (joints, sensors, GPIOs) end up in the ResourceManager's flat map
 
 ---
 
+## 5. The Math Behind Transmissions
+
+### Gear reduction — simple ratio
+
+```
+joint_position  = actuator_position / reduction
+joint_velocity  = actuator_velocity / reduction
+joint_effort    = actuator_effort   * reduction   ← note: inverted!
+
+Example with reduction = 50:
+  Motor at 3000 RPM → Joint at 60 RPM (slower)
+  Motor torque 0.1 Nm → Joint torque 5 Nm (stronger)
+
+Power is conserved (ignoring friction):
+  P = τ * ω = constant
+  τ_joint * ω_joint = τ_motor * ω_motor
+```
+
+### Differential transmission
+
+Two motors driving two joints (e.g., wrist roll + pitch):
+
+```
+[ joint1_pos ]   [ 1/n  1/n ] [ actuator1_pos ]
+[            ] = [           ] [                ]
+[ joint2_pos ]   [ 1/n -1/n ] [ actuator2_pos ]
+
+Where n = reduction ratio for each actuator.
+
+When both motors spin same direction → joint1 moves (roll)
+When motors spin opposite → joint2 moves (pitch)
+```
+
+---
+
+## 6. Quick Reference
+
+| Concept | Key Point |
+|---|---|
+| Transmission | Mechanical coupling between actuator and joint (gear ratio) |
+| `SimpleTransmission` | 1 actuator ↔ 1 joint with `<mechanical_reduction>` |
+| `DifferentialTransmission` | 2 actuators ↔ 2 joints (coupled) |
+| Gear math | `joint_pos = actuator_pos / ratio`, `joint_torque = actuator_torque * ratio` |
+| `SensorInterface` | Read-only hardware — only `read()`, no `write()` |
+| Sensor URDF | `type="sensor"`, only `<state_interface>` tags |
+| GPIO | Non-joint I/O — LEDs, buttons, grippers, fans |
+| GPIO naming | `gpio_name/interface_name` (e.g., `vacuum_gripper/activate`) |
+| GPIO in code | Same `command_interfaces_` / `state_interfaces_` vectors as joints |
+| Combined system | One `SystemInterface` can handle joints + sensors + GPIOs together |
+
+---
+
 **Prev:** [Part 15 — Lifecycle & State Machines](15-lifecycle-state-machines.md)
 **Next:** [Part 17 — MoveIt Architecture](17-moveit-architecture.md)

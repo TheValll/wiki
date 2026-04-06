@@ -27,10 +27,30 @@ A Node is a **process** (or part of a process) on your computer. When you start 
 | **Thread(s)** | One or more execution threads to process callbacks |
 | **Network sockets** | Connections to communicate via DDS |
 
-### Looking at the C++ code (`cpp_pkg/src/minimal_node.cpp`):
+### Full C++ code — `minimal_node.cpp` (complete, compilable):
 
 ```cpp
-// Lines 20-26: The main — the process entry point
+#include "rclcpp/rclcpp.hpp"
+
+class MinimalNode : public rclcpp::Node
+{
+    public:
+        MinimalNode() : Node("minimal_node")
+        {
+            timer_ = this->create_wall_timer(
+                std::chrono::seconds(1),
+                std::bind(&MinimalNode::timer_callback, this));
+        }
+
+    private:
+        void timer_callback()
+        {
+            RCLCPP_INFO(this->get_logger(), "Minimal node is running ...");
+        }
+
+        rclcpp::TimerBase::SharedPtr timer_;
+};
+
 int main(int argc, char **argv){
     rclcpp::init(argc, argv);                      // 1. Initialize the ROS2 context
     auto node = std::make_shared<MinimalNode>();    // 2. Create the node in memory
@@ -38,6 +58,13 @@ int main(int argc, char **argv){
     rclcpp::shutdown();                            // 4. Cleanup
     return 0;
 }
+```
+
+Build and run:
+```bash
+colcon build --packages-select cpp_pkg
+source install/setup.bash
+ros2 run cpp_pkg minimal_cpp_node
 ```
 
 ### What happens in memory, step by step?
@@ -166,6 +193,42 @@ Node A:
 
 This is **auto-discovery**. No central server needed (unlike ROS1 which had a `rosmaster`).
 
+### SPDP & SEDP — the two discovery protocols
+
+Discovery happens in **two phases**:
+
+**Phase 1 — SPDP** (Simple Participant Discovery Protocol):
+- Each node broadcasts a "hello" packet via **UDP multicast** on a well-known address
+- The multicast port is computed from the Domain ID:
+
+```
+port = 7400 + (domain_id * 250) + offset
+
+Example with domain_id = 0:
+  Discovery multicast port = 7400 + 0*250 + 0 = 7400
+  Multicast address = 239.255.0.1
+
+Example with domain_id = 42:
+  Discovery multicast port = 7400 + 42*250 = 17900
+```
+
+This is why nodes on different Domain IDs can't see each other — they listen on different ports.
+
+**Phase 2 — SEDP** (Simple Endpoint Discovery Protocol):
+- Once two participants know each other (via SPDP), they exchange their **endpoint lists** via unicast
+- Endpoints = publishers, subscribers, service servers, service clients
+- This lets each node know "who publishes what" and "who subscribes to what"
+
+```
+Timeline:
+  t=0.0s  Node A starts → SPDP broadcast "I exist, participant_A"
+  t=0.1s  Node B starts → SPDP broadcast "I exist, participant_B"
+  t=0.2s  A receives B's SPDP → stores B's address
+  t=0.3s  SEDP unicast A→B: "I publish on /simple_topic (String)"
+  t=0.3s  SEDP unicast B→A: "I subscribe to /simple_topic (String)"
+  t=0.4s  DDS matches publisher ↔ subscriber → data flows
+```
+
 ### Network memory layout:
 
 ```
@@ -277,6 +340,23 @@ This says: "when someone runs `ros2 run py_pkg minimal_py_node`, call the `main(
 |  OS: manages RAM, threads, sockets for each process             |
 +-----------------------------------------------------------------+
 ```
+
+---
+
+## 1.8 — Quick Reference
+
+| Concept | Key Point |
+|---|---|
+| Node | A process (or part of one) with a name, timer(s), and DDS participant |
+| `rclcpp::init()` | Creates the global ROS2 context + DDS DomainParticipant |
+| `std::make_shared<Node>()` | Allocates the node on the **heap**, managed by smart pointer |
+| `rclcpp::spin(node)` | Infinite event loop — sleeps until a callback is ready |
+| `rclcpp::shutdown()` | Destroys DDS context, frees all resources |
+| DDS Discovery | SPDP (multicast) finds participants, SEDP (unicast) matches endpoints |
+| Domain ID | Like a radio channel — `port = 7400 + domain_id * 250` |
+| Shared memory | Used when pub/sub are on the same machine (no network copy) |
+| `colcon build` | Topological sort of packages, then CMake + make for each |
+| `source install/setup.bash` | Sets `AMENT_PREFIX_PATH`, `LD_LIBRARY_PATH` so `ros2 run` works |
 
 ---
 

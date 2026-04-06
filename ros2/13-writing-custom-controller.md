@@ -209,4 +209,95 @@ The Controller Manager will:
 
 ---
 
+## 8. Complete Example: Alpha Filter Controller
+
+Here is a complete custom controller from the repo that implements a **low-pass alpha filter** — it smoothly follows incoming commands instead of jumping to them instantly.
+
+### Full C++ code — `basic_controller.cpp`:
+
+```cpp
+// on_init(): declare parameters
+joint_names_ = auto_declare<std::vector<std::string>>("joints", {});
+interface_name_ = auto_declare<std::string>("interface_name", "position");
+coefficient_ = auto_declare<double>("coefficient", 0.8);
+
+// on_configure(): subscribe to external commands
+command_subscriber_ = get_node()->create_subscription<FloatArray>(
+    "joints_command", 10,
+    [this](const FloatArray::SharedPtr msg) {
+        if (msg->data.size() == joint_names_.size()) {
+            appCommand_.clear();
+            for (auto cmd : msg->data)
+                appCommand_.push_back(cmd);
+        }
+    });
+
+// on_activate(): initialize commands from current state (no jump)
+for (int i = 0; i < (int)joint_names_.size(); i++) {
+    appCommand_.push_back(state_interfaces_[i].get_optional().value());
+}
+
+// update(): the alpha filter
+for (int i = 0; i < (int)joint_names_.size(); i++) {
+    double state = state_interfaces_[i].get_optional().value();
+    double cmd = appCommand_[i];
+    double new_cmd = cmd * coefficient_ + state * (1 - coefficient_);
+    command_interfaces_[i].set_value(new_cmd);
+}
+```
+
+### The alpha filter — math explanation
+
+```
+new_cmd = α * target + (1 - α) * current_state
+
+Where:
+  α = coefficient (0 to 1)
+  target = desired command from the subscriber
+  current_state = actual joint state from hardware
+
+α = 1.0 → new_cmd = target         (instant jump, no filtering)
+α = 0.0 → new_cmd = current_state  (never moves)
+α = 0.8 → 80% target + 20% current (fast but smooth)
+α = 0.2 → 20% target + 80% current (slow and very smooth)
+```
+
+This is a **first-order IIR (Infinite Impulse Response) filter**, also called an **exponential moving average**:
+
+```
+Step response (α = 0.8, target = 1.0, start = 0.0):
+
+  Step 0: new = 0.8*1.0 + 0.2*0.0 = 0.80
+  Step 1: new = 0.8*1.0 + 0.2*0.8 = 0.96
+  Step 2: new = 0.8*1.0 + 0.2*0.96 = 0.992
+  Step 3: new = 0.8*1.0 + 0.2*0.992 = 0.998
+
+Convergence: after n steps, error = (1-α)^n * initial_error
+  n steps to reach 99%: n = log(0.01) / log(1-α)
+  For α=0.8: n = log(0.01)/log(0.2) = 2.86 → ~3 steps
+
+At 50Hz with α=0.8: reaches 99% in 3 * 20ms = 60ms
+```
+
+---
+
+## 9. Quick Reference
+
+| Concept | Key Point |
+|---|---|
+| Controller base | `controller_interface::ControllerInterface` (inherits LifecycleNode) |
+| `on_init()` | Declare parameters with `auto_declare<T>()` |
+| `on_configure()` | Create subscribers/publishers, allocate memory |
+| `on_activate()` | Interfaces available — init commands from current state |
+| `update(time, period)` | Called every cycle — **no malloc, no blocking** |
+| Interface config | Return `INDIVIDUAL` + list of `"joint/type"` names |
+| Command interface | **Exclusive** — only one controller can claim it |
+| State interface | **Shared** — multiple controllers can read |
+| Plugin registration | `PLUGINLIB_EXPORT_CLASS(Class, ControllerInterface)` + XML + CMake |
+| Spawner | `ros2 run controller_manager spawner my_controller` |
+| Alpha filter | `new = α*target + (1-α)*current` — convergence in `log(ε)/log(1-α)` steps |
+| RealtimeBuffer | Thread-safe way to pass subscriber data to `update()` |
+
+---
+
 **Next:** [Part 14 — Controller Manager Internals](14-controller-manager-internals.md)

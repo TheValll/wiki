@@ -348,5 +348,24 @@ USB to UART conversion:
 
 ---
 
+## 12.11 — Quick Reference
+
+| Concept | Key Point |
+|---|---|
+| LX-225 | Serial bus servo with position feedback and unique ID |
+| UART | Serial protocol: TX/RX lines, asynchronous, no clock wire |
+| 8N1 | 8 data bits, No parity, 1 stop bit — standard config |
+| Baudrate 115200 | 11520 bytes/sec, ~87 μs per byte |
+| `boost::asio` | C++ async I/O library for serial/network communication |
+| Command format | `bus_servo.run(id, position, time_ms)\r\n` |
+| Position range | 0–1000 maps to ~0–300 degrees |
+| `tcflush(TCIFLUSH)` | Clears the receive buffer of stale data |
+| Response parsing | Skip echo lines, extract digits from the response |
+| USB-to-UART | CH340/CP2102 chip translates USB packets ↔ UART signals |
+| `/dev/ttyUSB0` | Linux device file for the USB-to-serial adapter |
+| Wire time | `bytes * (1/baudrate) * 10` — e.g., 27 bytes @ 115200 ≈ 2.3ms |
+
+---
+
 **Next:** [Part 13 — Writing a Custom Controller](13-writing-custom-controller.md)
 

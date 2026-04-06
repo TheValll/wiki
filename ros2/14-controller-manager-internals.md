@@ -240,4 +240,23 @@ The control loop thread and the executor thread(s) share the process. Interface 
 
 ---
 
+## 8. Quick Reference
+
+| Concept | Key Point |
+|---|---|
+| Controller Manager | Node that owns the real-time loop + manages controller lifecycles |
+| ResourceManager | Stores all interface `double*` pointers, loans them to controllers |
+| Control loop | `read()` → `update()` (all active controllers) → `write()` at `update_rate` Hz |
+| Command interfaces | **Exclusive** — one controller at a time |
+| State interfaces | **Shared** — multiple readers OK |
+| Spawner | Calls `load → configure → switch_controller` services |
+| Atomic switch | Deactivate + activate in the same cycle (no gap) |
+| `STRICT` mode | All-or-nothing switch — if one fails, none switch |
+| Controller order | `update()` called in activation order |
+| Chained controllers | Output → reference interface → input of next controller |
+| `ros2 control` CLI | `list_controllers`, `list_hardware_interfaces`, `switch_controllers` |
+| URDF parsing | `ResourceManager::load_urdf()` → parse tags → dlopen plugins → register interfaces |
+
+---
+
 **Next:** [Part 15 — Lifecycle & State Machines](15-lifecycle-state-machines.md)

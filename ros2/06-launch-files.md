@@ -208,5 +208,76 @@ ros2 launch basic_description display.launch.xml
 
 ---
 
+## 6.8 — Under the Hood: Process Management
+
+### How does `ros2 launch` spawn nodes?
+
+The launch system is a Python program that uses `subprocess.Popen` (on Linux, backed by `fork()` + `exec()`):
+
+```
+ros2 launch (PID 100)
+  |
+  |-- subprocess.Popen(["ros2", "run", "cpp_pkg", "parameters", ...])
+  |     → OS: fork() → new process PID 101
+  |     → OS: exec() → replaces with the node binary
+  |
+  |-- subprocess.Popen(["ros2", "run", "cpp_pkg", "subscriber"])
+  |     → OS: fork() → new process PID 102
+  |     → OS: exec() → replaces with the node binary
+  |
+  |-- Event loop: monitors PID 101, 102
+  |     - SIGCHLD → a child exited (crash?)
+  |     - SIGINT  → Ctrl+C → forward to all children
+  |     - SIGTERM → clean shutdown request
+```
+
+### Signal propagation on Ctrl+C:
+
+```
+User presses Ctrl+C
+  → kernel sends SIGINT to the foreground process group
+  → launch process catches SIGINT
+  → sends SIGINT to each child process
+  → each child: rclcpp::shutdown() → cleanup → exit(0)
+  → launch process waits for all children to exit
+  → launch process exits
+```
+
+### Node startup time — why order matters
+
+Nodes are started nearly simultaneously, but DDS discovery takes time:
+
+```
+t=0.00s  Launch spawns robot_state_publisher
+t=0.01s  Launch spawns rviz2
+t=0.05s  robot_state_publisher publishes /tf
+t=0.10s  rviz2 starts, subscribes to /tf
+t=0.15s  DDS matches publisher ↔ subscriber
+t=0.20s  rviz2 receives first /tf → displays robot
+
+If rviz2 starts before robot_state_publisher, it just waits
+for the DDS match. No special ordering needed (decoupled!).
+```
+
+---
+
+## 6.9 — Quick Reference
+
+| Concept | Key Point |
+|---|---|
+| Launch file | Starts multiple nodes with one command |
+| XML format | `<launch><node pkg="..." exec="..."/></launch>` |
+| Python format | `LaunchDescription([Node(...), ...])` — more flexible |
+| `<let>` | Declare a launch-time variable, use with `$(var name)` |
+| `$(find-pkg-share pkg)` | Resolves to the package's install/share path |
+| `$(command 'cmd')` | Runs a shell command, uses its stdout as the value |
+| `<param from="file.yaml"/>` | Loads parameters from YAML |
+| `<include file="...">` | Includes another launch file |
+| `<set_env>` | Sets an OS environment variable |
+| Install directive | `install(DIRECTORY launch config DESTINATION share/${PROJECT_NAME}/)` |
+| Signal handling | Ctrl+C → SIGINT → forwarded to all child processes |
+
+---
+
 **Next:** [Part 7 — URDF & Visualization](07-urdf-visualization.md)
 

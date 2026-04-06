@@ -679,5 +679,47 @@ Circular arc?
 
 ---
 
+## 19.15 — C++ Example: Setting a Planner
+
+```cpp
+#include <moveit/move_group_interface/move_group_interface.h>
+
+// Set the OMPL planner
+arm.setPlannerId("RRTConnectkConfigDefault");  // or "RRTstarkConfigDefault", "PRMkConfigDefault"
+arm.setPlanningTime(5.0);  // seconds
+arm.setNumPlanningAttempts(10);
+
+// Plan to a joint target
+std::vector<double> joint_goal = {0.0, -1.57, 1.57, 0.0, 0.0, 0.0};
+arm.setJointValueTarget(joint_goal);
+
+auto [success, plan] = [&]() {
+    moveit::planning_interface::MoveGroupInterface::Plan p;
+    bool ok = (arm.plan(p) == moveit::core::MoveItErrorCode::SUCCESS);
+    return std::make_pair(ok, p);
+}();
+
+if (success) arm.execute(plan);
+```
+
+---
+
+## 19.16 — Quick Reference
+
+| Concept | Key Point |
+|---|---|
+| RRT | Randomly grows a tree from start toward goal — probabilistically complete |
+| RRT-Connect | Two trees (start + goal) growing toward each other — fast in practice |
+| RRT* | Optimal RRT — rewires tree to find shorter paths (slower, asymptotically optimal) |
+| PRM | Builds a roadmap graph offline — fast multi-query in static environments |
+| OMPL | Open Motion Planning Library — C++ library behind MoveIt planners |
+| Probabilistic completeness | If a solution exists, probability of finding it → 1 as time → ∞ |
+| Narrow passages | Hard for sampling-based planners — KPIECE/EST can help |
+| Pilz LIN/CIRC | Deterministic Cartesian planners — straight lines and arcs |
+| Planning time | `setPlanningTime(seconds)` — more time = better paths (for RRT*) |
+| C++ API | `arm.setPlannerId("RRTConnectkConfigDefault")` |
+
+---
+
 **Prev:** [Part 18 — Configuration Space](18-configuration-space.md)
 **Next:** [Part 20 — Inverse Kinematics](20-inverse-kinematics.md)
