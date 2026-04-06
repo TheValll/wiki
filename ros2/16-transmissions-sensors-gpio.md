@@ -233,3 +233,4 @@ All interfaces (joints, sensors, GPIOs) end up in the ResourceManager's flat map
 ---
 
 **Prev:** [Part 15 — Lifecycle & State Machines](15-lifecycle-state-machines.md)
+**Next:** [Part 17 — MoveIt Architecture](17-moveit-architecture.md)
