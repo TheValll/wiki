@@ -2,7 +2,7 @@
 
 A structured deep-dive into Rust, from installation to ownership mastery.
 
-Based on [The Rust Programming Language](https://doc.rust-lang.org/book/) (Chapters 1-5).
+Based on [The Rust Programming Language](https://doc.rust-lang.org/book/) (Chapters 1-6).
 
 ---
 
@@ -34,3 +34,9 @@ Based on [The Rust Programming Language](https://doc.rust-lang.org/book/) (Chapt
 | # | Part | Key Concepts | Rust Book |
 |---|------|-------------|-----------|
 | 7 | [Structs](07-structs.md) | `struct`, field init shorthand, update syntax `..`, tuple structs, unit structs, `#[derive(Debug)]`, `dbg!`, methods, `&self`, associated functions, `impl` | Ch. 5 |
+
+### Block E: Enums & Pattern Matching
+
+| # | Part | Key Concepts | Rust Book |
+|---|------|-------------|-----------|
+| 8 | [Enums & Pattern Matching](08-enums.md) | `enum`, variants with data, `Option<T>`, `Some`, `None`, `match`, exhaustive patterns, catch-all `_`, `if let`, `let...else` | Ch. 6 |
