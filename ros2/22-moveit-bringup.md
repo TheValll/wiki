@@ -410,3 +410,4 @@ Each layer only talks to its neighbors. Swap any layer without touching the othe
 ---
 
 **Prev:** [Part 21 — Trajectory Generation](21-trajectory-generation.md)
+**Next:** [Part 23 — MoveIt C++ API (MoveGroupInterface)](23-moveit-cpp-api.md)

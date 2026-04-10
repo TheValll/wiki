@@ -53,3 +53,4 @@ A structured deep-dive into ROS2, from basic concepts to ros2_control internals 
 | 20 | [Inverse Kinematics](20-inverse-kinematics.md) | DH convention, Jacobian, numerical IK, pseudoinverse, DLS, singularities, redundancy | `kinematics.yaml` |
 | 21 | [Trajectory Generation](21-trajectory-generation.md) | Path vs trajectory, trapezoidal profile, TOPP-RA, splines, SLERP, FollowJointTrajectory | `joint_limits.yaml`, `pilz_cartesian_limits.yaml` |
 | 22 | [MoveIt Bringup & Integration](22-moveit-bringup.md) | Three-package pattern, launch sequence, controller wiring, execution flow, full stack | `display.launch.xml`, `ros2_controllers.yaml` |
+| 23 | [MoveIt C++ API (MoveGroupInterface)](23-moveit-cpp-api.md) | MoveGroupInterface, named/joint/pose/Cartesian goals, plan-execute pattern, multi-group, commander node | `test_moveit.cpp`, `commander_template.cpp` |
