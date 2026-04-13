@@ -1,8 +1,8 @@
 # Rust Learning Wiki
 
-A structured deep-dive into Rust, from installation to ownership mastery.
+A structured deep-dive into Rust, from installation to the common collections.
 
-Based on [The Rust Programming Language](https://doc.rust-lang.org/book/) (Chapters 1-6).
+Based on [The Rust Programming Language](https://doc.rust-lang.org/book/) (Chapters 1-8).
 
 ---
 
@@ -40,3 +40,15 @@ Based on [The Rust Programming Language](https://doc.rust-lang.org/book/) (Chapt
 | # | Part | Key Concepts | Rust Book |
 |---|------|-------------|-----------|
 | 8 | [Enums & Pattern Matching](08-enums.md) | `enum`, variants with data, `Option<T>`, `Some`, `None`, `match`, exhaustive patterns, catch-all `_`, `if let`, `let...else` | Ch. 6 |
+
+### Block F: Growing Projects
+
+| # | Part | Key Concepts | Rust Book |
+|---|------|-------------|-----------|
+| 9 | [Packages, Crates & Modules](09-packages-crates-modules.md) | Packages vs crates, `mod`, module file lookup, `pub`, absolute vs relative paths, `super`, `use`, `as`, `pub use`, nested paths | Ch. 7 |
+
+### Block G: Common Collections
+
+| # | Part | Key Concepts | Rust Book |
+|---|------|-------------|-----------|
+| 10 | [Common Collections](10-collections.md) | `Vec<T>`, indexing vs `.get()`, `Vec<Vec<T>>`, `String` vs `&str`, UTF-8, `push_str`, `format!`, `HashMap<K, V>`, `entry().or_insert()` | Ch. 8 |
