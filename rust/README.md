@@ -1,8 +1,8 @@
 # Rust Learning Wiki
 
-A structured deep-dive into Rust, from installation to the common collections.
+A structured deep-dive into Rust, from installation to generics, traits, and lifetimes.
 
-Based on [The Rust Programming Language](https://doc.rust-lang.org/book/) (Chapters 1-8).
+Based on [The Rust Programming Language](https://doc.rust-lang.org/book/) (Chapters 1-10).
 
 ---
 
@@ -52,3 +52,15 @@ Based on [The Rust Programming Language](https://doc.rust-lang.org/book/) (Chapt
 | # | Part | Key Concepts | Rust Book |
 |---|------|-------------|-----------|
 | 10 | [Common Collections](10-collections.md) | `Vec<T>`, indexing vs `.get()`, `Vec<Vec<T>>`, `String` vs `&str`, UTF-8, `push_str`, `format!`, `HashMap<K, V>`, `entry().or_insert()` | Ch. 8 |
+
+### Block H: Error Handling
+
+| # | Part | Key Concepts | Rust Book |
+|---|------|-------------|-----------|
+| 11 | [Error Handling](11-error-handling.md) | `panic!`, unwinding vs aborting, `Result<T, E>`, `unwrap`, `expect`, propagating errors, the `?` operator, panic vs Result, custom validation types | Ch. 9 |
+
+### Block I: Generic Types, Traits & Lifetimes
+
+| # | Part | Key Concepts | Rust Book |
+|---|------|-------------|-----------|
+| 12 | [Generics, Traits & Lifetimes](12-generics-traits-lifetimes.md) | Generic functions/structs/enums/methods, monomorphization, `trait`, default impls, `impl Trait`, trait bounds, `+`, `where` clauses, blanket impls, lifetime annotations, elision rules, `'static` | Ch. 10 |
