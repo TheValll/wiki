@@ -1,8 +1,8 @@
 # Rust Learning Wiki
 
-A structured deep-dive into Rust, from installation to generics, traits, and lifetimes.
+A structured deep-dive into Rust, from installation to automated testing.
 
-Based on [The Rust Programming Language](https://doc.rust-lang.org/book/) (Chapters 1-10).
+Based on [The Rust Programming Language](https://doc.rust-lang.org/book/) (Chapters 1-11).
 
 ---
 
@@ -64,3 +64,9 @@ Based on [The Rust Programming Language](https://doc.rust-lang.org/book/) (Chapt
 | # | Part | Key Concepts | Rust Book |
 |---|------|-------------|-----------|
 | 12 | [Generics, Traits & Lifetimes](12-generics-traits-lifetimes.md) | Generic functions/structs/enums/methods, monomorphization, `trait`, default impls, `impl Trait`, trait bounds, `+`, `where` clauses, blanket impls, lifetime annotations, elision rules, `'static` | Ch. 10 |
+
+### Block J: Writing Automated Tests
+
+| # | Part | Key Concepts | Rust Book |
+|---|------|-------------|-----------|
+| 13 | [Writing Automated Tests](13-tests.md) | `#[test]`, `assert!`, `assert_eq!`, `assert_ne!`, custom messages, `#[should_panic]`, `Result` in tests, `cargo test` flags, `#[ignore]`, `#[cfg(test)]`, unit vs integration tests, `tests/` directory, `tests/common/mod.rs` | Ch. 11 |

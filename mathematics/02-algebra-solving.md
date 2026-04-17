@@ -169,3 +169,51 @@ q₃ = −1
 2q₁ + 2.5 + (−1) = 8  ⇒   2q₁ = 6.5    ⇒   q₁ = 3.25
 ```
 → `(q₁, q₂, q₃) = (3.25, 2.5, −1)`.
+
+---
+
+## 2.4 — Remarkable Identities
+
+**What it does:**
+A handful of algebraic equalities that appear *everywhere* — expanding and factoring polynomials, simplifying expressions in calculus, deriving physics formulas, manipulating norms and covariances in stats. Memorizing them pays compound interest across every domain.
+
+Imagine having a set of **pre-built Lego blocks**. Every time you see `(a + b)²` you can instantly swap it for `a² + 2ab + b²` without thinking — like clicking in a pre-assembled piece. Without the blocks, you'd rebuild the expansion from scratch every time. With them, your algebraic manipulations flow in seconds.
+
+**Core identities:**
+```
+(a + b)²       = a² + 2ab + b²
+(a − b)²       = a² − 2ab + b²
+(a + b)(a − b) = a² − b²
+
+(a + b + c)²   = a² + b² + c² + 2(ab + bc + ca)
+```
+
+**Expansion of the 3-term square, step by step:**
+```
+(a + b + c)² = (a + b + c)·(a + b + c)
+             = a·a + a·b + a·c
+             + b·a + b·b + b·c
+             + c·a + c·b + c·c
+             = a² + b² + c² + 2ab + 2bc + 2ca
+```
+The "mixed" terms each appear twice (ab and ba, bc and cb, ca and ac) — hence the factor of 2.
+
+**Simple example:**
+```
+(x + 3)²  = x² + 2·x·3 + 3² = x² + 6x + 9
+(x − 5)²  = x² − 2·x·5 + 5² = x² − 10x + 25
+(x + y + z)² = x² + y² + z² + 2(xy + yz + zx)
+```
+
+**Complex example (variance of a sum of random variables):**
+In statistics, the variance of `X + Y + Z` for **independent** variables uses the 3-term square identity applied to the expectation operator:
+```
+Var(X + Y + Z) = E[((X + Y + Z) − E[X + Y + Z])²]
+              = E[((X − μₓ) + (Y − μᵧ) + (Z − μ_z))²]
+              = E[(X−μₓ)²] + E[(Y−μᵧ)²] + E[(Z−μ_z)²]
+              +   2·E[(X−μₓ)(Y−μᵧ)]
+              +   2·E[(Y−μᵧ)(Z−μ_z)]
+              +   2·E[(X−μₓ)(Z−μ_z)]
+              = Var(X) + Var(Y) + Var(Z) + 2·Cov(X,Y) + 2·Cov(Y,Z) + 2·Cov(X,Z)
+```
+→ If X, Y, Z are independent, all covariances vanish and `Var(X+Y+Z) = Var(X) + Var(Y) + Var(Z)`. This is the backbone of **Kalman filter uncertainty propagation** — the robot combines noisy measurements and its uncertainty grows by summing variances (when errors are independent).

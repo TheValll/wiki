@@ -711,3 +711,4 @@ bool ik_found = current_state->setFromIK(
 
 **Prev:** [Part 19 — Motion Planning Algorithms](19-motion-planning.md)
 **Next:** [Part 21 — Trajectory Generation](21-trajectory-generation.md)
+**See also:** [Mathematics — Linear Algebra](../mathematics/01-linear-algebra.md) — matrix × matrix, matrix inverse, and the linear systems behind the DH transform, Jacobian, and pseudoinverse `J⁺ = Jᵀ(JJᵀ)⁻¹`

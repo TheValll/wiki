@@ -350,4 +350,5 @@ This is why robots use **sensor fusion** (odometry + IMU + lidar/GPS) — odomet
 ---
 
 **Next:** [Part 12 — Hardware Driver: LX-225](12-lx225-driver.md)
+**See also:** [Mathematics — Linear Algebra](../mathematics/01-linear-algebra.md) — 2×2 linear system behind the DiffDrive inverse kinematics `w_L = (v − ω·L/2)/r`, `w_R = (v + ω·L/2)/r`
 

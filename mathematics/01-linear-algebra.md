@@ -368,3 +368,18 @@ det = (5−λ) · [(3−λ)² − 1]
 ⇒ λ₁ = 5,  λ₂ = 2,  λ₃ = 4
 ```
 → Principal moments of inertia are 2, 4, and 5 — the rotation axes for which torque aligns with angular acceleration.
+
+---
+
+## Applied in
+
+Where these operations show up across the wiki:
+
+| Concept | Used in |
+|---------|---------|
+| **Euclidean norm / dot product** | [ROS2 — Configuration Space](../ros2/18-configuration-space.md) (weighted distance `d = √(Σ wᵢ(qᵢ−q'ᵢ)²)`) |
+| **Matrix × matrix, matrix × vector** | [ROS2 — Inverse Kinematics](../ros2/20-inverse-kinematics.md) (DH transforms, forward kinematics as a chain of 4×4 matrices) |
+| **Matrix inverse, linear systems** | [ROS2 — Inverse Kinematics](../ros2/20-inverse-kinematics.md) (Jacobian, pseudoinverse `J⁺ = Jᵀ(JJᵀ)⁻¹`, damped least squares) |
+| **2×2 linear systems** | [ROS2 — DiffDrive Controller](../ros2/11-controllers-diffdrive.md) (wheel velocity equations from `cmd_vel`) |
+| **Distance metrics** | [ROS2 — Motion Planning](../ros2/19-motion-planning.md) (nearest-neighbor lookups in RRT / PRM) |
+| **Eigenvalues / eigenvectors** | Physics (principal moments of inertia), and future `ml/` domain (PCA, covariance decomposition) |

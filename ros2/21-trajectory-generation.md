@@ -765,3 +765,4 @@ if (fraction > 0.99) {
 
 **Prev:** [Part 20 — Inverse Kinematics](20-inverse-kinematics.md)
 **Next:** [Part 22 — MoveIt Bringup & Integration](22-moveit-bringup.md)
+**See also:** [Mathematics — Derivatives](../mathematics/03-derivatives.md) — velocity `q̇(t)` and acceleration `q̈(t)` are derivatives of `q(t)`; spline continuity classes C¹ / C² / C⁴ are about derivative continuity

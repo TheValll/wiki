@@ -345,3 +345,123 @@ f(x) =  { √x        if 0 ≤ x < 4
   - Function value jumps from 2 to 3 → **jump discontinuity**, non-differentiable at 4.
 
 - Everywhere else: differentiable.
+
+---
+
+## 3.8 — Partial Derivatives
+
+**What it does:**
+Extends the notion of derivative to functions of **several variables**. The partial derivative `∂f/∂x` measures how `f(x, y, ...)` changes when you vary only `x`, holding the other variables fixed. Core tool for gradient descent, backpropagation, physics of fields, and multivariate optimization.
+
+Imagine a **topographic map**: altitude `f(x, y)` depends on east-west (`x`) and north-south (`y`) position. If you stand at one spot and walk **only east** for a tiny step, how fast does your altitude change? That slope is `∂f/∂x`. Walk **only north**? That's `∂f/∂y`. Each partial derivative is a slice of the landscape along one direction — you freeze everything else and do a regular 1D derivative.
+
+**Notation:**
+```
+Lagrange-style :   f_x,  f_y,  f_xy (mixed)
+Leibniz-style  :   ∂f/∂x,  ∂f/∂y,  ∂²f/(∂x∂y)
+```
+
+**How to compute `∂f/∂x`:**
+Treat **every variable except `x`** as a constant, then differentiate normally with respect to `x`.
+
+**Simple example:**
+```
+f(x, y) = 3x²y + 4y³ + 5x
+
+∂f/∂x  =  6xy + 0 + 5   (y is frozen, so 4y³ → 0)
+       =  6xy + 5
+
+∂f/∂y  =  3x² + 12y² + 0   (x is frozen, so 5x → 0)
+       =  3x² + 12y²
+```
+
+**Complex example (loss function in ML regression):**
+Given prediction `ŷ = w·x + b` and squared loss `L = (y − ŷ)² = (y − wx − b)²`, compute how `L` responds to each parameter:
+```
+∂L/∂w  =  2·(y − wx − b)·(−x)  =  −2x·(y − ŷ)
+∂L/∂b  =  2·(y − wx − b)·(−1)  =  −2·(y − ŷ)
+```
+→ These are the raw gradients used in **gradient descent**: each weight `w, b` is updated in the direction that reduces the loss. See [`04-optimization.md`](./04-optimization.md) for how this powers training.
+
+---
+
+## 3.9 — Gradient and Hessian
+
+**What it does:**
+Packages all partial derivatives of a multivariable function into structured objects.
+- The **gradient** `∇f` is the vector of all first partial derivatives — it points toward the steepest ascent of `f`.
+- The **Hessian** `H` is the matrix of all second partial derivatives — it describes local curvature (how the landscape bends).
+
+Think of `∇f` as the **compass needle** on the topographic map: it always points uphill, and its length tells you how steep the climb is. Think of `H` as a **curvature sensor**: at a valley floor it reads "bowl" (positive curvature everywhere), at a ridge "dome" (negative curvature), at a pass "bowl in one direction, dome in another" (saddle).
+
+**Formulas (for `f : ℝⁿ → ℝ`):**
+
+Gradient (n × 1 column vector):
+```
+∇f = [ ∂f/∂x₁ ]
+     [ ∂f/∂x₂ ]
+     [   ...  ]
+     [ ∂f/∂xₙ ]
+```
+
+Hessian (n × n symmetric matrix — by Schwarz's theorem `f_xy = f_yx` for smooth `f`):
+```
+H = [ f_xx   f_xy   ...   f_xn ]
+    [ f_yx   f_yy   ...   f_yn ]
+    [  ...    ...   ...    ... ]
+    [ f_nx   f_ny   ...   f_nn ]
+```
+
+For `f(x, y)` (2 variables):
+```
+∇f = [ f_x ]        H = [ f_xx   f_xy ]
+     [ f_y ]            [ f_yx   f_yy ]
+```
+
+**Simple example (2D):**
+```
+f(x, y) = x² + 3xy + 2y²
+
+f_x = 2x + 3y                f_xx = 2     f_xy = 3
+f_y = 3x + 4y                f_yy = 4     f_yx = 3
+
+∇f = [ 2x + 3y ]        H = [ 2   3 ]
+     [ 3x + 4y ]            [ 3   4 ]
+```
+
+**Complex example (Rosenbrock "banana" function — classic optimization benchmark):**
+```
+f(x, y) = (1 − x)² + 100·(y − x²)²
+
+f_x = −2·(1 − x) + 100·2·(y − x²)·(−2x) = −2·(1−x) − 400·x·(y − x²)
+f_y = 100·2·(y − x²) = 200·(y − x²)
+
+f_xx = 2 − 400·(y − x²) + 800·x²  = 2 − 400y + 1200x²
+f_xy = f_yx = −400x
+f_yy = 200
+
+At the minimum (1, 1):
+∇f = [ −2·0 − 400·1·0 ]   = [ 0 ]     ← confirmed stationary point
+     [       200·0    ]     [ 0 ]
+
+H  = [ 2 − 400·1 + 1200   −400 ]   = [ 802   −400 ]
+     [       −400          200 ]     [−400    200 ]
+
+det(H) = 802·200 − (−400)² = 160 400 − 160 000 = 400 > 0
+f_xx > 0  (and eigenvalues both positive)
+```
+→ At `(1, 1)`, `f` has a **local minimum**. The ill-conditioned Hessian (eigenvalues span two orders of magnitude) is exactly why naïve gradient descent struggles on Rosenbrock — motivating Newton's method and its variants (see [`04-optimization.md`](./04-optimization.md)).
+
+---
+
+## Applied in
+
+Where derivatives show up across the wiki:
+
+| Concept | Used in |
+|---------|---------|
+| **First derivative as velocity** | [ROS2 — Trajectory Generation](../ros2/21-trajectory-generation.md) — joint velocity `q̇(t) = dq/dt` |
+| **Second derivative as acceleration** | [ROS2 — Trajectory Generation](../ros2/21-trajectory-generation.md) — joint acceleration `q̈(t) = d²q/dt²` |
+| **Continuity classes (C¹, C², C⁴)** | [ROS2 — Trajectory Generation](../ros2/21-trajectory-generation.md) — cubic splines are C² (smooth velocity), quintic splines are C⁴ (smooth acceleration) |
+| **Derivative as linear approximation** | [ROS2 — Inverse Kinematics](../ros2/20-inverse-kinematics.md) — the Jacobian is the derivative of forward kinematics: `ẋ = J · q̇` |
+| **Gradients for optimization** | Future `ml/` and `dl/` domains — gradient descent, backpropagation |

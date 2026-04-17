@@ -414,3 +414,4 @@ This is the **motion planning problem**. Part 19 covers the algorithms that solv
 
 **Prev:** [Part 17 — MoveIt Architecture](17-moveit-architecture.md)
 **Next:** [Part 19 — Motion Planning Algorithms](19-motion-planning.md)
+**See also:** [Mathematics — Linear Algebra](../mathematics/01-linear-algebra.md) — Euclidean norm and weighted distance metric `d = √(Σ wᵢ(qᵢ−q'ᵢ)²)` used across C-space

@@ -723,3 +723,4 @@ if (success) arm.execute(plan);
 
 **Prev:** [Part 18 — Configuration Space](18-configuration-space.md)
 **Next:** [Part 20 — Inverse Kinematics](20-inverse-kinematics.md)
+**See also:** [Mathematics — Linear Algebra](../mathematics/01-linear-algebra.md) — distance metrics for nearest-neighbor lookups in RRT / RRT* / PRM
