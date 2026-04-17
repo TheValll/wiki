@@ -4,17 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "ebc188604bdfd462",
+        "id": "467bb9dd6dbaadd7",
         "type": "tabs",
         "children": [
           {
-            "id": "46f4a58d7cf8da51",
+            "id": "577412f2cec0eb29",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "type": "markdown",
+              "state": {
+                "file": "mathematics/02-algebra-solving.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "02-algebra-solving"
             }
           }
         ]
@@ -176,10 +180,16 @@
       "bases:Create new base": false
     }
   },
-  "active": "46f4a58d7cf8da51",
+  "active": "577412f2cec0eb29",
   "lastOpenFiles": [
-    "review/progress/math.md",
+    "review/progress/math.md.tmp.83856.1776465666658",
+    "review/progress/math.md.tmp.83856.1776465658625",
+    "review/progress/math.md.tmp.83856.1776465646031",
+    "review/progress/math.md.tmp.83856.1776465640601",
     "mathematics/03-derivatives.md",
+    "raw/papers/template.md",
+    "raw/papers/shortlist.md",
+    "review/progress/math.md",
     "mathematics/02-algebra-solving.md",
     "mathematics/01-linear-algebra.md",
     "init.md",
