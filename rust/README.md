@@ -1,8 +1,8 @@
 # Rust Learning Wiki
 
-A structured deep-dive into Rust, from installation to automated testing.
+A structured deep-dive into Rust, from installation to a full command-line project.
 
-Based on [The Rust Programming Language](https://doc.rust-lang.org/book/) (Chapters 1-11).
+Based on [The Rust Programming Language](https://doc.rust-lang.org/book/) (Chapters 1-12).
 
 ---
 
@@ -70,3 +70,9 @@ Based on [The Rust Programming Language](https://doc.rust-lang.org/book/) (Chapt
 | # | Part | Key Concepts | Rust Book |
 |---|------|-------------|-----------|
 | 13 | [Writing Automated Tests](13-tests.md) | `#[test]`, `assert!`, `assert_eq!`, `assert_ne!`, custom messages, `#[should_panic]`, `Result` in tests, `cargo test` flags, `#[ignore]`, `#[cfg(test)]`, unit vs integration tests, `tests/` directory, `tests/common/mod.rs` | Ch. 11 |
+
+### Block K: An I/O Project — Building a Command Line Program
+
+| # | Part | Key Concepts | Rust Book |
+|---|------|-------------|-----------|
+| 14 | [An I/O Project: Building a Command Line Program](14-io-project-minigrep.md) | `std::env::args`, `fs::read_to_string`, splitting `main.rs` / `lib.rs`, `Config` struct, `build` vs `new` convention, `Box<dyn Error>`, `?` propagation, `unwrap_or_else`, `eprintln!` vs `println!`, `process::exit`, lifetimes on return values, TDD, `env::var` for runtime flags | Ch. 12 |
