@@ -2,6 +2,8 @@
 
 This file is the **schema** for any LLM agent (Claude Code or other) working on this wiki. Read it first before making any changes.
 
+> **Also read [`me.md`](me.md)** — a standing brief on who the user is, long-term goals (PhD EPFL 2028), and active projects. Load it alongside this file at the start of every new conversation.
+
 ---
 
 ## 1. What this wiki is

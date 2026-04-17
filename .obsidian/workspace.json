@@ -16,19 +16,8 @@
               "icon": "lucide-git-fork",
               "title": "Graph view"
             }
-          },
-          {
-            "id": "9cc849f901dd9554",
-            "type": "leaf",
-            "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -187,8 +176,12 @@
       "bases:Create new base": false
     }
   },
-  "active": "9cc849f901dd9554",
+  "active": "46f4a58d7cf8da51",
   "lastOpenFiles": [
+    "review/progress/math.md",
+    "mathematics/03-derivatives.md",
+    "mathematics/02-algebra-solving.md",
+    "mathematics/01-linear-algebra.md",
     "init.md",
     "rust/README.md"
   ]
