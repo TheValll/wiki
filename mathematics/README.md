@@ -23,6 +23,8 @@ Each entry follows the same format:
 - 1.8  det(A⁻¹) = 1 / det(A)
 - 1.9  Characteristic Equation  det(A − λI) = 0
 
+> **Companion:** [`01-linear-algebra-intuition.md`](./01-linear-algebra-intuition.md) — pure intuition, no formulas, no exercises. Why each operation works the way it does. Grows as topics are discussed.
+
 ### [02 — Algebra (Discriminant, Linear Systems, Identities)](./02-algebra-solving.md)
 - 2.1  Discriminant of a Quadratic
 - 2.2  Solving a 2-Variable Linear System (substitution & Cramer)

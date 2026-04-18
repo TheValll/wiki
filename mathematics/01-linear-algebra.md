@@ -1,5 +1,7 @@
 # Linear Algebra — Vectors & Matrices
 
+> For the plain-language intuition behind each operation (no formulas, no exercises), see [`01-linear-algebra-intuition.md`](./01-linear-algebra-intuition.md).
+
 ## 1.1 — Vector Norm (Euclidean)
 
 **What it does:**

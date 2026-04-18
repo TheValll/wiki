@@ -1,24 +1,26 @@
 # Review System
 
-Personal spaced-repetition review agent. Run short, focused sessions (15-30 min) to move concepts from discovery to solid mastery across every domain of the wiki.
+Personal spaced-repetition review agent. Runs **1h-2h evening sessions** that blend spaced repetition, original practice, and articulated recall — moving concepts from discovery to solid mastery across every domain of the wiki.
 
 ---
 
 ## Concept
 
-The wiki contains **what you've studied on paper**. The review system tracks **what you've actually practiced and mastered**. These are deliberately decoupled.
+The wiki contains **what you've studied on paper**. The review system tracks **what you've actually practiced and retained**. These are deliberately decoupled.
 
 ```
-┌─────────────────────┐     ┌──────────────────────┐
-│  Wiki (reference)    │     │  Review (practice)    │
-│                      │     │                       │
-│  rust/, ros2/, …     │     │  checklists/ — scope  │
-│  = theory you wrote  │     │  progress/   — state  │
-│                      │     │  AGENT.md    — rules  │
-└─────────────────────┘     └──────────────────────┘
-     ↑                              ↓
-     └─ agent reads for theory      agent never quizzes beyond
-                                    the active checklist
+┌─────────────────────────────┐     ┌──────────────────────────┐
+│  Wiki (reference)           │     │  Review (practice)        │
+│                             │     │                           │
+│  rust/, ros2/, mathematics/ │     │  checklists/  — scope     │
+│  *-intuition.md companions  │     │  progress/    — state     │
+│  = theory you wrote         │     │  external-tracking — ext. │
+│                             │     │  AGENT.md     — rules     │
+└─────────────────────────────┘     └──────────────────────────┘
+        ↑                                       ↓
+        └─ agent reads for theory               agent never quizzes beyond
+           (incl. intuition companions          the active checklist
+           in intuition mode)
 ```
 
 ---
@@ -27,34 +29,66 @@ The wiki contains **what you've studied on paper**. The review system tracks **w
 
 ```
 review/
-├── AGENT.md                    ← framework prompt (session rules)
-├── README.md                   ← this file
-├── checklists/                 ← curriculum per domain (ordered concept list)
+├── AGENT.md                   ← framework prompt (session rules)
+├── README.md                  ← this file
+├── external-tracking.md       ← non-wiki state (book chapters, papers, projects)
+├── checklists/                ← curriculum per domain (ordered concept list)
 │   ├── rust.md
 │   ├── math.md
 │   └── <domain>.md
-└── progress/                   ← state per domain (levels 0-4)
+└── progress/                  ← state per domain (levels 0-4 + intuition drills)
     ├── rust.md
     ├── math.md
     └── <domain>.md
 ```
 
-- **`checklists/<domain>.md`** is the **curriculum**. Manually curated, in study order. The agent treats everything beyond the current position as locked.
-- **`progress/<domain>.md`** is the **state**. The agent updates this at the end of every session. You never need to copy-paste save codes.
+- **`checklists/<domain>.md`** — curriculum, manually curated in study order. Everything beyond the current position is locked.
+- **`progress/<domain>.md`** — state, updated at the end of every session. Also logs intuition drills when the domain has an intuition companion.
+- **`external-tracking.md`** — a single file for things outside the wiki (Rust book chapter, paper queue, DeepSight milestones, PhD deadlines). Read at the end of every session for the check-in.
 
 ---
 
 ## How to run a session
 
-Say *"review <domain>"* (e.g., `review math`, `review rust`). Claude will:
+Say *"review"* — with or without a domain. Claude always runs the **opener** first:
 
-1. **Warm-up** — 1-2 flashcards on concepts you're currently consolidating
-2. **Lesson** — theory + simple example + applied example on the next unlocked concept
-3. **Challenge** — 3 original exercises (easy / tricky / applied)
+### 1. Session opener (2-3 min)
+
+Claude asks:
+- How much time you have tonight (1h, 1h30, 2h)
+- Which domains you want to cover (1, 2, or 3)
+- For each domain that supports it: which **mode** (`practice` / `intuition` / `mix`)
+- Any specific focus inside a domain ("lifetimes in Rust", "dot product under the hood")
+
+Claude then proposes a **time allocation** (e.g., 2h = 70 min math-practice + 40 min rust-practice + 10 min check-in), you validate or adjust.
+
+### 2. Per-domain block (6 steps, unchanged)
+
+For each domain in the plan:
+
+1. **Warm-up** — 1-2 flashcards on concepts in active review (occasionally pulls a Level-4 concept aged >3 weeks to cold-check long-term retention)
+2. **Lesson** — theory + simple example + applied example on the next concept
+3. **Challenge** — **3 original exercises** (practice mode) OR **1 articulation drill** (intuition mode, no formulas) OR both (mix)
 4. ⏸ **Waits for your answers**
-5. **Correction** — grading with reasoning feedback
-6. **Bonus** — a short piece of tech/science culture
+5. **Correction** — grading with reasoning feedback (or articulation-gap feedback in intuition mode)
+6. **Bonus** — tech/science culture paragraph (or fresh analogy in intuition mode)
 7. **Progress update** — writes to `progress/<domain>.md` + gives you a save code
+
+### 3. Final check-in (~5 min, always runs)
+
+Claude reads `external-tracking.md` and asks 2-3 short concrete questions about state outside the wiki: Rust book chapter, papers read, DeepSight milestones, PhD prep, etc. If you report an update, Claude edits `external-tracking.md` on the spot.
+
+---
+
+## Practice modes
+
+| Mode | When to use | Challenge format |
+|------|-------------|------------------|
+| **practice** | You want to apply, compute, solve problems | 3 original exercises (easy / tricky / applied) |
+| **intuition** | You want to consolidate *why* a concept works, no calculation | 1 drill: re-explain in your own words, with your own analogies/schemas, **no formulas allowed** |
+| **mix** | You want both | 1 articulation drill + 2 original exercises |
+
+Intuition mode is currently available for `maths` (backed by `mathematics/01-linear-algebra-intuition.md`). It becomes automatically available for any domain that grows an intuition companion page.
 
 ---
 
@@ -66,9 +100,9 @@ Say *"review <domain>"* (e.g., `review math`, `review rust`). Claude will:
 | 1 | First success (same day) |
 | 2 | Second success (later session) |
 | 3 | Third success (later session) |
-| 4 | Mastered — archived, no longer quizzed |
+| 4 | Mastered — archived, no longer actively quizzed (but may be cold-checked after 3+ weeks) |
 
-Success: +1. Failure: −1 (floor at 0). Level 4 removes the concept from active review.
+Success: +1. Failure: −1 (floor at 0). Level 4 removes the concept from active review. Intuition-mode articulations are tracked separately in a dedicated table in `progress/<domain>.md`.
 
 ---
 
@@ -84,13 +118,13 @@ This is deliberate: even if your wiki contains the probability chapter, the agen
 
 ---
 
-## Initial state (as of 2026-04-17)
+## Current state
 
-| Domain | Checklist | Progress | Started? |
-|--------|-----------|----------|----------|
-| `math` | 41 concepts across 7 modules | Stage 13/41 — in review: concepts 11, 12, 13 | Yes |
-| `rust` | 13 chapters from the Rust book | Ch 3-11 covered in past quiz sessions | Pending reset to formal review system |
-| `ros2` | *(to create when you want to review ROS2)* | — | No |
+| Domain | Checklist | Progress | Intuition companion? |
+|--------|-----------|----------|----------------------|
+| `math` | 41 concepts across 7 modules | Stage 15/41 — in review: 11-15 | ✓ (linear algebra only, growing) |
+| `rust` | 13 chapters from the Rust book | Ch 3-11 covered in past quiz sessions | — |
+| `ros2` | *(not yet created)* | — | — |
 
 ---
 
@@ -98,4 +132,5 @@ This is deliberate: even if your wiki contains the probability chapter, the agen
 
 1. Create `checklists/<domain>.md` with the ordered concept list (see `math.md` as a template)
 2. Create `progress/<domain>.md` with initial state (`Current position: 0/N`)
-3. Start a session: *"review <domain>"*
+3. *(Optional)* Create `<domain>/*-intuition.md` companion pages to enable intuition mode
+4. Start a session: *"review"* → pick the new domain in the opener menu

@@ -2,7 +2,9 @@
 
 This file is the **schema** for any LLM agent (Claude Code or other) working on this wiki. Read it first before making any changes.
 
-> **Also read [`me.md`](me.md)** — a standing brief on who the user is, long-term goals (PhD EPFL 2028), and active projects. Load it alongside this file at the start of every new conversation.
+> **Also read [`me.md`](me.md) and [`how-i-learn.md`](how-i-learn.md)** at the start of every new conversation.
+> - `me.md` — who the user is, long-term goals (PhD EPFL 2028), active projects.
+> - `how-i-learn.md` — pedagogical profile: formats that land (multi-frame schemas, physical analogies), articulation-based correction pattern, signals to watch. Maintained by the agent over time, the user can correct it.
 
 ---
 
@@ -132,16 +134,17 @@ Known cross-domain connections to watch for:
 
 ## 7. Review sessions
 
-When the user says *"review <domain>"* (or equivalent in French), switch to **review mode**:
+When the user says *"review"* (with or without a specific domain), switch to **review mode**. Sessions are **1h-2h evening blocks**, not 30 min.
 
-1. Read `review/AGENT.md` — follow the 6-step session flow strictly (warm-up → lesson → challenge → STOP → correction → bonus → update)
-2. Read `review/checklists/<domain>.md` for the curriculum
-3. Read `review/progress/<domain>.md` for the current state
-4. Never quiz on concepts marked "Not yet reached"
-5. Generate **original** exercises — never copy wiki examples
-6. At end of session, update `review/progress/<domain>.md` directly
+1. Read `review/AGENT.md` — the full framework. Follow it strictly.
+2. **Run the Session Opener FIRST** (AGENT.md §2): ask time available, which domain(s), which mode (`practice` / `intuition` / `mix` where supported), focus. Propose a time allocation, let the user validate.
+3. For each chosen domain, follow the **6-step per-domain flow** (warm-up → lesson → challenge → STOP → correction → bonus → progress update).
+4. Never quiz on concepts marked "Not yet reached" in the checklist.
+5. Generate **original** exercises — never copy wiki examples. In **intuition mode**, the challenge is a single articulation drill (re-explain in own words, **no formulas allowed**).
+6. **Always run the Final Check-in** at the end (AGENT.md §5): 2-3 short questions from `review/external-tracking.md` on non-wiki state (Rust book chapter, papers, DeepSight, PhD prep). Update `external-tracking.md` on the spot if the user reports new state.
+7. At end of each domain block, update `review/progress/<domain>.md` directly (including the "Intuition drills" table when in intuition mode).
 
-The review system is separate from the wiki: the wiki is theory (what the user wrote), the checklist is practice (what the user is drilling).
+The review system is separate from the wiki: the wiki is theory (what the user wrote), the checklist is practice (what the user is drilling), `external-tracking.md` is the rest of his world outside the wiki.
 
 ---
 

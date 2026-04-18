@@ -2,7 +2,7 @@
 
 Personal learning wiki — structured notes across the technical domains I'm studying, synthesized from books, courses, videos, and articles.
 
-Agent instructions: see [`CLAUDE.md`](CLAUDE.md).
+Agent instructions: see [`CLAUDE.md`](CLAUDE.md). Personal profile: [`me.md`](me.md). Pedagogical profile (agent-maintained): [`how-i-learn.md`](how-i-learn.md).
 
 ---
 
@@ -37,15 +37,21 @@ Where concepts link across domains — follow these to get the full picture.
 
 ## Review system
 
-Spaced-repetition practice — see [`review/README.md`](review/README.md).
+1h-2h evening sessions blending spaced repetition, original practice, and articulated recall — see [`review/README.md`](review/README.md).
 
-- `review/AGENT.md` — session rules (warm-up → lesson → challenge → correction → bonus → progress update)
+- `review/AGENT.md` — session rules: opener (time + mode) → per-domain 6 steps → final check-in
 - `review/checklists/<domain>.md` — curriculum (ordered concept list)
-- `review/progress/<domain>.md` — current mastery levels (0 → 4)
+- `review/progress/<domain>.md` — current mastery levels (0 → 4) + intuition drills log
+- `review/external-tracking.md` — non-wiki state (book chapters, papers, projects, PhD prep)
 
-Start a session with *"review <domain>"* (e.g., `review math`, `review rust`).
+Start a session with *"review"* — Claude runs an **opener menu** (time available, which domains, which mode: `practice` / `intuition` / `mix`) before starting any block. Every session ends with a ~5 min check-in on external state.
 
-**Key principle:** the wiki holds theory you've *written down*; the review system tracks what you've actually *practiced*. The agent never quizzes on concepts not in the active checklist.
+**Practice modes** (per domain, when supported):
+- `practice` — original exercises, formulas, computation
+- `intuition` — articulate the concept under-the-hood in your own words (no formulas), using the `*-intuition.md` companion
+- `mix` — both
+
+**Key principle:** the wiki holds theory you've *written down*; the review system tracks what you've actually *practiced and internalized*. The agent never quizzes on concepts outside the active checklist.
 
 ---
 
@@ -75,11 +81,14 @@ Ask Claude to: *"Lint the wiki — check for broken links, orphan pages, inconsi
 ```
 wiki/
 ├── CLAUDE.md           ← agent schema + conventions
+├── me.md               ← personal profile (identity, goals, roadmap)
+├── how-i-learn.md      ← pedagogical profile (agent-maintained)
 ├── README.md           ← this file
 ├── raw/                ← unprocessed sources
+├── review/             ← spaced-repetition system
 ├── rust/               ← domain
 ├── ros2/               ← domain
-├── mathematics/        ← domain
+├── mathematics/        ← domain (+ *-intuition.md companions)
 └── …                   ← future domains
 ```
 

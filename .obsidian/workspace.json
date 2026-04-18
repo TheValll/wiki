@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "467bb9dd6dbaadd7",
+        "id": "5aaaad6fbe0acd84",
         "type": "tabs",
         "children": [
           {
-            "id": "577412f2cec0eb29",
+            "id": "64b98c6d9f720277",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "mathematics/02-algebra-solving.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "02-algebra-solving"
+              "title": "New tab"
             }
           }
         ]
@@ -180,18 +176,33 @@
       "bases:Create new base": false
     }
   },
-  "active": "577412f2cec0eb29",
+  "active": "64b98c6d9f720277",
   "lastOpenFiles": [
-    "review/progress/math.md.tmp.83856.1776465666658",
-    "review/progress/math.md.tmp.83856.1776465658625",
-    "review/progress/math.md.tmp.83856.1776465646031",
-    "review/progress/math.md.tmp.83856.1776465640601",
+    "review/progress/rust.md",
+    "review/progress/math.md",
+    "review/checklists/rust.md",
+    "review/checklists/math.md",
+    "README.md.tmp.15652.1776519630378",
+    "README.md.tmp.15652.1776519624976",
+    "README.md.tmp.15652.1776519613190",
+    "CLAUDE.md.tmp.15652.1776519606665",
+    "CLAUDE.md.tmp.15652.1776519592870",
+    "review/README.md.tmp.15652.1776519579770",
+    "review/AGENT.md.tmp.15652.1776519537339",
+    "review/progress/math.md.tmp.15652.1776519445426",
+    "review/external-tracking.md",
+    "review/external-tracking.md.tmp.15652.1776519434251",
+    "how-i-learn.md",
+    "how-i-learn.md.tmp.15652.1776519412450",
+    "README.md",
+    "CLAUDE.md",
+    "mathematics/01-linear-algebra-intuition.md",
+    "Untitled.canvas",
+    "mathematics/01-linear-algebra.md",
+    "mathematics/02-algebra-solving.md",
     "mathematics/03-derivatives.md",
     "raw/papers/template.md",
     "raw/papers/shortlist.md",
-    "review/progress/math.md",
-    "mathematics/02-algebra-solving.md",
-    "mathematics/01-linear-algebra.md",
     "init.md",
     "rust/README.md"
   ]

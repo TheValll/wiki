@@ -1,7 +1,7 @@
 # Rust — Review Progress
 
-**Current position:** 33/37 — *Lifetime elision rules*
-**Last session:** 2026-04-17 (informal quiz, pre-review-system)
+**Current position:** 34/37 — *`#[test]`, assertion macros, custom messages*
+**Last session:** 2026-04-18 (first formal session)
 **Note:** Pre-system quiz covered book chapters 3-11. Levels below are imported conservatively — revise downward if you want tighter consolidation.
 
 ---
@@ -25,12 +25,14 @@ Imported from the informal quiz we ran previously. Each concept is placed at Lev
 | 8 | Ownership rules, stack vs heap, move semantics | 2 | 2026-04-17 | Q5 discussed but not fully completed |
 | 9-11 | References, slices, borrowing rules | 2 | — | Covered, not individually quizzed |
 | 12-17 | Structs, methods, enums, `match`, `if let` | 2 | — | Covered, not individually quizzed |
-| 18-20 | Modules, `pub`, `use` | 1 | — | **Flagged: visibility rules to consolidate** |
+| 18-19 | Modules, `pub`, visibility (struct fields vs enum variants) | 2 | 2026-04-18 | Struct-vs-enum asymmetry grasped |
+| 20 | `use`, `as`, `pub use`, nested paths, glob | 1 | — | **Flagged: visibility rules to consolidate** |
 | 21-23 | Collections (`Vec`, `String`, `HashMap`) | 2 | — | — |
 | 24-27 | Error handling (`panic`, `Result`, `?`, validation types) | 1 | — | **Flagged: `?` vs `unwrap` distinction, `unwrap` acceptable cases** |
 | 28-31 | Generics, traits, trait bounds | 2 | — | — |
 | 32-33 | Lifetimes, elision rules | 1 | — | **Flagged: elision rules will become natural with practice** |
-| 34-37 | Automated tests | 2 | — | Chapter 11 just completed |
+| 34 | `#[test]`, `assert!` / `assert_eq!` / `assert_ne!`, custom messages | 1 | 2026-04-18 | **Gaps: `.sum()` on empty iter, `Debug` required by `assert_eq!`, fluency writing float-tolerant tests** |
+| 35-37 | `should_panic`, `Result`-returning tests, `cargo test` flags, unit vs integration | 2 | — | Chapter 11 just completed, not yet formally quizzed |
 
 ---
 
@@ -59,3 +61,4 @@ These are the weak spots that sessions should prioritize in warm-ups:
 | 2026-04-15 | Q1-Q4 — variables, overflow, expressions/statements, `loop` | All passed, solid mechanics |
 | 2026-04-17 | Q5 — move semantics (partial) | Paused, move at some point |
 | 2026-04-17 | Review system initialized | State imported from informal quiz |
+| 2026-04-18 | Warm-up #18-19 (visibility) ✅ — Lesson #34 (`#[test]` + asserts) ⚠️ | Visibility asymmetry struct/enum solid. Tests: gaps on `.sum()` empty, `Debug`-for-`assert_eq`, float-test fluency |
