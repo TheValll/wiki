@@ -1,7 +1,7 @@
 # Math — Review Progress
 
-**Current position:** 15/41 — *Derivatives of quadratics and curves* (concept 16 NOT introduced yet — foundation consolidation required first)
-**Last session:** 2026-04-18 (2nd of the day — consolidation session)
+**Current position:** 17/41 — *3D and acceleration: partial derivatives and second derivative* (#16 downgraded to awareness-only, not in active spaced repetition — course scope is corners + jumps only, wiki §3.7 trimmed accordingly on 2026-04-18)
+**Last session:** 2026-04-18 (3rd of the day — review-system test, #16 intro)
 **Initialized from:** `[Sauvegarde | Étape de la checklist = 13/41 | Nouveau Concept = 13. Dérivées complexes (Niv 0) | Maîtrise validée = {Module 0, Module 1} | En cours de consolidation = {11. Dérivées simples: Niv 0, 12. Chain Rule: Niv 0, 13. Dérivées complexes: Niv 0} | Prochaine étape = 14. Les règles de calcul]`
 
 ---
@@ -30,17 +30,17 @@
 |---|---------|-------|-----------|
 | 11 | Basic derivatives: linear, powers, inverse | 1 | 2026-04-18 |
 | 12 | Chain rule (function composition) | 1 | 2026-04-18 |
-| 13 | Complex derivatives: trig, exponential, logarithm | 0 | 2026-04-18 |
+| 13 | Complex derivatives: trig, exponential, logarithm | 1 | 2026-04-18 |
 | 14 | Calculation rules: sum, product, scalar multiplication | 1 | 2026-04-18 |
 | 15 | Derivatives of quadratics and curves | 1 | 2026-04-18 |
+| 16 | Non-differentiable functions (corners + jumps, awareness only — not drilled) | — | 2026-04-18 |
 
 ---
 
 ## Not yet reached (locked — do not quiz)
 
 ### Module 2 — Analysis (remaining)
-- 16. Non-differentiable functions ← **next**
-- 17. 3D and acceleration: partial derivatives and second derivative
+- 17. 3D and acceleration: partial derivatives and second derivative ← **next**
 
 ### Module 3 — Probability & Statistics
 - 18-25 (locked)
@@ -68,7 +68,7 @@ Format: each successful articulation = "validated". A second successful articula
 | Concept | Source | First validated | Consolidated | Notes |
 |---------|--------|-----------------|--------------|-------|
 | 1.1 — Euclidean Norm | [`01-linear-algebra-intuition.md`](../../mathematics/01-linear-algebra-intuition.md) | — | — | Explained by agent on 2026-04-18, not yet drilled as articulation |
-| 1.2 — Dot Product | [`01-linear-algebra-intuition.md`](../../mathematics/01-linear-algebra-intuition.md) | — | — | Explained by agent on 2026-04-18 with 3-case decomposition; articulation drill pending |
+| 1.2 — Dot Product | [`01-linear-algebra-intuition.md`](../../mathematics/01-linear-algebra-intuition.md) | 2026-04-18 | — | Articulated clean: projection / ombre / 3 cases (s'aident, orthogonaux, s'opposent). Gap closed after correction: `a·b` = ombre × `|b|` (not just ombre). |
 
 ---
 
@@ -80,3 +80,4 @@ Format: each successful articulation = "validated". A second successful articula
 | 2026-04-17 | Warm-up #12 (chain rule) failed + lesson #14 (calculation rules) | #14 → Lv 1 (product rule OK, arithmetic slip + chain rule still weak). #12 failed twice — stays at Lv 0. |
 | 2026-04-18 | Warm-up #11 + #12 + lesson #15 (derivatives of quadratics) | #12 OK (chain rule clean) → Lv 1. #11 failed (exponent decrement error on x⁻² → -14x⁻³) — stays Lv 0. #15 → Lv 1: principle grasped, but two sign slips (x = 2 written as -2; -b with b<0). Ex3 (peak-fitting 3×3 system) not attempted → walked through. |
 | 2026-04-18 | Consolidation session — warm-up #13+#11 failed, drill + re-check resolved #11 and #14 | Warm-up failed (`2·ln(x)` treated as product, `(eˣ)' = x·eˣ`). Drill 4/5 (exo 4 was actually a misread of `2/√x` as `2·√x` due to cramped notation — saved feedback memory). Final re-check on `3·x^(-1/2)` clean, incl. fractional negative exponent decrement. Final: #11 → Lv 1, #14 → Lv 1. #13 untested properly (trig/exp/log not re-drilled) — stays Lv 0. #16 still deferred to next session. |
+| 2026-04-18 | Review-system test — mix mode (1h) | Warm-up #13 clean (`2eˣ + cos(x) − 3ln(x)`) → Lv 1. Lesson #16 overshot course scope (4 cases including cusps/vert. tangents & fractional exponents, out of his actual study → coude + saut only). Drill 1.2 Dot Product validated (3 cases solid; correction: `a·b` = ombre × `|b|`, not just ombre). Exo 1 (cusp on `√|x|`) unfair (out of scope), exo 2 (rover) abandoned — both walked through. Saved memory `feedback_wiki_scope_vs_course.md`. #16 stays Lv 0, to be re-drilled next session at coude/saut level. |

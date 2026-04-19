@@ -259,92 +259,114 @@ df/dx = dy/dv · dv/du · du/dx
 ## 3.7 — Non-Differentiable Functions
 
 **What it does:**
-Identifies where a derivative **does not exist**. A function must be *continuous* AND *smooth* to be differentiable at a point. The four classical failures are: **corners, cusps, jumps, and vertical tangents**.
+Identifies where a derivative **does not exist**. Short section — the goal is just to *recognize* the two common patterns: **corners** and **jumps**.
 
-Imagine driving a **car along the graph** of the function, with the steering wheel locked to the curve. The derivative is your heading (compass direction). If the road has a sharp corner, your compass flips — is it heading left or right? If the road breaks in two (jump), you teleport — no heading either. If the road becomes vertical, your compass spins to infinity. A function is non-differentiable exactly where the road stops being a smooth, gentle curve.
+### Recall — the derivative is a slope
 
-**The four cases:**
+At a smooth point, `f'(a)` is the slope of the **unique tangent line** to the graph at `x = a`. Zoom in on a smooth curve and it looks straight — that slope is `f'(a)`.
 
-### 1) Corner (kink) — left and right slopes differ
+A function is **non-differentiable at `a`** when no single slope works at that point.
 
-```
-f(x) = |x|
+### Intuition — the car on the road
 
-     \       /
-      \     /
-       \   /
-        \ /
-    -----•-----   corner at x = 0
-        / \
-```
-```
-f'(0⁻) = −1,   f'(0⁺) = +1   ⇒   f'(0) does not exist.
-```
+Drive a car along the graph, steering wheel locked to the curve. The derivative is your heading (compass direction).
 
-### 2) Cusp — both slopes become infinite in opposite signs
-
-```
-f(x) = x^(2/3)
-f'(x) = (2/3) · x^(−1/3)
-
-f'(0⁻) → −∞,   f'(0⁺) → +∞   ⇒   not differentiable at x = 0.
-```
-Looks like a sharp "beak" — the curve comes down vertically and leaves vertically.
-
-### 3) Jump discontinuity — the function itself is discontinuous
-
-```
-         1  ─────────
-            
-   ────•                    (open circle at 0⁻, closed at 0⁺)
-         0
-```
-```
-f(x) = { 0   if x < 0
-       { 1   if x ≥ 0
-
-Not continuous at 0   ⇒   not differentiable at 0.
-```
-Rule: **no continuity ⇒ no derivative** (but the converse is false — continuous functions can still fail to be differentiable).
-
-### 4) Vertical tangent — slope is infinite but function is continuous
-
-```
-f(x) = ∛x = x^(1/3)
-f'(x) = (1/3) · x^(−2/3)
-
-f'(0) → +∞   ⇒   not differentiable at x = 0,
-but f is continuous at 0.
-```
-The curve passes smoothly through 0 but momentarily goes straight up.
+| Graph shape | Heading | Differentiable? |
+|-------------|---------|-----------------|
+| Smooth curve | Well-defined | ✓ |
+| Sharp corner | Flips abruptly | ✗ |
+| Jump (broken road) | You'd have to teleport | ✗ |
 
 ---
 
-**Simple example:**
-`f(x) = |x − 2|` has a **corner at x = 2**:
+### 1) Corner — two different slopes meet
+
+The canonical example uses the **absolute value** function `f(x) = |x|`.
+
+**Reminder — absolute value `|x|`** is the distance from `x` to 0 on the number line. Always ≥ 0.
 ```
-Left slope  = −1
-Right slope = +1
-f'(2) does not exist.
+|x| = {  x   if x ≥ 0
+      { −x   if x < 0
+```
+Examples: `|3| = 3`, `|−5| = 5`, `|0| = 0`. It simply "strips the sign".
+
+**Graph of `|x|`** — a "V" made of two straight half-lines meeting at the origin:
+```
+             y
+             │
+      \      │      /
+       \     │     /
+        \    │    /
+         \   │   /
+     -----•------------  x
+             0
+             ↑
+         corner at x = 0
 ```
 
-**Complex example (piecewise function with three failures):**
+**Slope on each side:**
 ```
-        { x²        if x < 0
-f(x) =  { √x        if 0 ≤ x < 4
-        { 3         if x = 4
-        { x − 1     if x > 4
+   Left side  (x < 0):  f(x) = −x    →   slope = −1
+   Right side (x > 0):  f(x) = +x    →   slope = +1
 ```
 
-- At `x = 0`:  `f(0⁻) = 0`, `f(0⁺) = 0` → continuous.
-  - Left derivative: `(x²)' = 2x` → at 0⁻ = 0
-  - Right derivative: `(√x)' = 1/(2√x)` → at 0⁺ → +∞
-  - ⇒ **vertical tangent from the right**, non-differentiable at 0.
+Try to draw "the" tangent at `x = 0`:
+```
+       \              /
+  slope \            /  slope
+  = −1   \          /   = +1
+          \        /
+           \      /
+    ────────•────────
+           x = 0
+```
+Which line is the tangent? **Neither** — the two sides disagree. So `f'(0)` doesn't exist.
 
-- At `x = 4`:  `f(4⁻) = √4 = 2`, `f(4) = 3`, `f(4⁺) = 3`.
-  - Function value jumps from 2 to 3 → **jump discontinuity**, non-differentiable at 4.
+**Formal check with the limit definition** (`f'(a) = lim_{h→0} [f(a+h) − f(a)] / h`):
+```
+f'(0) = lim (h → 0)  |h| / h
+```
+- If `h → 0⁺` (from the right):  `|h|/h = h/h = +1`
+- If `h → 0⁻` (from the left):   `|h|/h = (−h)/h = −1`
 
-- Everywhere else: differentiable.
+The two one-sided limits disagree → no overall limit → no derivative at 0.
+
+---
+
+### 2) Jump — the function itself breaks
+
+The canonical example is a **step function** — it jumps from one value to another without passing through anything in between.
+
+```
+f(x) = { 0   if x < 0
+       { 1   if x ≥ 0
+```
+
+**Graph:**
+```
+             y
+             │
+      1 ────────────●         ● = closed point (value is reached)
+             │
+             │                ○ = open point (value NOT reached)
+             │
+      0 ────○
+             │
+     ────────┼──────────  x
+             0
+```
+
+Between the two pieces there is a **vertical gap of height 1** at `x = 0`. The function value "teleports" from 0 to 1 instantly.
+
+**Why no derivative?** A tangent needs a smooth neighborhood to attach to. Here the function isn't even continuous at 0 — there's no nearby behavior to measure a slope against. It's like asking the speed of a car that teleports: undefined.
+
+---
+
+**Rule of thumb:** **not continuous ⇒ not differentiable.**
+
+The reverse is **false** — a function can be perfectly continuous and still fail to be differentiable. The corner `|x|` proves it: no jump at 0, but still no derivative because the two slopes disagree.
+
+**Short example:** `f(x) = |x − 2|` has a corner at `x = 2`. Left slope `−1`, right slope `+1`, so `f'(2)` does not exist.
 
 ---
 

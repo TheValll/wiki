@@ -4,17 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "5aaaad6fbe0acd84",
+        "id": "1b13815f367db5a8",
         "type": "tabs",
         "children": [
           {
-            "id": "64b98c6d9f720277",
+            "id": "4d2f6c0a6a2d472e",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "mathematics/01-linear-algebra.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "01-linear-algebra"
             }
           }
         ]
@@ -176,34 +180,44 @@
       "bases:Create new base": false
     }
   },
-  "active": "64b98c6d9f720277",
+  "active": "4d2f6c0a6a2d472e",
   "lastOpenFiles": [
+    "mathematics/intuition/README.md.tmp.19688.1776631354142",
+    "mathematics/intuition/1.9-characteristic-equation.md",
+    "mathematics/intuition/1.9-characteristic-equation.md.tmp.19688.1776631345118",
+    "mathematics/intuition/1.8-det-inverse.md",
+    "mathematics/intuition/1.8-det-inverse.md.tmp.19688.1776631321255",
+    "mathematics/02-algebra-solving.md",
+    "rust/rust-intuition.md",
+    "mathematics/intuition/1.7-det-product.md",
+    "mathematics/intuition/1.7-det-product.md.tmp.19688.1776631308688",
+    "mathematics/intuition/1.5-inverse.md",
+    "mathematics/intuition/1.5-inverse.md.tmp.19688.1776631293447",
+    "mathematics/intuition/1.6-determinant.md",
+    "mathematics/intuition/1.4-matrix-matrix.md",
+    "mathematics/intuition/1.3-matrix-vector.md",
+    "mathematics/intuition/1.2-dot-product.md",
+    "mathematics/intuition/1.1-norm.md",
+    "mathematics/01-linear-algebra.md",
+    "mathematics/05-ml-basics.md",
+    "mathematics/04-optimization.md",
+    "mathematics/03-derivatives.md",
+    "mathematics/01-linear-algebra-intuition.md",
+    "mathematics/01-linear-algebra-intuition.md.tmp.3788.1776621964978",
+    "mathematics/01-linear-algebra-intuition.md.tmp.3788.1776621190742",
+    "mathematics/06-probability.md",
+    "review/external-tracking.md.tmp.54512.1776543494313",
+    "review/external-tracking.md.tmp.54512.1776543492374",
+    "review/external-tracking.md.tmp.54512.1776543488423",
+    "review/progress/math.md.tmp.54512.1776543417471",
+    "raw/papers/README.md",
+    "raw/papers/shortlist.md",
+    "raw/papers/template.md",
+    "raw/2026-04-17_karpathy-llm-wiki-tutorial.md",
+    "rust/12-generics-traits-lifetimes.md",
     "review/progress/rust.md",
     "review/progress/math.md",
     "review/checklists/rust.md",
-    "review/checklists/math.md",
-    "README.md.tmp.15652.1776519630378",
-    "README.md.tmp.15652.1776519624976",
-    "README.md.tmp.15652.1776519613190",
-    "CLAUDE.md.tmp.15652.1776519606665",
-    "CLAUDE.md.tmp.15652.1776519592870",
-    "review/README.md.tmp.15652.1776519579770",
-    "review/AGENT.md.tmp.15652.1776519537339",
-    "review/progress/math.md.tmp.15652.1776519445426",
-    "review/external-tracking.md",
-    "review/external-tracking.md.tmp.15652.1776519434251",
-    "how-i-learn.md",
-    "how-i-learn.md.tmp.15652.1776519412450",
-    "README.md",
-    "CLAUDE.md",
-    "mathematics/01-linear-algebra-intuition.md",
-    "Untitled.canvas",
-    "mathematics/01-linear-algebra.md",
-    "mathematics/02-algebra-solving.md",
-    "mathematics/03-derivatives.md",
-    "raw/papers/template.md",
-    "raw/papers/shortlist.md",
-    "init.md",
-    "rust/README.md"
+    "Untitled.canvas"
   ]
 }

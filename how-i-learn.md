@@ -11,8 +11,10 @@ This file is maintained by the agent. It captures observations about **how** Val
 ### Step-by-step visual decomposition
 Multi-frame ASCII schemas (one frame per step) land far better than a single dense diagram. Each frame isolates one transformation — e.g., for the dot product: (1) the two vectors, (2) drop the perpendicular, (3) split into parallel + perpendicular pieces, (4) read the result. Breaking the motion into discrete frames lets him mentally replay the operation later.
 
-### Physical analogies
+### Physical / mental analogies (scales beyond geometry)
 Mechanical images stick: a cart being pushed, a rope being pulled, a rubber sheet being deformed, a shadow on the floor. Once the physical image is in place, the formal mechanism slots in cleanly. Favor analogies involving forces, shadows, projections, and motion — mechanical, not abstract.
+
+This pattern works **even for non-geometric concepts**. Validated on Rust (2026-04-18): ownership = holding a package, borrowing = lending a book, lifetimes = expiration dates on loans, iterators = a conveyor belt, closures = a chef who grabs from the pantry. The more mechanical the image, the better — even when the underlying concept has no visual form at all.
 
 ### Simple sentences and conversational tone
 No academic register. Short sentences. Plain words. Meta-comments like "this is the elegant part" or "c'est ça la magie" serve as attention cues. Dense, jargon-heavy paragraphs cause drift.

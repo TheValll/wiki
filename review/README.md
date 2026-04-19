@@ -88,7 +88,11 @@ Claude reads `external-tracking.md` and asks 2-3 short concrete questions about 
 | **intuition** | You want to consolidate *why* a concept works, no calculation | 1 drill: re-explain in your own words, with your own analogies/schemas, **no formulas allowed** |
 | **mix** | You want both | 1 articulation drill + 2 original exercises |
 
-Intuition mode is currently available for `maths` (backed by `mathematics/01-linear-algebra-intuition.md`). It becomes automatically available for any domain that grows an intuition companion page.
+Intuition mode is currently available for:
+- `maths` — backed by `mathematics/01-linear-algebra-intuition.md`
+- `rust` — backed by `rust/rust-intuition.md` (covers chapters 1-13)
+
+It becomes automatically available for any domain that grows an intuition companion page.
 
 ---
 
@@ -122,8 +126,8 @@ This is deliberate: even if your wiki contains the probability chapter, the agen
 
 | Domain | Checklist | Progress | Intuition companion? |
 |--------|-----------|----------|----------------------|
-| `math` | 41 concepts across 7 modules | Stage 15/41 — in review: 11-15 | ✓ (linear algebra only, growing) |
-| `rust` | 13 chapters from the Rust book | Ch 3-11 covered in past quiz sessions | — |
+| `math` | 41 concepts across 7 modules | Stage 15/41 — in review: 11-15 | ✓ (linear algebra, growing) |
+| `rust` | 37 concepts across 8 modules (book ch 1-11) | Stage 34/37 — ch 12-13 being read | ✓ (`rust-intuition.md`, ch 1-13) |
 | `ros2` | *(not yet created)* | — | — |
 
 ---

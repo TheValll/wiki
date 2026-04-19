@@ -38,9 +38,47 @@ Imported from the informal quiz we ran previously. Each concept is placed at Lev
 
 ## Not yet reached (locked — do not quiz)
 
-*(none — entire book chapters 1-11 are in scope; rest of the book will be added as user progresses past chapter 11)*
+### Module 9 — Closures & iterators (chapter 13) — fiches written, pending read-through
+- 38-45 (locked — unlock after user validates the fiches against the book)
 
-Planned future additions: chapters 12+ of the Rust book (I/O project, iterators and closures, Cargo, smart pointers, concurrency, OOP, patterns, advanced features, final project).
+### Module 10 — Cargo deep dive (chapter 14) — fiches written, pending read-through
+- 46-52 (locked — unlock after user validates the fiches against the book)
+
+Planned future additions: chapters 15+ of the Rust book (smart pointers, concurrency, OOP, patterns, advanced features, final project).
+
+---
+
+## Intuition drills (under-the-hood, no-formulas mode)
+
+Concepts articulated in **intuition mode** — re-explained by the user in his own words, using his own analogies and schemas, **without code**. Source: [`rust/rust-intuition.md`](../../rust/rust-intuition.md).
+
+Format: each successful articulation = "validated". A second successful articulation a few weeks later = "consolidated".
+
+| Section | Concept | First validated | Consolidated | Notes |
+|---------|---------|-----------------|--------------|-------|
+| 1.1 | The single-owner rule | — | — | Pending first articulation drill |
+| 1.2 | Move vs Copy | — | — | Pending first articulation drill |
+| 1.3 | Borrowing: sharing without giving up | — | — | Pending first articulation drill |
+| 1.4 | The two borrowing states (and why) | — | — | Pending first articulation drill |
+| 1.5 | Lifetimes as proofs | — | — | Pending first articulation drill |
+| 1.6 | Slices: views into owned memory | — | — | Pending first articulation drill |
+| 2.1 | Enums as sum types (Option / Result) | — | — | Pending first articulation drill |
+| 2.2 | Pattern matching and exhaustiveness | — | — | Pending first articulation drill |
+| 2.3 | Modules and the visibility rule | — | — | Pending first articulation drill |
+| 3.1 | Traits: shared behavior without inheritance | — | — | Pending first articulation drill |
+| 3.2 | Generics and monomorphization | — | — | Pending first articulation drill |
+| 3.3 | Trait bounds: the contract on T | — | — | Pending first articulation drill |
+| 3.4 | Trait objects: the dynamic alternative | — | — | Pending first articulation drill |
+| 4.1 | Panic vs Result: two ways to fail | — | — | Pending first articulation drill |
+| 4.2 | The `?` operator: the propagation shortcut | — | — | Pending first articulation drill |
+| 5.1 | Closures: functions that remember | — | — | Chapter 13 — in reading 2026-04-18 |
+| 5.2 | Fn / FnMut / FnOnce: the three capture kinds | — | — | Chapter 13 — in reading 2026-04-18 |
+| 5.3 | The `move` keyword | — | — | Chapter 13 — in reading 2026-04-18 |
+| 5.4 | Iterators: lazy pipelines | — | — | Chapter 13 — in reading 2026-04-18 |
+| 6.1 | Release profiles: two kitchens, two priorities | — | — | Chapter 14 — fiche written pre-read 2026-04-18 |
+| 6.2 | Crates.io: the shared pantry | — | — | Chapter 14 — fiche written pre-read 2026-04-18 |
+| 6.3 | Workspaces: one repo, many crates | — | — | Chapter 14 — fiche written pre-read 2026-04-18 |
+| 6.4 | `cargo install`: the personal tool shelf | — | — | Chapter 14 — fiche written pre-read 2026-04-18 |
 
 ---
 

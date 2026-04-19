@@ -10,7 +10,7 @@ Entries shown as `—` are placeholders to fill in.
 
 ## Rust
 
-- **Rust book:** chapter 13 — *planned to read 2026-04-18 evening*
+- **Rust book:** chapter 13 **completed 2026-04-18** — next: chapter 14
 - **Current exercises outside the wiki:** —
 - **Current Rust project work:** —
 - **Last deep Rust session:** —
@@ -40,11 +40,11 @@ Entries shown as `—` are placeholders to fill in.
 ## Robotics papers
 
 - **Shortlist:** `raw/papers/shortlist.md`
-- **Queue (to read):** *"How to Read a Paper"* (S. Keshav, 2007) — methodology, planned 2026-04-18 evening
+- **Queue (to read):** — (Keshav read; pick next paper from shortlist for the coming week)
 - **Recently read (title + one-line takeaway):**
-  - —
+  - *"How to Read a Paper"* (S. Keshav, 2007) — read 2026-04-18 — 3-pass reading methodology (quick scan → deep pass → reimplementation-level pass)
 - **Pass 1 weekly target:** 1 paper / week
-- **Last paper read:** —
+- **Last paper read:** *"How to Read a Paper"* (Keshav 2007) — 2026-04-18
 
 ---
 
@@ -74,10 +74,11 @@ Entries shown as `—` are placeholders to fill in.
 
 ## English
 
-- **TOEFL prep:** not started (planned 2027)
+- **TOEFL prep:** not started (planned 2027 per roadmap — may advance depending on diagnostic)
 - **Work immersion (Iceberg Data Lab):** ongoing
 - **Recent milestone:** —
+- **TODO this week:** take the [EF SET](https://www.efset.org/) (50 min, free, CEFR + TOEFL/IELTS equivalence) for a baseline diagnostic — added 2026-04-18
 
 ---
 
-*Last updated: 2026-04-18 — initial shell created; ready for first multi-domain session.*
+*Last updated: 2026-04-18 — Rust ch 13 done, Keshav paper read, next paper to pick from shortlist.*

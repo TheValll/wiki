@@ -53,7 +53,28 @@ Some domains have both a reference page and an **intuition companion** page. Whe
 | **intuition** | Re-explain the concept **in your own words, with your own analogies/schemas, no formulas** | `<domain>/*-intuition.md` + `progress/<domain>.md` "Intuition drills" table |
 | **mix** | Both, split the time in the session block | both |
 
-Currently supported for intuition mode: **`maths`** (via `mathematics/01-linear-algebra-intuition.md` — more companion pages will extend scope). The mode becomes automatically available for any domain that gains an intuition companion.
+Currently supported for intuition mode:
+- **`maths`** — via `mathematics/01-linear-algebra-intuition.md` (only §1.1 Norm and §1.2 Dot product covered so far — the rest of Module 1 and all of Modules 2+ still need intuition pages)
+- **`rust`** — via `rust/rust-intuition.md` (covers chapters 1-13 — chapters 14+ still need coverage as the curriculum advances)
+
+The mode becomes automatically available for any domain that gains an intuition companion page.
+
+### 1.5 Intuition-first rule (maths and rust)
+
+**A concept must have an intuition companion covering it *before* it can be reviewed in any mode.** This applies to `maths` and `rust`.
+
+- Before starting a lesson or warm-up on a concept, verify the relevant `*-intuition.md` section exists and actually covers the concept (title + content, not just a placeholder).
+- If the intuition page is missing or incomplete for the target concept, **stop the session flow** and propose writing the intuition page first (separate task, not in the review block). The user validates, then either:
+  - writes the intuition page first and resumes the review afterwards, or
+  - swaps the target concept for another one that already has intuition coverage.
+- This rule applies to **new concepts (Step 2)** and to **warm-ups (Step 1)** — a concept that entered review before this rule existed must still get its intuition page retrofitted before being drilled again.
+- The rule does not apply to the Final Check-in (§5) or to other domains without intuition companions (e.g. `ros2`).
+
+**Why:** the user's mental model slips when a concept is drilled on formulas alone. Locking intuition-first forces the "physical image" pass before the procedural pass, which is how he actually learns (see `how-i-learn.md`).
+
+**Current debt (2026-04-18):**
+- **Maths:** only `01-linear-algebra-intuition.md` §1.1 (Norm) and §1.2 (Dot product) are written. Concepts #7-#10 (matrix ops, determinant, inverse, systems, Gaussian) and all of Module 2 (#11-#17, derivatives) currently in active review have no intuition coverage. Writing these is the priority for the coming sessions before any further review on those concepts.
+- **Rust:** `rust-intuition.md` covers up to chapter 13. Modules 9-10 (closures/iterators, Cargo) not yet covered — to write as the curriculum advances.
 
 ---
 
@@ -73,7 +94,9 @@ When the user says *"review"* (with or without a domain), **do not start a domai
    - 3 domains → ~40/30/30
    - Always reserve **~5 min at the end** for the Final Check-in (§5)
 
-3. **Confirm the plan in one short recap,** then run each chosen block in order using §3.
+3. **Intuition coverage check (maths / rust):** before confirming the plan, for each domain block that touches `maths` or `rust`, verify the target concept (warm-up candidates + today's new concept) has an intuition companion section (§1.5). If any target is uncovered, surface it now: "concept X has no intuition page yet — on l'écrit d'abord ou on bascule sur un autre concept ?" Let the user decide before the block starts.
+
+4. **Confirm the plan in one short recap,** then run each chosen block in order using §3.
 
 ---
 
@@ -217,3 +240,4 @@ After the last domain block of the session is complete, run a **~5-minute check-
 | Skip the Final Check-in because the session is mono-domain | The check-in runs every time — it's the only lever on external state |
 | Update progress files without the user noticing | Always explicitly state what you're updating |
 | Skip Step 5 (bonus) to save time | Always include it — curiosity fuel / analogy in intuition mode |
+| Review a maths/rust concept that has no intuition page yet | Stop, propose writing the intuition page first (§1.5), or swap to a concept that has intuition coverage |

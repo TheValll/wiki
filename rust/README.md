@@ -2,7 +2,9 @@
 
 A structured deep-dive into Rust, from installation to a full command-line project.
 
-Based on [The Rust Programming Language](https://doc.rust-lang.org/book/) (Chapters 1-12).
+Based on [The Rust Programming Language](https://doc.rust-lang.org/book/) (Chapters 1-14).
+
+> **Companion:** [`rust-intuition.md`](./rust-intuition.md) — pure intuition of the language's tricky concepts (ownership, borrowing, lifetimes, traits, generics, errors, closures, iterators, cargo & crates.io), no code, no exercises. Covers chapters 1-14. Readable on a train.
 
 ---
 
@@ -76,3 +78,15 @@ Based on [The Rust Programming Language](https://doc.rust-lang.org/book/) (Chapt
 | # | Part | Key Concepts | Rust Book |
 |---|------|-------------|-----------|
 | 14 | [An I/O Project: Building a Command Line Program](14-io-project-minigrep.md) | `std::env::args`, `fs::read_to_string`, splitting `main.rs` / `lib.rs`, `Config` struct, `build` vs `new` convention, `Box<dyn Error>`, `?` propagation, `unwrap_or_else`, `eprintln!` vs `println!`, `process::exit`, lifetimes on return values, TDD, `env::var` for runtime flags | Ch. 12 |
+
+### Block L: Functional Features — Closures & Iterators
+
+| # | Part | Key Concepts | Rust Book |
+|---|------|-------------|-----------|
+| 15 | [Closures & Iterators](15-closures-iterators.md) | Closure syntax, capture modes (ref / mut ref / move), `Fn` / `FnMut` / `FnOnce` hierarchy, `Iterator` trait, `iter` / `iter_mut` / `into_iter`, laziness, consumers (`sum`, `collect`, `fold`…), adapters (`map`, `filter`, `zip`…), custom iterators via `impl Iterator`, zero-cost abstraction | Ch. 13 |
+
+### Block M: Cargo Deep Dive
+
+| # | Part | Key Concepts | Rust Book |
+|---|------|-------------|-----------|
+| 16 | [More About Cargo & Crates.io](16-more-cargo-crates.md) | Release profiles (`dev`, `release`, `opt-level`, `lto`, `panic`), doc comments (`///`, `//!`, `# Examples`), `pub use` re-exports, publishing flow, `cargo login` / `publish` / `yank`, SemVer, workspaces (`[workspace]`, `members`, shared lockfile), `cargo install`, custom `cargo-*` commands | Ch. 14 |

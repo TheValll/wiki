@@ -37,7 +37,7 @@ Linked wiki pages (when they exist) are in [`mathematics/`](../../mathematics/).
 | 13 | Complex derivatives: trig, exponential, logarithm | [`03-derivatives.md`](../../mathematics/03-derivatives.md) §3.2 |
 | 14 | Calculation rules: sum, product, scalar multiplication | [`03-derivatives.md`](../../mathematics/03-derivatives.md) §3.3-3.5 |
 | 15 | Derivatives of quadratics and curves | — |
-| 16 | Non-differentiable functions: corners, cusps, jumps, vertical tangents | [`03-derivatives.md`](../../mathematics/03-derivatives.md) §3.7 |
+| 16 | Non-differentiable functions: corners and jumps (awareness only — not drilled) | [`03-derivatives.md`](../../mathematics/03-derivatives.md) §3.7 |
 | 17 | 3D and acceleration: partial derivatives and second derivative | [`03-derivatives.md`](../../mathematics/03-derivatives.md) §3.8-3.9 |
 
 ## Module 3 — Probability & Statistics (uncertainty)

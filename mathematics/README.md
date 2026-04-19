@@ -23,7 +23,7 @@ Each entry follows the same format:
 - 1.8  det(A⁻¹) = 1 / det(A)
 - 1.9  Characteristic Equation  det(A − λI) = 0
 
-> **Companion:** [`01-linear-algebra-intuition.md`](./01-linear-algebra-intuition.md) — pure intuition, no formulas, no exercises. Why each operation works the way it does. Grows as topics are discussed.
+> **Companion:** [`intuition/`](./intuition/README.md) — pure-intuition pages, one file per concept, no formulas, no exercises. Ordered by course sequence. Grows as topics are discussed.
 
 ### [02 — Algebra (Discriminant, Linear Systems, Identities)](./02-algebra-solving.md)
 - 2.1  Discriminant of a Quadratic
@@ -38,7 +38,7 @@ Each entry follows the same format:
 - 3.4  Sum Rule
 - 3.5  Product Rule
 - 3.6  Chain Rule
-- 3.7  Non-Differentiable Functions (corners, cusps, jumps, vertical tangents)
+- 3.7  Non-Differentiable Functions (corners and jumps — awareness only)
 - 3.8  Partial Derivatives
 - 3.9  Gradient and Hessian
 

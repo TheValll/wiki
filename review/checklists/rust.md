@@ -88,6 +88,31 @@ Each item is one reviewable concept, not necessarily one full chapter — long c
 | 36 | `cargo test` flags: `--test-threads`, `--show-output`, filtering, `#[ignore]` | [`13-tests.md`](../../rust/13-tests.md) §13.5 |
 | 37 | Unit vs integration tests, `#[cfg(test)]`, `tests/` directory, `tests/common/mod.rs` | [`13-tests.md`](../../rust/13-tests.md) §13.6 |
 
+## Module 9 — Closures & iterators (chapter 13)
+
+| # | Concept | Wiki ref |
+|---|---------|----------|
+| 38 | Closure syntax, type inference, each closure's unique anonymous type | [`15-closures-iterators.md`](../../rust/15-closures-iterators.md) §15.1 |
+| 39 | Capture modes: shared ref, mut ref, move; `move` keyword and threads | [`15-closures-iterators.md`](../../rust/15-closures-iterators.md) §15.2 |
+| 40 | `Fn` / `FnMut` / `FnOnce` hierarchy; picking the weakest bound as a caller (`unwrap_or_else`, `sort_by_key` case studies) | [`15-closures-iterators.md`](../../rust/15-closures-iterators.md) §15.3 |
+| 41 | `Iterator` trait, `next()` + `Item` associated type, laziness, `iter` / `iter_mut` / `into_iter` | [`15-closures-iterators.md`](../../rust/15-closures-iterators.md) §15.4 |
+| 42 | Consuming adapters: `sum`, `collect` (with turbofish), `fold`, `for_each`, `find`, `any` / `all` | [`15-closures-iterators.md`](../../rust/15-closures-iterators.md) §15.5 |
+| 43 | Iterator adapters: `map`, `filter`, `take`, `skip`, `zip`, `chain`, `enumerate`, `flat_map`, `rev` | [`15-closures-iterators.md`](../../rust/15-closures-iterators.md) §15.6 |
+| 44 | Closures that capture environment inside iterator chains (e.g. `filter` + bound variable) | [`15-closures-iterators.md`](../../rust/15-closures-iterators.md) §15.7 |
+| 45 | Custom iterators via `impl Iterator`; zero-cost performance claim | [`15-closures-iterators.md`](../../rust/15-closures-iterators.md) §15.8-15.9 |
+
+## Module 10 — Cargo deep dive (chapter 14)
+
+| # | Concept | Wiki ref |
+|---|---------|----------|
+| 46 | Release profiles: `[profile.dev]` / `[profile.release]`, `opt-level`, `lto`, `panic`, `codegen-units` | [`16-more-cargo-crates.md`](../../rust/16-more-cargo-crates.md) §16.1 |
+| 47 | Documentation comments `///` vs `//!`, `# Examples` as runnable tests, `cargo doc` | [`16-more-cargo-crates.md`](../../rust/16-more-cargo-crates.md) §16.2 |
+| 48 | `pub use` re-exports — decoupling public API from internal module layout | [`16-more-cargo-crates.md`](../../rust/16-more-cargo-crates.md) §16.2 |
+| 49 | Publishing flow: `cargo login`, `cargo publish`, SemVer bumps, `cargo yank` (permanence of versions) | [`16-more-cargo-crates.md`](../../rust/16-more-cargo-crates.md) §16.2 |
+| 50 | Workspaces: `[workspace]` + `members`, shared `Cargo.lock` and `target/`, sibling deps with `path = "…"`, `cargo test -p <member>` | [`16-more-cargo-crates.md`](../../rust/16-more-cargo-crates.md) §16.3 |
+| 51 | `cargo install` — user-wide binaries in `~/.cargo/bin`, `cargo install --path .` for local testing | [`16-more-cargo-crates.md`](../../rust/16-more-cargo-crates.md) §16.4 |
+| 52 | Custom cargo commands: any `cargo-<name>` in `$PATH` becomes `cargo <name>` (cargo-watch, cargo-edit, cargo-expand, cargo-audit) | [`16-more-cargo-crates.md`](../../rust/16-more-cargo-crates.md) §16.5 |
+
 ---
 
 ## Notes
