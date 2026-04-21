@@ -1,38 +1,53 @@
 # Rust — Review Progress
 
-**Current position:** 34/37 — *`#[test]`, assertion macros, custom messages*
-**Last session:** 2026-04-18 (first formal session)
-**Note:** Pre-system quiz covered book chapters 3-11. Levels below are imported conservatively — revise downward if you want tighter consolidation.
+**Review flow:** Flow C — Competence validation (see [`../AGENT.md`](../AGENT.md) §3.C)
+**Current position:** 4 concepts in progress / awaiting validation
+**Last session:** 2026-04-18 (first formal session — pre-migration)
+**Note:** On 2026-04-21 this file was migrated from Flow M (levels 0-4, spaced repetition) to Flow C (binary validation). Concepts that had reached Level 2 without a flagged consolidation note were auto-promoted to Validated. Concepts flagged in the previous "Priority consolidation areas" section were placed In progress for their upcoming validation session.
 
 ---
 
-## Mastered (Level 4) — archived, no longer quizzed
+## Validated — concept has passed competence validation, no longer in active review
 
-*(none yet — move items here as they reach Level 4 in formal sessions)*
+Post-validation retention comes from actual Rust coding on personal projects (DeepSight, Rust book exercises). These concepts are not re-drilled; if the user reports a real-world gap on a validated concept, he explicitly requests to re-open it.
+
+### Language basics
+- **#3** — Variables, mutability, shadowing vs `mut` *(validated 2026-04-15)*
+- **#4** — Scalar types, integer overflow, wrapping/checked/saturating/overflowing *(validated 2026-04-15)*
+- **#6** — Functions, statements vs expressions, `()` unit type *(validated 2026-04-15)*
+- **#7** — Control flow, `loop` with `break value`, `while` returns `()` *(validated 2026-04-15)*
+
+### Ownership & borrowing
+- **#8** — Ownership rules, stack vs heap, move semantics *(validated 2026-04-17)*
+- **#9-11** — References, slices, borrowing rules *(auto-migrated 2026-04-21)*
+
+### Structs & enums
+- **#12-17** — Structs, methods, enums, `match`, `if let` *(auto-migrated 2026-04-21)*
+
+### Modules & paths
+- **#18-19** — Modules, `pub`, visibility (struct fields vs enum variants) *(validated 2026-04-18)*
+
+### Collections
+- **#21-23** — `Vec`, `String`, `HashMap` *(auto-migrated 2026-04-21)*
+
+### Generics & traits
+- **#28-31** — Generics, traits, trait bounds *(auto-migrated 2026-04-21)*
+
+### Testing (partial)
+- **#35-37** — `should_panic`, `Result`-returning tests, `cargo test` flags, unit vs integration *(auto-migrated 2026-04-21)*
 
 ---
 
-## In review (active spaced repetition)
+## In progress — pending validation session
 
-Imported from the informal quiz we ran previously. Each concept is placed at Level 2 (seen and answered correctly at least once, but not in this formal system yet). Anything the user flagged as shaky is at Level 1.
+Each of these is the next candidate for a Flow C validation block (§3.C). Gaps noted from prior quiz work are the things to address in the Step 3 exercise battery.
 
-| # | Concept | Level | Last seen | Note |
-|---|---------|-------|-----------|------|
-| 3 | Variables, mutability, shadowing vs `mut` | 2 | 2026-04-15 | Binding vs assignment understood |
-| 4 | Scalar types, integer overflow, wrapping/checked/saturating/overflowing | 2 | 2026-04-15 | 4 explicit methods solid |
-| 6 | Functions, statements vs expressions, `()` unit type | 2 | 2026-04-15 | Semicolon trick, `()` vocabulary |
-| 7 | Control flow, `loop` with `break value`, `while` returns `()` | 2 | 2026-04-15 | — |
-| 8 | Ownership rules, stack vs heap, move semantics | 2 | 2026-04-17 | Q5 discussed but not fully completed |
-| 9-11 | References, slices, borrowing rules | 2 | — | Covered, not individually quizzed |
-| 12-17 | Structs, methods, enums, `match`, `if let` | 2 | — | Covered, not individually quizzed |
-| 18-19 | Modules, `pub`, visibility (struct fields vs enum variants) | 2 | 2026-04-18 | Struct-vs-enum asymmetry grasped |
-| 20 | `use`, `as`, `pub use`, nested paths, glob | 1 | — | **Flagged: visibility rules to consolidate** |
-| 21-23 | Collections (`Vec`, `String`, `HashMap`) | 2 | — | — |
-| 24-27 | Error handling (`panic`, `Result`, `?`, validation types) | 1 | — | **Flagged: `?` vs `unwrap` distinction, `unwrap` acceptable cases** |
-| 28-31 | Generics, traits, trait bounds | 2 | — | — |
-| 32-33 | Lifetimes, elision rules | 1 | — | **Flagged: elision rules will become natural with practice** |
-| 34 | `#[test]`, `assert!` / `assert_eq!` / `assert_ne!`, custom messages | 1 | 2026-04-18 | **Gaps: `.sum()` on empty iter, `Debug` required by `assert_eq!`, fluency writing float-tolerant tests** |
-| 35-37 | `should_panic`, `Result`-returning tests, `cargo test` flags, unit vs integration | 2 | — | Chapter 11 just completed, not yet formally quizzed |
+| # | Concept | Gaps to address in the validation session |
+|---|---------|--------------------------------------------|
+| 20 | `use`, `as`, `pub use`, nested paths, glob | Visibility rules — private by default, `pub` on module vs `pub` on item, visibility of struct fields vs enum variants. User initially assumed everything was accessible within the same crate. |
+| 24-27 | Error handling (`panic`, `Result`, `?`, validation types) | `?` vs `unwrap` distinction; when `unwrap` is acceptable (logical impossibilities only); propagation patterns with custom error types. |
+| 32-33 | Lifetimes, elision rules | The 3 elision rules, when they apply, when to annotate manually. User noted this will become natural with practice — validation bar stays at "able to read & annotate correctly under exercise pressure". |
+| 34 | `#[test]`, `assert!` / `assert_eq!` / `assert_ne!`, custom messages | `.sum()` on empty iter (type inference), `Debug` required by `assert_eq!`, fluency writing float-tolerant tests, custom assertion messages. |
 
 ---
 
@@ -50,7 +65,7 @@ Planned future additions: chapters 15+ of the Rust book (smart pointers, concurr
 
 ## Intuition drills (under-the-hood, no-formulas mode)
 
-Concepts articulated in **intuition mode** — re-explained by the user in his own words, using his own analogies and schemas, **without code**. Source: [`rust/rust-intuition.md`](../../rust/rust-intuition.md).
+Intuition drills are **orthogonal to Flow C** — run as standalone articulation sessions when the user explicitly requests one, not embedded in the validation flow. Source: [`rust/rust-intuition.md`](../../rust/rust-intuition.md).
 
 Format: each successful articulation = "validated". A second successful articulation a few weeks later = "consolidated".
 
@@ -82,21 +97,12 @@ Format: each successful articulation = "validated". A second successful articula
 
 ---
 
-## Priority consolidation areas (from past quiz feedback)
-
-These are the weak spots that sessions should prioritize in warm-ups:
-
-1. **Module visibility rules** (#18-19) — user initially assumed everything was accessible within the same crate. Clarify: private by default, `pub` on module vs `pub` on item, visibility of struct fields vs enum variants.
-2. **`?` vs `unwrap`** (#25-26) — distinguish error propagation from panic. When is `unwrap` acceptable (logical impossibilities only)?
-3. **Lifetime elision rules** (#33) — the 3 rules, when they apply, when to annotate manually.
-
----
-
 ## Session history
 
 | Date | Session focus | Notes |
 |------|---------------|-------|
 | 2026-04-15 | Q1-Q4 — variables, overflow, expressions/statements, `loop` | All passed, solid mechanics |
 | 2026-04-17 | Q5 — move semantics (partial) | Paused, move at some point |
-| 2026-04-17 | Review system initialized | State imported from informal quiz |
-| 2026-04-18 | Warm-up #18-19 (visibility) ✅ — Lesson #34 (`#[test]` + asserts) ⚠️ | Visibility asymmetry struct/enum solid. Tests: gaps on `.sum()` empty, `Debug`-for-`assert_eq`, float-test fluency |
+| 2026-04-17 | Review system initialized | State imported from informal quiz (under Flow M) |
+| 2026-04-18 | Warm-up #18-19 (visibility) OK — Lesson #34 (`#[test]` + asserts) gaps | Visibility asymmetry struct/enum solid. Tests: gaps on `.sum()` empty, `Debug`-for-`assert_eq`, float-test fluency |
+| 2026-04-21 | **Migration Flow M → Flow C** | Auto-promoted Lv 2 unflagged concepts to Validated (#3, #4, #6, #7, #8, #9-11, #12-17, #18-19, #21-23, #28-31, #35-37). Kept In progress: #20, #24-27, #32-33, #34. "Priority consolidation areas" section removed — gaps inlined in "In progress" table. |

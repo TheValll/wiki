@@ -8,7 +8,18 @@ This file defines the rules and session flow. Per-domain specifics (which concep
 
 ## 1. Core principles
 
-### 1.1 Mastery levels (0 → 4)
+### 1.0 Two review flows — pick one per domain
+
+Each domain runs one of two flows (full details in §3):
+
+| Flow | Short name | Model | Used by |
+|------|------------|-------|---------|
+| **Flow M** | Mastery (spaced repetition) | Multi-session, levels 0→4, warm-ups on old concepts | `maths`, `ros2` |
+| **Flow C** | Competence validation | Single-session, binary status, no warm-ups (retention driven by real use) | `rust` |
+
+The flow used for each domain is declared at the top of `progress/<domain>.md`. Do not mix flows within a single domain.
+
+### 1.1 Mastery levels (0 → 4) — Flow M only
 
 | Level | Meaning |
 |-------|---------|
@@ -22,7 +33,21 @@ Rules:
 - First success on day of discovery → **Level 1**
 - Each successful recall in a **subsequent** session → **+1**
 - Each failure → **−1** (minimum stays at 0)
-- Reach **Level 4** → concept is archived, no longer actively quizzed (but may be cold-checked — see §3 Step 1)
+- Reach **Level 4** → concept is archived, no longer actively quizzed (but may be cold-checked — see §3.M Step 1)
+
+### 1.1b Competence validation states — Flow C only
+
+Binary status per concept:
+
+| Status | Meaning |
+|--------|---------|
+| **In progress** | Concept exists in the checklist, not yet validated. May have gap notes from past attempts. |
+| **Validated** | Passed its validation session (theory OK + ≥ 4/5 exos correct). Archived — not re-quizzed. Post-validation retention relies on actual use in user's projects. |
+
+Rules:
+- A concept leaves "In progress" → "Validated" only by passing a full validation session (§3.C).
+- Once Validated, a concept is not re-drilled. If the user reports a real-world gap on a validated concept, he explicitly requests to re-open it.
+- There is no cold-check and no warm-up in Flow C.
 
 ### 1.2 Wiki = theory source, checklist = practice path
 
@@ -43,9 +68,11 @@ Rules:
 - Then **generate new problems** with different numbers, contexts, and scenarios.
 - For technical domains, favor applications in **robotics, spatial navigation, computer vision, ML** — fields the user is targeting.
 
-### 1.4 Two practice modes
+### 1.4 Session modes per flow
 
-Some domains have both a reference page and an **intuition companion** page. When a domain has both, a session block for that domain can run in either of three modes:
+The user picks one mode per domain block at the start of a session (§2). The available modes depend on the flow:
+
+**Flow M (maths, ros2)** — practice is the default, intuition is available when the domain has a companion page:
 
 | Mode | Challenge | Source |
 |------|-----------|--------|
@@ -53,27 +80,38 @@ Some domains have both a reference page and an **intuition companion** page. Whe
 | **intuition** | Re-explain the concept **in your own words, with your own analogies/schemas, no formulas** | `<domain>/*-intuition.md` + `progress/<domain>.md` "Intuition drills" table |
 | **mix** | Both, split the time in the session block | both |
 
+**Flow C (rust)** — validation is the default, intuition is a standalone separate session:
+
+| Mode | Challenge | Source |
+|------|-----------|--------|
+| **validation** | Run the full competence-validation flow on the next concept (§3.C) | `progress/rust.md` + reference pages |
+| **intuition** | Standalone articulation drill on one concept — no code, no formulas | `rust/rust-intuition.md` + `progress/rust.md` "Intuition drills" table |
+
+*Flow C has no "mix" — an intuition drill and a validation session are kept as distinct blocks.*
+
 Currently supported for intuition mode:
-- **`maths`** — via `mathematics/01-linear-algebra-intuition.md` (only §1.1 Norm and §1.2 Dot product covered so far — the rest of Module 1 and all of Modules 2+ still need intuition pages)
+- **`maths`** — via `mathematics/intuition/*.md` (§§1.1, 1.2, 2.1-2.4, 3.1-3.9 covered as of 2026-04-21 — the rest of §1 covered via `01-linear-algebra-intuition.md`)
 - **`rust`** — via `rust/rust-intuition.md` (covers chapters 1-13 — chapters 14+ still need coverage as the curriculum advances)
 
 The mode becomes automatically available for any domain that gains an intuition companion page.
 
 ### 1.5 Intuition-first rule (maths and rust)
 
-**A concept must have an intuition companion covering it *before* it can be reviewed in any mode.** This applies to `maths` and `rust`.
+**A concept must have an intuition companion covering it *before* it can be touched in any flow.** This applies to `maths` and `rust`.
 
-- Before starting a lesson or warm-up on a concept, verify the relevant `*-intuition.md` section exists and actually covers the concept (title + content, not just a placeholder).
+- Before starting any step that engages the user on a concept, verify the relevant `*-intuition.md` section exists and actually covers the concept (title + content, not just a placeholder).
 - If the intuition page is missing or incomplete for the target concept, **stop the session flow** and propose writing the intuition page first (separate task, not in the review block). The user validates, then either:
   - writes the intuition page first and resumes the review afterwards, or
   - swaps the target concept for another one that already has intuition coverage.
-- This rule applies to **new concepts (Step 2)** and to **warm-ups (Step 1)** — a concept that entered review before this rule existed must still get its intuition page retrofitted before being drilled again.
+- Scope per flow:
+  - **Flow M:** applies to new concepts (§3.M Step 2) and warm-ups (§3.M Step 1).
+  - **Flow C:** applies to theory check (§3.C Step 1), lesson (§3.C Step 2), and any standalone intuition drill.
 - The rule does not apply to the Final Check-in (§5) or to other domains without intuition companions (e.g. `ros2`).
 
-**Why:** the user's mental model slips when a concept is drilled on formulas alone. Locking intuition-first forces the "physical image" pass before the procedural pass, which is how he actually learns (see `how-i-learn.md`).
+**Why:** the user's mental model slips when a concept is drilled on formulas / code alone. Locking intuition-first forces the "physical image" pass before the procedural pass, which is how he actually learns (see `how-i-learn.md`).
 
-**Current debt (2026-04-18):**
-- **Maths:** only `01-linear-algebra-intuition.md` §1.1 (Norm) and §1.2 (Dot product) are written. Concepts #7-#10 (matrix ops, determinant, inverse, systems, Gaussian) and all of Module 2 (#11-#17, derivatives) currently in active review have no intuition coverage. Writing these is the priority for the coming sessions before any further review on those concepts.
+**Current debt (2026-04-21):**
+- **Maths:** intuition coverage complete for §§1.1-1.9 (linear algebra), §§2.1-2.4 (algebra & solving), §§3.1-3.9 (derivatives). Modules 4+ still pending as the curriculum advances.
 - **Rust:** `rust-intuition.md` covers up to chapter 13. Modules 9-10 (closures/iterators, Cargo) not yet covered — to write as the curriculum advances.
 
 ---
@@ -85,7 +123,9 @@ When the user says *"review"* (with or without a domain), **do not start a domai
 1. **Ask the user:**
    - How much time they have tonight (typical: 1h, 1h30, 2h)
    - Which domains they want to cover (1, 2, or 3 among `maths` / `rust` / `ros2` / future domains)
-   - For each domain that supports modes: which one (practice / intuition / mix)
+   - For each domain, which mode (depends on the flow — see §1.4):
+     - Flow M domains (`maths`, `ros2`): **practice / intuition / mix**
+     - Flow C domains (`rust`): **validation** (default) or **intuition drill** (standalone)
    - Any specific focus inside a domain ("lifetimes in Rust", "dot product under the hood")
 
 2. **Propose a time allocation** (the user validates or adjusts):
@@ -101,6 +141,16 @@ When the user says *"review"* (with or without a domain), **do not start a domai
 ---
 
 ## 3. Per-domain session flow — STRICT
+
+Choose the flow based on the domain (see §1.0):
+- `maths`, `ros2` → **§3.M — Flow M (Mastery)**
+- `rust` → **§3.C — Flow C (Competence validation)**
+
+Do NOT mix steps across flows. Each flow is self-contained.
+
+---
+
+## 3.M — Flow M (Mastery / spaced repetition) — `maths`, `ros2`
 
 For each chosen domain block, follow these 6 steps in order. Do NOT skip, reorder, or merge.
 
@@ -177,6 +227,67 @@ The Save Code is purely for the user's comfort / external backup — the real st
 
 ---
 
+## 3.C — Flow C (Competence validation) — `rust`
+
+For each chosen domain block, follow these 5 steps in order. One concept per block (two if the session is long and the concept is light).
+
+**Goal:** validate in a single session that the user understood a concept and can apply it correctly, then move on. No spaced repetition — post-validation retention comes from actual coding on the user's own projects (DeepSight, Rust book exercises).
+
+### Step 1 — Theory check (2-3 min)
+
+- Read `progress/rust.md` → find the next concept to validate (first entry in "In progress", or the next one in "Not yet reached" if the user wants to open a new concept).
+- Ask the user to briefly reformulate the concept in his own words. Short recall, not a full articulation drill (see §1.4 "intuition mode" for that, which is a separate type of session).
+- If the theory is clearly off, pause Flow C and drop to Step 2 (lesson pass) before continuing.
+- If the theory is OK, **skip Step 2** and go straight to Step 3.
+
+### Step 2 — Lesson *(only if the concept is new, or Step 1 revealed a theory gap)*
+
+- Read the relevant wiki page(s) for the concept.
+- Structure: short theory paragraph + simple example + applied example (robotics firmware, systems, CLI, embedded — contexts aligned with user's projects).
+- Keep it tight. The goal is to enable the battery, not exhaustively teach.
+
+### Step 3 — Exercise battery (bulk of the time)
+
+Generate **4 to 5 original exercises** on the concept, difficulty progressive:
+
+1. **Easy** — direct application
+2. **Intermediate** — apply in a slightly unfamiliar context
+3. **Conceptual trap** — a question where the intuitive answer is subtly wrong
+4. **Applied** — realistic mini-problem (API design, module structure, error handling scenario, lifetime annotation choice, …)
+5. **(Optional) Bonus hard** — open-ended problem that stretches the concept
+
+Exercises must be **original** (§1.3) — never copy from the wiki verbatim.
+
+🚨 **HARD STOP HERE. Post all exercises at once and wait.** Do NOT generate solutions or hints.
+
+### Step 4 — Correction and verdict
+
+- Go through each answer. For wrong ones, pinpoint the reasoning gap (not just "here's the right answer").
+- **Verdict criteria:**
+  - **Validated** if: theory was understood at Step 1 (or Step 2 locked it in) **AND** ≥ 4/5 exercises correct (minor idiomatic imperfections allowed, not conceptual errors).
+  - **In progress** otherwise — note the specific gaps for next session.
+
+### Step 5 — Progress update
+
+Update `progress/rust.md`:
+- **Validated** → move the concept from "In progress" to "Validated".
+- **In progress** → keep it there, update the inline gap notes with today's findings.
+- Append to session history: date, concept, verdict, gaps (if any).
+
+Save Code format for Flow C:
+
+```
+[Save | Rust | Concept = X | Verdict = Validated / In progress | Gaps = (if any) | Next = Y]
+```
+
+### Intuition mode for Rust
+
+Intuition mode is still available for Rust (§1.4), but it is **orthogonal to Flow C**. An intuition session is a standalone articulation drill — one concept, formula/code-free re-explanation in the user's own words, with correction against `rust/rust-intuition.md`. It is run when the user explicitly requests it, not embedded inside Flow C.
+
+The intuition-first rule (§1.5) still applies: if a concept has no intuition companion section yet, stop the session flow and propose writing it before reviewing.
+
+---
+
 ## 4. Advancing the curriculum
 
 - The user advances **manually**. They must explicitly say "on passe au prochain concept" / "move to next" / "on passe au module N" before you touch concepts marked **"Not yet reached"**.
@@ -219,9 +330,9 @@ After the last domain block of the session is complete, run a **~5-minute check-
 3. Run the **Session Opener** (§2). Do not skip it, even if the user specified a domain — still confirm time, mode, and focus.
 4. After the user validates the plan, for each chosen domain block:
    - Read `review/checklists/<domain>.md`
-   - Read `review/progress/<domain>.md`
-   - Read the wiki pages relevant to today's target concept (reference page for practice, `*-intuition.md` for intuition mode)
-5. Run the per-domain 6-step flow (§3).
+   - Read `review/progress/<domain>.md` — note which flow (M or C) the domain uses
+   - Read the wiki pages relevant to today's target concept (reference page for practice/validation, `*-intuition.md` for intuition mode)
+5. Run the per-domain flow: **§3.M** for `maths`/`ros2`, **§3.C** for `rust`.
 6. After the last block, run the Final Check-in (§5).
 
 ---
@@ -236,8 +347,10 @@ After the last domain block of the session is complete, run a **~5-minute check-
 | Allow formulas in the intuition-mode challenge | Reject the answer and ask for plain-language re-articulation |
 | Give the solution immediately after posing exercises | Stop hard. Wait for the user's answer. |
 | Rewrite the user's articulation draft as if you never heard it | Name the specific gap, let him correct it himself |
-| Merge warm-up with the new lesson | Keep the 6 steps separated in the conversation |
+| Merge warm-up with the new lesson (Flow M) | Keep the 6 steps separated in the conversation |
+| Mix Flow M and Flow C steps in a single Rust block | Flow C has its own 5 steps (§3.C) — no warm-up, no spaced repetition, single-session validation |
+| Re-quiz a Validated Rust concept (Flow C) unless the user explicitly opens it | Once validated, it stays validated — real-world retention is the user's job |
 | Skip the Final Check-in because the session is mono-domain | The check-in runs every time — it's the only lever on external state |
 | Update progress files without the user noticing | Always explicitly state what you're updating |
-| Skip Step 5 (bonus) to save time | Always include it — curiosity fuel / analogy in intuition mode |
+| Skip Step 5 (bonus) to save time (Flow M) | Always include it — curiosity fuel / analogy in intuition mode |
 | Review a maths/rust concept that has no intuition page yet | Stop, propose writing the intuition page first (§1.5), or swap to a concept that has intuition coverage |
