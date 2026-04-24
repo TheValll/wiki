@@ -2,9 +2,9 @@
 
 A structured deep-dive into Rust, from installation to a full command-line project.
 
-Based on [The Rust Programming Language](https://doc.rust-lang.org/book/) (Chapters 1-14).
+Based on [The Rust Programming Language](https://doc.rust-lang.org/book/) (Chapters 1-15).
 
-> **Companion:** [`rust-intuition.md`](./rust-intuition.md) — pure intuition of the language's tricky concepts (ownership, borrowing, lifetimes, traits, generics, errors, closures, iterators, cargo & crates.io), no code, no exercises. Covers chapters 1-14. Readable on a train.
+> **Companion:** [`rust-intuition.md`](./rust-intuition.md) — pure intuition of the language's tricky concepts (ownership, borrowing, lifetimes, traits, generics, errors, closures, iterators, cargo & crates.io, smart pointers), no code, no exercises. Covers chapters 1-15. Readable on a train.
 
 ---
 
@@ -90,3 +90,9 @@ Based on [The Rust Programming Language](https://doc.rust-lang.org/book/) (Chapt
 | # | Part | Key Concepts | Rust Book |
 |---|------|-------------|-----------|
 | 16 | [More About Cargo & Crates.io](16-more-cargo-crates.md) | Release profiles (`dev`, `release`, `opt-level`, `lto`, `panic`), doc comments (`///`, `//!`, `# Examples`), `pub use` re-exports, publishing flow, `cargo login` / `publish` / `yank`, SemVer, workspaces (`[workspace]`, `members`, shared lockfile), `cargo install`, custom `cargo-*` commands | Ch. 14 |
+
+### Block N: Smart Pointers
+
+| # | Part | Key Concepts | Rust Book |
+|---|------|-------------|-----------|
+| 17 | [Smart Pointers](17-smart-pointers.md) | `Box<T>` (heap, recursive types, trait objects), `Deref` + deref coercion, `DerefMut`, `Drop` + `std::mem::drop`, `Rc<T>` / `Arc<T>` (shared ownership, reference counting), `RefCell<T>` (interior mutability, runtime borrow checking), `Rc<RefCell<T>>` pattern, reference cycles, `Weak<T>` (non-owning refs) | Ch. 15 |

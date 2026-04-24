@@ -1,8 +1,8 @@
 # Rust — Under the Hood
 
-A companion to the Rust wiki pages. The numbered pages ([`01`](01-installation-hello-cargo.md)-[`14`](14-io-project-minigrep.md)) are **reference** — syntax, examples, code snippets. This page is the **pure intuition**: why Rust's rules exist, how to picture each mechanism, told in plain language without code. Readable on a train.
+A companion to the Rust wiki pages. The numbered pages ([`01`](01-installation-hello-cargo.md)-[`17`](17-smart-pointers.md)) are **reference** — syntax, examples, code snippets. This page is the **pure intuition**: why Rust's rules exist, how to picture each mechanism, told in plain language without code. Readable on a train.
 
-Covers concepts from chapters 1-14 of the Rust book.
+Covers concepts from chapters 1-15 of the Rust book.
 
 ---
 
@@ -323,6 +323,122 @@ The mental image: `cargo install` is your **personal tool shelf** next to your d
 
 ---
 
+## Part 7 — Smart pointers (chapter 15)
+
+### 7.1 — What "smart pointer" even means
+
+A plain reference (`&T`, `&mut T`) only **borrows** — it points at something owned by someone else, and it must never outlive that someone. A **smart pointer** is a regular struct that *also* acts like a pointer, but usually **owns** the thing it points at, and carries extra machinery along: it may allocate on the heap, count references, run custom cleanup, or enforce borrow rules at runtime.
+
+What makes a type a smart pointer is not a keyword — it is implementing two traits: `Deref` (so `*` and `.method()` feel pointer-like) and `Drop` (so cleanup happens automatically on scope exit). Every smart pointer in this part is built from those two primitives.
+
+The mental image: a plain reference is a **sticky note** on someone else's book — you can peek at a page, but you don't own the book and you must put the note back in time. A smart pointer is a **briefcase that happens to hold the book itself** — heavier, but yours, and it takes care of returning the book to the library when you put the briefcase down.
+
+---
+
+### 7.2 — `Box`: send a value to the heap
+
+By default, Rust puts your values on the **stack** — fast, small, automatically reclaimed. `Box<T>` says: *"put this value on the heap instead, and give me a tiny pointer on the stack so I can carry it around cheaply."*
+
+You don't reach for `Box` to make things fast (the heap is slower). You reach for it for three reasons: the value is **huge** (you don't want to copy it every time you move a variable), the type is **recursive** (a list that contains a list that contains a list — infinite on the stack, finite through a pointer), or you want a **trait object** (one pointer type that can stand for many concrete types implementing a trait).
+
+The mental image: your stack is your **desk**. Most values live there because they fit and you reach them instantly. A `Box` is a **cardboard box in the warehouse**: the item is big or oddly shaped, so you store it downstairs and keep only the label on your desk. When you're done with the label, the warehouse clerk also throws away the box — no leak.
+
+---
+
+### 7.3 — Deref: why `*` works on everything
+
+`Box`, `Rc`, `&T`, your own hand-rolled smart pointer — all of them support `*thing` to "peek inside." That's not magic, it's the `Deref` trait: any type that implements it becomes *dereferenceable*, and the compiler rewrites `*x` into `*x.deref()` transparently.
+
+Even better, Rust quietly chains deref coercions at function-call sites: if you have a `&Box<String>` and the function wants `&str`, the compiler does **two** coercions in a row (`&Box<String> → &String → &str`) without you writing a single cast. This is why Rust APIs feel so forgiving about what you pass in — the coercion network is doing background work.
+
+The mental image: `Deref` is an **adapter plug**. Your `Box<String>` doesn't natively fit into the `&str`-shaped socket, but the compiler stacks two adapters behind your back and it plugs in cleanly. All the adapters are compile-time — no runtime cost.
+
+---
+
+### 7.4 — Drop: the destructor you control
+
+Every type in Rust already has an implicit "destructor" that frees memory when a value goes out of scope. The `Drop` trait lets you **hook into** that moment: when my value is about to die, run this code. Closing a file handle, releasing a lock, logging, decrementing a reference count — all of this happens in `drop`.
+
+Two surprising details: drops run in **reverse order of declaration** (last declared, first dropped — because the stack unwinds like a stack of plates), and you **cannot call `drop(&mut self)` directly** — Rust forbids it because your manual call plus the automatic end-of-scope call would run cleanup twice. To fire cleanup early, use the free function `std::mem::drop(x)` — it takes ownership, so the value is *actually* gone and the destructor only runs once.
+
+The mental image: `Drop` is the **goodbye routine** a value runs on its way out the door. You cannot interrupt someone else's goodbye, but you can say *"okay, go now"* by handing them to `std::mem::drop`, which escorts them out and runs their routine on the way.
+
+---
+
+### 7.5 — `Rc`: shared ownership by counting
+
+Single ownership is great for most things, but sometimes **multiple parts** of the code genuinely need to own the same value — think of a graph node that several edges point to. `Rc<T>` (Reference Counted) gives you this: every clone bumps a counter, every drop decrements it, and the value is freed exactly when the last clone dies.
+
+Cloning an `Rc` does **not** deep-copy the data — it only increments the counter. So `Rc::clone(&a)` is cheap (a pointer and a `+1`), regardless of how large `T` is. Convention is to write `Rc::clone(&a)` rather than `a.clone()`, so readers of your code immediately see that the clone is just a count bump, not a full duplicate.
+
+One important constraint: `Rc` is **read-only** and **single-threaded**. Read-only because multiple owners writing through the same pointer would break aliasing rules. Single-threaded because the counter is not atomic — for threads, use `Arc` (Atomic Rc), same API, slightly slower.
+
+The mental image: `Rc` is a **party balloon** with a tally chalked on the string. Every time a friend grabs the string, they add a tick mark. Every time a friend lets go, they cross one off. When the last tick is crossed, the balloon is released. Nobody can pop or repaint the balloon while it's being shared — you can only admire it.
+
+---
+
+### 7.6 — `RefCell`: runtime borrow checking
+
+Rust's borrow checker is **compile-time**. It proves at build time that you never have two mutable references at once. Sometimes this proof is too conservative — you know the code is safe, but the compiler cannot see why. `RefCell<T>` is the escape hatch: it enforces the **same rules** (one writer OR many readers, never both), but checks them at **runtime**. A violation is a panic, not a compile error.
+
+You use it precisely when you need to mutate something **through a shared reference** — for example, a cache inside a struct whose `&self` methods need to update it, or a test double that records calls. The public API still looks immutable, but internally a `RefCell` keeps the ability to `borrow_mut`.
+
+`RefCell` does **not** give you two mutable references. It gives you the *ability* to take a single mutable reference through a shared outer reference. The aliasing rule is untouched — only the place it's checked moves from compile time to runtime.
+
+The mental image: the compile-time borrow checker is a **bouncer at the door** who decides who enters before the club opens. `RefCell` is **no bouncer at the door, but alarms inside**: you can walk in freely, but if you break the rule (two writers, or a writer while readers are inside), the alarms go off at runtime — a panic. Same rules; different enforcement timing.
+
+---
+
+### 7.7 — `Rc<RefCell<T>>`: shared mutable state
+
+Each layer gives you one property: `Rc` gives you multiple owners (at the cost of read-only access); `RefCell` gives you interior mutability (at the cost of runtime checking). Stack them, and you get **many owners** that can **each mutate** the shared value:
+
+```
+  Rc <  RefCell <  T  > >
+   ↑      ↑         ↑
+   │      │         └─ the actual data
+   │      └─ runtime-checked borrow rules (interior mutability)
+   └─ shared ownership by reference counting
+```
+
+Read inside-out: a value, wrapped in a RefCell so it can be mutated through shared references, wrapped in an Rc so many owners exist. Each owner calls `.borrow_mut()` when they actually want to write — only one writer at a time, enforced at runtime.
+
+For the thread-safe version, swap the layers: `Arc<Mutex<T>>` (many threads, one writer at a time) or `Arc<RwLock<T>>` (many threads, many readers OR one writer). Same idea, different locks.
+
+The mental image: a **shared whiteboard**. `Rc` is the list of people who have a key to the room — any of them can come in. `RefCell` is the **marker**: only one person can be holding it at a time. Many people in the room, but only one writes at a time — and the system panics if two people try to grab the marker at once.
+
+---
+
+### 7.8 — Cycles and `Weak`: the one failure mode
+
+Reference counting has a blind spot: **cycles**. If `a` holds an `Rc` to `b`, and `b` holds one back to `a`, neither counter ever hits zero — even when all your local variables have been dropped. The two values just quietly live on, leaking memory forever. Rust does not detect this at compile time, and `Rc` does not leak-check at drop. No crash, no warning — just a slow drip.
+
+The fix is to break the cycle by making **one direction not own**. That's what `Weak<T>` is for: it's an `Rc` sibling that **does not count**. A `Weak` pointer says *"I know about this value, but I don't vote on whether it should stay alive."* When you actually want to use it, call `.upgrade()` — you get `Some(Rc<T>)` if the value still exists, `None` if it has been dropped.
+
+The canonical shape is a tree or a DAG with back-pointers: children own themselves strongly (parents `Rc` their children), but children hold only a `Weak` back to their parent. If the tree gets cut off from the root, the parent drops, the `Weak` upgrades to `None` on the next visit, and everything unwinds cleanly.
+
+The mental image: a regular `Rc` is a **cable holding the chandelier up** — cut all cables and it falls. A `Weak` is a **safety string** dangling from the chandelier — it tracks that you're still connected, but it is not holding the chandelier. If the last cable is cut, the chandelier falls and the string goes slack (`.upgrade()` returns `None`).
+
+---
+
+### 7.9 — The spectrum: one aliasing rule, many enforcement points
+
+Ownership and borrowing in Rust is not one system — it's a **spectrum**. Each type in this part trades one static guarantee for one dynamic check, in exchange for more flexibility:
+
+| Type | Owner count | Check | Mutability |
+|------|-------------|-------|------------|
+| plain `T` | 1 | compile time | direct |
+| `Box<T>` | 1 (on heap) | compile time | direct |
+| `&T` / `&mut T` | borrower, not owner | compile time | depends |
+| `Rc<T>` / `Arc<T>` | N | compile time (refcount is runtime) | read-only |
+| `RefCell<T>` | 1 | **runtime** | interior |
+| `Rc<RefCell<T>>` | N | **runtime** (borrows) | interior |
+| `Arc<Mutex<T>>` | N threads | **runtime** (lock) | interior |
+
+Everywhere you see *runtime*, you've paid for **flexibility** with a **panic risk**: the aliasing rule is still enforced, just later. Rust gives you the knob. Turn it toward compile time when you can, toward runtime only when you must.
+
+---
+
 ## What to remember
 
 | Concept cluster | The one-line picture |
@@ -348,3 +464,10 @@ The mental image: `cargo install` is your **personal tool shelf** next to your d
 | Crates.io | shared pantry — jars go in permanently, can be marked "expired" but never removed |
 | Workspaces | shared kitchen — many restaurants, one fridge, one set of spices |
 | `cargo install` | your personal tool shelf — user-wide binaries, no admin rights needed |
+| `Box<T>` | the warehouse — value stored off-stack, stack holds only the label |
+| `Deref` | an adapter plug — chained quietly by the compiler, zero runtime cost |
+| `Drop` | the goodbye routine — runs at scope exit, reverse declaration order, fire early via `drop(x)` |
+| `Rc<T>` | the party balloon — tally marks on the string, released at the last tick |
+| `RefCell<T>` | no bouncer at the door, alarms inside — same rules, checked at runtime |
+| `Rc<RefCell<T>>` | shared whiteboard with one marker — many key-holders, one writer at a time |
+| `Weak<T>` | safety string, not a cable — doesn't hold the chandelier up, just tracks it |

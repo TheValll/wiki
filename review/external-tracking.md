@@ -10,7 +10,8 @@ Entries shown as `—` are placeholders to fill in.
 
 ## Rust
 
-- **Rust book:** chapter 13 **completed 2026-04-18** — next: chapter 14
+- **Rust book:** chapter **14 completed** (reported 2026-04-24) — next: chapter 15
+- **Wiki intuition TODO:** `rust-intuition.md` needs sections for ch 14 (Cargo, workspaces, publishing) and ch 15 (smart pointers) — currently covers only ch 1-13. User flagged as blocker for Flow C validation on ch 14/15 concepts (intuition-first rule §1.5).
 - **Current exercises outside the wiki:** —
 - **Current Rust project work:** —
 - **Last deep Rust session:** —
@@ -40,11 +41,12 @@ Entries shown as `—` are placeholders to fill in.
 ## Robotics papers
 
 - **Shortlist:** `raw/papers/shortlist.md`
-- **Queue (to read):** — (Keshav read; pick next paper from shortlist for the coming week)
+- **Queue (to read):** — (Keshav consolidated; pick next paper from shortlist for coming week)
 - **Recently read (title + one-line takeaway):**
-  - *"How to Read a Paper"* (S. Keshav, 2007) — read 2026-04-18 — 3-pass reading methodology (quick scan → deep pass → reimplementation-level pass)
+  - *"How to Read a Paper"* (S. Keshav, 2007) — read 2026-04-18, video rewatched 2026-04-24 — 3-pass reading methodology (quick scan → deep pass → reimplementation-level pass)
+- **Ingest queue (raw/):** `raw/2026-04-29_HowtoReadPaper.md` (modified) + `raw/How to Write a Great Research Paper.md` (new) — user requested ingest, deferred to dedicated session (CLAUDE.md §4: ingest flow requires user validation on scope/granularity)
 - **Pass 1 weekly target:** 1 paper / week
-- **Last paper read:** *"How to Read a Paper"* (Keshav 2007) — 2026-04-18
+- **Last paper read:** *"How to Read a Paper"* (Keshav 2007) — 2026-04-18 (re-consolidated via video 2026-04-24, but no NEW paper in the last 6 days → queue stalling)
 
 ---
 

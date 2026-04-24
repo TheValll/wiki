@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "rust/16-more-cargo-crates.md",
+                "file": "raw/2026-04-29_HowtoReadPaper.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "16-more-cargo-crates"
+              "title": "2026-04-29_HowtoReadPaper"
             }
           }
         ]
@@ -180,8 +180,13 @@
       "bases:Create new base": false
     }
   },
-  "active": "653b2c8b3c38232e",
+  "active": "565595c907490d06",
   "lastOpenFiles": [
+    "raw/2026-04-17_karpathy-llm-wiki-tutorial.md",
+    "raw/2026-04-29_HowtoReadPaper.md",
+    "raw/How to Write a Great Research Paper.md",
+    "rust/16-more-cargo-crates.md",
+    "Clippings",
     "rust/15-closures-iterators.md",
     "mathematics/intuition/1.9-characteristic-equation.md",
     "mathematics/intuition/1.8-det-inverse.md",
@@ -209,15 +214,10 @@
     "mathematics/06-probability.md",
     "review/external-tracking.md.tmp.54512.1776543494313",
     "review/external-tracking.md.tmp.54512.1776543492374",
-    "review/external-tracking.md.tmp.54512.1776543488423",
     "raw/papers/README.md",
     "raw/papers/shortlist.md",
     "raw/papers/template.md",
-    "raw/2026-04-17_karpathy-llm-wiki-tutorial.md",
     "rust/12-generics-traits-lifetimes.md",
-    "review/progress/rust.md",
-    "review/progress/math.md",
-    "review/checklists/rust.md",
     "Untitled.canvas"
   ]
 }
