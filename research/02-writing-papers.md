@@ -1,4 +1,4 @@
-# Part 1 — How to Write a Great Research Paper
+# Part 2 — How to Write a Great Research Paper
 
 Seven concrete, actionable guidelines from **Simon Peyton Jones** (Microsoft Research) — distilled from his talk at MSR. The thesis: writing is not the output of research, it is the **machinery** of research. And a paper is a **vehicle for conveying an idea** from your head into the reader's head.
 
@@ -14,7 +14,7 @@ Seven concrete, actionable guidelines from **Simon Peyton Jones** (Microsoft Res
 
 ---
 
-## 1.1 — Start writing early
+## 2.1 — Start writing early
 
 The wrong model: idea → do research for 12 months → start writing.
 
@@ -40,7 +40,7 @@ And: don't wait until you have a "good" idea. Write about any idea. Most ideas s
 
 ---
 
-## 1.2 — Identify your key idea
+## 2.2 — Identify your key idea
 
 A paper is a **vehicle**: it carries an idea from your head into the reader's head. If the transfer succeeds, the reader becomes a carrier — they take the idea to other people, build on it, cite it. If the transfer fails, the paper is heat.
 
@@ -67,7 +67,7 @@ Leave the reader no doubt about the moment when the setup ends and the new contr
 
 ---
 
-## 1.3 — Tell a story
+## 2.3 — Tell a story
 
 The structure of a paper mirrors what you would do at a whiteboard explaining your work to a friend:
 
@@ -106,7 +106,7 @@ Readership drops off sharply after page 1. Build your strategy around that fact.
 
 ---
 
-## 1.4 — Nail the introduction (one page)
+## 2.4 — Nail the introduction (one page)
 
 Page 1 is the **most precious real estate** in the paper. You have ~10× the readers here than on page 4. Spend that page on exactly two things: **the problem** and **your contributions**.
 
@@ -167,7 +167,7 @@ Nobody reads it. You are wasting your most precious bytes. If you want forward r
 
 ---
 
-## 1.5 — Put related work at the end
+## 2.5 — Put related work at the end
 
 Related work at the beginning looks like good scholarship. It is terrible. It is a sandbar between your reader and your idea:
 
@@ -204,7 +204,7 @@ Computer science is multi-dimensional (speed, space, simplicity, environment, �
 
 ---
 
-## 1.6 — Lead the reader by the hand
+## 2.6 — Lead the reader by the hand
 
 The body of the paper is evidence and exposition. Two traps to avoid.
 
@@ -232,7 +232,7 @@ If your final idea looks simple, the reader may suspect it is trivial. Counter t
 
 ---
 
-## 1.7 — Listen
+## 2.7 — Listen
 
 Two audiences give you feedback before publication: **guinea pigs** (friends you ask to read drafts) and **reviewers** (after submission).
 
@@ -260,7 +260,7 @@ Most reviewers are conscientious and have genuinely misunderstood something. Tha
 
 ---
 
-## 1.8 — Summary
+## 2.8 — Summary
 
 | Lever | The actionable move |
 |-------|---------------------|
@@ -279,6 +279,6 @@ Most reviewers are conscientious and have genuinely misunderstood something. Tha
 
 Writing is the **machinery of research**, not its output. A paper is a **vehicle for one idea**, and the vehicle has to be honest, reader-first, and tuned for page 1. Feedback — including painful feedback — is a **gift of time** from someone who will never have that hour back.
 
-> See also: [How to Read a Paper](README.md) (planned — Keshav's three-pass method) for the other side of the same skill.
+> See also: [Part 1 — How to Read a Paper](01-reading-papers.md) — Keshav's three-pass method, the other side of the same skill.
 
 Source: Simon Peyton Jones, *"How to Write a Great Research Paper"*, Microsoft Research, 2016. Video: <https://www.youtube.com/watch?v=VK51E3gHENc>.

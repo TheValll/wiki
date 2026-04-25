@@ -1,6 +1,6 @@
 # Research — Learning Wiki
 
-Meta-skills for becoming a researcher: writing papers, reading papers, giving talks, navigating reviews. Separate from the technical domains (`rust/`, `ros2/`, `mathematics/`) — this is **how to do research**, not *what* research is about.
+Meta-skills for becoming a researcher: writing papers, reading papers, giving talks, navigating reviews — plus field-specific landmarks (venues, labs) for the robotics PhD trajectory. Separate from the technical domains (`rust/`, `ros2/`, `mathematics/`) — this is **how to do research** and **where the field lives**, not *what* the research is about.
 
 Distilled from talks, articles, and authors known for the craft of scholarship (Simon Peyton Jones, S. Keshav, …).
 
@@ -8,23 +8,32 @@ Distilled from talks, articles, and authors known for the craft of scholarship (
 
 ## Syllabus
 
-### Block A: Writing
+### Block A: Reading
 
 | # | Part | Key Concepts | Source |
 |---|------|--------------|--------|
-| 1 | [How to Write a Great Research Paper](01-writing-papers.md) | Start writing early, one key idea, narrative structure, page-1 introduction, forward references, related work at the end, reader-first exposition, guinea pigs & reviews | Simon Peyton Jones (MSR, 2016) |
+| 1 | [How to Read a Paper](01-reading-papers.md) | Three-pass method (bird's-eye / content / re-implementation), the five Cs, literature survey procedure | S. Keshav (Waterloo, 2007) |
 
-### Block B: Reading *(planned)*
+### Block B: Writing
 
 | # | Part | Key Concepts | Source |
 |---|------|--------------|--------|
-| 2 | How to Read a Paper | Three-pass method, literature survey | S. Keshav |
+| 2 | [How to Write a Great Research Paper](02-writing-papers.md) | Start writing early, one key idea, narrative structure, page-1 introduction, forward references, related work at the end, reader-first exposition, guinea pigs & reviews | Simon Peyton Jones (MSR, 2016) |
 
 ### Block C: Speaking *(planned)*
 
 | # | Part | Key Concepts | Source |
 |---|------|--------------|--------|
-| 3 | How to Give a Great Research Talk | Audience, payload, structure, delivery | Simon Peyton Jones |
+| — | How to Give a Great Research Talk | Audience, payload, structure, delivery | Simon Peyton Jones |
+
+### Block D: Field navigation (PhD prep)
+
+Robotics-specific landmarks for the PhD trajectory.
+
+| # | Part | Key Concepts |
+|---|------|--------------|
+| 3 | [Robotics venues to monitor](03-robotics-venues.md) | Conferences (ICRA, IROS, RSS, CoRL), journals (T-RO, RA-L, IJRR), arXiv `cs.RO` |
+| 4 | [EPFL labs (PhD prep)](04-epfl-labs.md) | Spatial (eSpace), medical (LSRO, Micera, BioRob), mobile (MOBOTS / LIS) |
 
 ---
 
