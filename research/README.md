@@ -26,15 +26,6 @@ Distilled from talks, articles, and authors known for the craft of scholarship (
 |---|------|--------------|--------|
 | — | How to Give a Great Research Talk | Audience, payload, structure, delivery | Simon Peyton Jones |
 
-### Block D: Field navigation (PhD prep)
-
-Robotics-specific landmarks for the PhD trajectory.
-
-| # | Part | Key Concepts |
-|---|------|--------------|
-| 3 | [Robotics venues to monitor](03-robotics-venues.md) | Conferences (ICRA, IROS, RSS, CoRL), journals (T-RO, RA-L, IJRR), arXiv `cs.RO` |
-| 4 | [EPFL labs (PhD prep)](04-epfl-labs.md) | Spatial (eSpace), medical (LSRO, Micera, BioRob), mobile (MOBOTS / LIS) |
-
 ---
 
 ## Why this domain

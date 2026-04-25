@@ -53,14 +53,7 @@ Best done **after** the refacto in §1 — the row count stabilises once each co
 
 ## 4. PhD prep — academic groundwork
 
-Captured into wiki pages where applicable; this section tracks the remaining actions.
-
-**Wiki content already in place:**
-- [`research/03-robotics-venues.md`](research/03-robotics-venues.md) — conferences, journals, preprints
-- [`research/04-epfl-labs.md`](research/04-epfl-labs.md) — labs preliminary list (spatial + medical + mobile)
-
-**Open work:**
-- [ ] Deepen `research/04-epfl-labs.md` — for each lab: current PIs, recent papers (3-5), open PhD positions, contact pattern
+- [ ] Make research about labs and university with a PhD
 - [ ] Identify and study 3-5 EPFL robotics PhD profiles — undergrad → master → PhD trajectory, papers, current position
 - [ ] Build a starter reading list (15-20 papers) in robotics — apply the [literature survey procedure](research/01-reading-papers.md) to each target lab's recent output
 - [ ] First pass-1 sweep on recent ICRA / IROS proceedings to triage relevant work
