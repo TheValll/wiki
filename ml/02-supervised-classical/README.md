@@ -12,7 +12,7 @@ Each page covers **one model**. The classical supervised toolkit — fit a funct
 
 | § | Page | In one line |
 |---|------|-------------|
-| 2.1 | [Linear Regression](./2.1-linear-regression.md) · [story](./2.1-linear-regression-intuition.md) | Fit `ŷ = w·x + b` that minimizes squared error — the cleanest line through the cloud |
+| 2.1 | [Linear Regression](./2.1-linear-regression.md) | Fit `ŷ = w·x + b` that minimizes squared error — the cleanest line through the cloud |
 | 2.2 | **Logistic Regression** *(planned)* | Linear regression squashed through sigmoid for binary classification |
 | 2.3 | **k-Nearest Neighbors** *(planned)* | Vote of the k closest training points — no training phase, pure lazy learner |
 | 2.4 | **Naive Bayes** *(planned)* | Bayes' rule + feature-independence assumption — fast, surprisingly strong on text |
