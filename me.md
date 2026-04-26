@@ -7,7 +7,7 @@ This file tells any agent working in this wiki **who I am, what I'm working towa
 ## Profile
 
 - **Name:** Valentin
-- **Language:** French native · English improving (work language at Iceberg Data Lab)
+- **Language:** French native · English improving
 - **Current role:** Alternance Ingénieur IA / Data Scientist at **Iceberg Data Lab** (2 years of alternance experience)
 - **Studies:** M1 of *Mastère Intelligence Artificielle & Data Engineering* at **Efrei**
 - **Location:** France
@@ -17,16 +17,6 @@ This file tells any agent working in this wiki **who I am, what I'm working towa
 ## Long-term goal
 
 **PhD in Robotics + AI at EPFL (Lausanne, Switzerland)** — target start **September 2028**.
-
-**Domains of interest:** space robotics *or* medical robotics (not yet fixed — will firm up through paper reading and lab exploration).
-
-**Target labs at EPFL** (initial shortlist, to refine):
-- **LSRO** (Bleuler) — medical / surgical robotics
-- **TNE** (Micera) — neural interfaces, neuroprostheses
-- **BioRob** (Ijspeert) — biorobotics, locomotion, exoskeletons
-- **eSpace** (EPFL Space Center) — orbital debris, on-orbit servicing
-
-**Backup timeline:** Sept 2027 if an opportunity opens (tight but possible).
 
 ---
 
@@ -49,12 +39,14 @@ Sept 2028                   Start PhD
 ## Current projects
 
 ### DeepSight-Nebula (active)
-- Repo: https://github.com/TheValll/DeepSight-Nebula
+
+- Repo: <https://github.com/TheValll/DeepSight-Nebula>
 - Goal: transform an educational robot into a real-time capable robot
 - Stack: ESP32 firmware (new), coming from Arduino background
 - **Key deliverable:** a proper technical document / mini-thesis structure (not just a README) that will serve as a portfolio piece and an interview asset for PhD applications
 
 ### Next project (planned)
+
 - SLAM-focused robotics project, starting after DeepSight
 - Will run in parallel with a 7h ROS2 SLAM course
 
@@ -78,6 +70,7 @@ Sept 2028                   Start PhD
 See `review/checklists/math.md` for the full curriculum. From the Dunod MP theory book, the **260-380 pages to focus on** are:
 
 **P1 — essential (≈263 p. theory + proofs):**
+
 - Ch 2 — Réduction des endomorphismes
 - Ch 14 — Espaces préhilbertiens et euclidiens
 - Ch 18 — Calcul différentiel
@@ -85,6 +78,7 @@ See `review/checklists/math.md` for the full curriculum. From the Dunod MP theor
 - Ch 16 — Variables aléatoires discrètes
 
 **P2 — useful bonus (≈121 p.):**
+
 - Ch 3 — Fonctions convexes
 - Ch 17 — Équations différentielles linéaires
 - Ch 7 — Fonctions vectorielles

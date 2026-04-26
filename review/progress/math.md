@@ -67,8 +67,8 @@ Format: each successful articulation = "validated". A second successful articula
 
 | Concept | Source | First validated | Consolidated | Notes |
 |---------|--------|-----------------|--------------|-------|
-| 1.1 — Euclidean Norm | [`01-linear-algebra-intuition.md`](../../mathematics/01-linear-algebra-intuition.md) | — | — | Explained by agent on 2026-04-18, not yet drilled as articulation |
-| 1.2 — Dot Product | [`01-linear-algebra-intuition.md`](../../mathematics/01-linear-algebra-intuition.md) | 2026-04-18 | — | Articulated clean: projection / ombre / 3 cases (s'aident, orthogonaux, s'opposent). Gap closed after correction: `a·b` = ombre × `|b|` (not just ombre). |
+| 1.1 — Euclidean Norm | [`01-linear-algebra-intuition.md`](../../mathematics/01-linear-algebra/README.md) | — | — | Explained by agent on 2026-04-18, not yet drilled as articulation |
+| 1.2 — Dot Product | [`01-linear-algebra-intuition.md`](../../mathematics/01-linear-algebra/README.md) | 2026-04-18 | — | Articulated clean: projection / ombre / 3 cases (s'aident, orthogonaux, s'opposent). Gap closed after correction: `a·b` = ombre × `|b|` (not just ombre). |
 | 3.6 — Chain Rule | [`intuition/3.6-chain-rule.md`](../../mathematics/intuition/3.6-chain-rule.md) | 2026-04-24 | — | Articulated on 2nd try: landed on the **dimensional argument** (`du/dx · df/du` must yield `df/dx`, addition breaks units). First try gave the correct core ("série vs parallèle → ×") but without an owned image — engrenages and amplis didn't stick. Finally anchored via *taux de change en cascade* / *réductions en cascade* (-20% puis -10% = -28%, pas -30%). Positive side of the argument (cascade of factors) still to lock in — currently relies on the negative side (addition violates units). |
 
 ---

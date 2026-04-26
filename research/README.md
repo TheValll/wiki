@@ -4,6 +4,8 @@ Meta-skills for becoming a researcher: writing papers, reading papers, giving ta
 
 Distilled from talks, articles, and authors known for the craft of scholarship (Simon Peyton Jones, S. Keshav, …).
 
+> **At a glance:** [`RECAP.md`](./RECAP.md) — single-glance table of every key step across reading + writing.
+
 ---
 
 ## Syllabus

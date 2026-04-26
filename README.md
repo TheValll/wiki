@@ -2,7 +2,7 @@
 
 Personal learning wiki — structured notes across the technical domains I'm studying, synthesized from books, courses, videos, and articles.
 
-Agent instructions: see [`CLAUDE.md`](CLAUDE.md). Personal profile: [`me.md`](me.md). Pedagogical profile (agent-maintained): [`how-i-learn.md`](how-i-learn.md).
+Agent instructions: see [`CLAUDE.md`](CLAUDE.md). Personal profile: [`me.md`](me.md). Pedagogical profile (agent-maintained): [`how-i-learn.md`](how-i-learn.md). New-domain playbook: [`domains.md`](domains.md).
 
 ---
 
@@ -27,10 +27,10 @@ Where concepts link across domains — follow these to get the full picture.
 
 | Topic | Primary page | Related |
 |-------|--------------|---------|
-| Rotation matrices, Jacobian | [`ros2/20-inverse-kinematics.md`](ros2/20-inverse-kinematics.md) | [`mathematics/01-linear-algebra.md`](mathematics/01-linear-algebra.md) |
-| Motion planning, distance metrics | [`ros2/19-motion-planning.md`](ros2/19-motion-planning.md) | [`mathematics/01-linear-algebra.md`](mathematics/01-linear-algebra.md) |
-| Trajectory generation (splines, derivatives) | [`ros2/21-trajectory-generation.md`](ros2/21-trajectory-generation.md) | [`mathematics/03-derivatives.md`](mathematics/03-derivatives.md) |
-| DiffDrive kinematics | [`ros2/11-controllers-diffdrive.md`](ros2/11-controllers-diffdrive.md) | [`mathematics/01-linear-algebra.md`](mathematics/01-linear-algebra.md) |
+| Rotation matrices, Jacobian | [`ros2/moveit/20-inverse-kinematics.md`](ros2/moveit/20-inverse-kinematics.md) | [`mathematics/01-linear-algebra/`](mathematics/01-linear-algebra/README.md) |
+| Motion planning, distance metrics | [`ros2/moveit/19-motion-planning.md`](ros2/moveit/19-motion-planning.md) | [`mathematics/01-linear-algebra/`](mathematics/01-linear-algebra/README.md) |
+| Trajectory generation (splines, derivatives) | [`ros2/moveit/21-trajectory-generation.md`](ros2/moveit/21-trajectory-generation.md) | [`mathematics/03-derivatives/`](mathematics/03-derivatives/README.md) |
+| DiffDrive kinematics | [`ros2/ros2-control/11-controllers-diffdrive.md`](ros2/ros2-control/11-controllers-diffdrive.md) | [`mathematics/01-linear-algebra/`](mathematics/01-linear-algebra/README.md) |
 
 *(More links will appear here as domains are added — Rust ↔ Embedded, Embedded ↔ Electronics, ML ↔ Math, etc.)*
 
@@ -49,7 +49,7 @@ Start a session with *"review"* — Claude runs an **opener menu** (time availab
 
 **Practice modes** (per domain, when supported):
 - `practice` — original exercises, formulas, computation
-- `intuition` — articulate the concept under-the-hood in your own words (no formulas), using the `*-intuition.md` companion
+- `intuition` — articulate the concept under-the-hood in your own words (no formulas), using the **Intuition** section of each concept page
 - `mix` — both
 
 **Key principle:** the wiki holds theory you've *written down*; the review system tracks what you've actually *practiced and internalized*. The agent never quizzes on concepts outside the active checklist.
@@ -89,7 +89,7 @@ wiki/
 ├── review/             ← spaced-repetition system
 ├── rust/               ← domain
 ├── ros2/               ← domain
-├── mathematics/        ← domain (+ *-intuition.md companions)
+├── mathematics/        ← domain (one folder per chapter, one file per concept)
 └── …                   ← future domains
 ```
 

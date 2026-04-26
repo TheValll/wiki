@@ -21,9 +21,11 @@ Entries shown as `—` are placeholders to fill in.
 
 ## ROS2
 
+- **Mode:** maintenance (24 concepts in `review/checklists/ros2.md`, all at Lv 0 initially as of 2026-04-26 — user already covered the wiki, goal = retention not learning)
+- **Bias:** ros2-control = 50% of warm-up draw (user-flagged weakness)
 - **Course progress:** ROS2 / SLAM course — not started yet (scheduled after DeepSight)
 - **Hardware setup:** —
-- **Last ROS2 touch:** —
+- **Last ROS2 touch (review or project):** —
 - **Blockers:** —
 
 ---

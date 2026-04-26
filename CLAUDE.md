@@ -5,6 +5,7 @@ This file is the **schema** for any LLM agent (Claude Code or other) working on 
 > **Also read [`me.md`](me.md) and [`how-i-learn.md`](how-i-learn.md)** at the start of every new conversation.
 > - `me.md` — who the user is, long-term goals (PhD EPFL 2028), active projects.
 > - `how-i-learn.md` — pedagogical profile: formats that land (multi-frame schemas, physical analogies), articulation-based correction pattern, signals to watch. Maintained by the agent over time, the user can correct it.
+> - **When adding a new domain, also read [`domains.md`](domains.md)** — playbook for structuring a new course (folder layout, file conventions, RECAP, reading-order DAG, launch checklist).
 
 ---
 
@@ -16,9 +17,10 @@ A **personal learning wiki** — structured notes synthesizing books, courses, v
 
 | Folder | Scope | Status |
 |--------|-------|--------|
-| [`rust/`](rust/README.md) | Rust language — based on the official Rust book | ch 1-11 done |
-| [`ros2/`](ros2/README.md) | ROS2 — nodes, control, MoveIt, hardware drivers | 24 pages |
-| [`mathematics/`](mathematics/README.md) | Math used in robotics / ML / graphics | linear algebra, derivatives |
+| [`rust/`](rust/README.md) | Rust language — based on the official Rust book | ch 1-15 ✓, 124 concept files |
+| [`ros2/`](ros2/README.md) | ROS2 — nodes, control, MoveIt, hardware drivers | 24 pages, 4 sub-folders |
+| [`mathematics/`](mathematics/README.md) | Math used in robotics / ML / graphics | 7 chapters, ~50 concept files |
+| [`research/`](research/README.md) | Meta-skills (reading, writing) for PhD prep | 2 pages |
 
 **Planned domains** (folders to be created as work begins): `embedded/` (Rust embedded, no_std), `low-level/` (memory, pointers, OS), `electronics/`, `ml/`, `dl/`, plus master/doctorate course material.
 
@@ -39,13 +41,20 @@ wiki/
 │   └── progress/       ← mastery state per domain
 ├── rust/
 │   ├── README.md       ← domain index
-│   └── 01-*.md … 13-*.md
+│   ├── RECAP.md        ← single-glance table
+│   ├── rust-intuition.md  ← global companion (train-readable)
+│   └── 01-*/ … 17-*/   ← one folder per chapter, one file per concept
 ├── ros2/
 │   ├── README.md
-│   └── 00-*.md … 23-*.md
+│   ├── RECAP.md
+│   ├── setup/          ← 00
+│   ├── basics/         ← 01-07
+│   ├── ros2-control/   ← 08-16
+│   └── moveit/         ← 17-23
 ├── mathematics/
 │   ├── README.md
-│   └── 01-*.md … 03-*.md
+│   ├── RECAP.md
+│   └── 01-*/ … 07-*/   ← one folder per chapter, one file per concept
 └── <future-domain>/
     ├── README.md
     └── …
@@ -118,17 +127,17 @@ When the user says *"ingest `raw/<file>`"*:
 When a concept spans domains, add a **"See also"** line at the end of the relevant section:
 
 ```markdown
-> See also: [Linear Algebra — Matrix × Vector](../mathematics/01-linear-algebra.md#13-matrix--vector-multiplication)
+> See also: [Linear Algebra — Matrix × Vector](../mathematics/01-linear-algebra/1.3-matrix-vector.md)
 ```
 
 Known cross-domain connections to watch for:
 
 | From | To | Why |
 |------|----|----|
-| `ros2/20-inverse-kinematics.md` | `mathematics/01-linear-algebra.md` | Jacobian, rotation matrices |
-| `ros2/19-motion-planning.md` | `mathematics/` | Distance metrics, sampling |
+| `ros2/moveit/20-inverse-kinematics.md` | `mathematics/01-linear-algebra/` | Jacobian, rotation matrices |
+| `ros2/moveit/19-motion-planning.md` | `mathematics/` | Distance metrics, sampling |
 | `rust/` (embedded future) | `low-level/`, `electronics/` | Registers, GPIO, protocols |
-| `ml/`, `dl/` (future) | `mathematics/03-derivatives.md` | Gradients, backprop |
+| `ml/`, `dl/` (future) | `mathematics/03-derivatives/` | Gradients, backprop |
 
 ---
 
