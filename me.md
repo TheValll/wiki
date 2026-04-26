@@ -23,7 +23,7 @@ This file tells any agent working in this wiki **who I am, what I'm working towa
 ## Multi-year roadmap
 
 ```
-2025-2026 (current - M1)    Math daily review + Rust + DeepSight-Nebula + ESP32 firmware
+2025-2026 (current - M1)    Math (Deisenroth) + Rust + DeepSight-Nebula + ESP32 firmware
 Summer 2026                 Ambitious M1 internship (research-lab ideally)
 2026-2027 (M2)              Top grades + ML/DL certs + ROS2/SLAM course + 2nd robotics project
 Spring 2027                 M2 internship (EPFL visiting OR top FR lab: LAAS/ISIR/Inria/ONERA)
@@ -56,7 +56,7 @@ Sept 2028                   Start PhD
 
 | Track | Rhythm | State |
 |-------|--------|-------|
-| **Math (MP-level, via Dunod Maths MPSI-MP 5e ed.)** | 30-60 min / evening | Module 2 (derivatives) in spaced-repetition review |
+| **Math (Mathematics for Machine Learning — Deisenroth, Faisal, Ong)** | 30-60 min / evening | Pivoting to Deisenroth as the primary reference (better aligned with ML/robotics trajectory than Dunod MP). Dunod kept as a reference but no longer the daily driver. |
 | **Rust** | ongoing | Chapter 13 of the Rust book |
 | **Robotics papers** | 1 / week (Pass 1+2) | Starter pack defined (see `raw/papers/shortlist.md`) |
 | **ROS2 / SLAM course** | coming after DeepSight | Not started |
@@ -65,23 +65,21 @@ Sept 2028                   Start PhD
 
 ---
 
-## Math study plan (priority chapters from the Dunod book)
+## Math study plan
 
-See `review/checklists/math.md` for the full curriculum. From the Dunod MP theory book, the **260-380 pages to focus on** are:
+**Primary book:** [Mathematics for Machine Learning](https://mml-book.github.io) (Deisenroth, Faisal, Ong — Cambridge UP 2020, free PDF). Covers linear algebra, analytic geometry, matrix decompositions, vector calculus, probability + distributions, continuous optimization, then applied chapters (linear regression, dimensionality reduction, density estimation, classification with SVMs).
 
-**P1 — essential (≈263 p. theory + proofs):**
+**Why Deisenroth over Dunod MP**: pedagogy aligned with how I learn (intuition first, formalism second), exercises framed in ML contexts that motivate every concept, and it's exactly the foundation needed for the EPFL PhD trajectory. Dunod stays as a reference for proof-level rigor when needed.
 
-- Ch 2 — Réduction des endomorphismes
-- Ch 14 — Espaces préhilbertiens et euclidiens
-- Ch 18 — Calcul différentiel
-- Ch 15 — Espaces probabilisés
-- Ch 16 — Variables aléatoires discrètes
+**Priorities for me (mapped to Deisenroth chapters):**
 
-**P2 — useful bonus (≈121 p.):**
+- Linear algebra + analytic geometry (ch 2-3) — for SE(3), Jacobians, PCA
+- Matrix decompositions (ch 4) — eigendecomposition, SVD, Cholesky
+- Vector calculus (ch 5) — for backprop, gradient descent
+- Probability & distributions (ch 6) — Gaussian, Bayes, exponential families
+- Continuous optimization (ch 7) — gradient descent variants, constrained optimization
 
-- Ch 3 — Fonctions convexes
-- Ch 17 — Équations différentielles linéaires
-- Ch 7 — Fonctions vectorielles
+**Companions:** [3Blue1Brown — Essence of Linear Algebra / Calculus](https://www.youtube.com/c/3blue1brown) for intuition reset. [MIT 18.06 (Strang)](https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/) when a linear algebra concept resists.
 
 ---
 
@@ -114,7 +112,7 @@ See `review/checklists/math.md` for the full curriculum. From the Dunod MP theor
 | Math intensity (10 min/day was too light) | Scaled to 30-60 min/evening |
 | No paper reading habit yet | Starter pack defined, 1/week minimum |
 | English at work level but not yet TOEFL-ready | Iceberg Data Lab immersion + TOEFL prep in 2027 |
-| Robotics theory (SE(3), Lagrangian dynamics, Kalman) | ROS2 course + books + future modules in math review |
+| Robotics theory (SE(3), Lagrangian dynamics, Kalman) | ROS2 course + Modern Robotics (Lynch & Park) + Probabilistic Robotics (Thrun) when ready |
 
 ---
 

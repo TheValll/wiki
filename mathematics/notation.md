@@ -3,9 +3,9 @@
 A bilingual (FR / EN) reference for mathematical symbols encountered in the wiki and review sessions. Used as a **lookup**, not a drill.
 
 **Role:**
-- Reference companion for the Flow M v2 review (see [`review/AGENT.md`](../review/AGENT.md) §3.M).
-- Each new symbol introduced in a lesson is added here with FR + EN reading.
-- Exercise statements use proper notation; if a symbol is freshly introduced (≤ 1-2 sessions ago), the agent puts a one-line glossary at the bottom of the exercise. Once the symbol is in this atlas and has been reused 3+ times, the glossary is dropped.
+- A passive reference grown alongside reading (Mathematics for Machine Learning, …) and articulation drills (see [`CLAUDE.md`](../CLAUDE.md) §7).
+- Each new symbol encountered in a chapter or drill is added here with FR + EN reading.
+- Used as a lookup, not a flashcard deck. Familiarisation comes from repeated exposure in real exercises.
 
 **Conventions:**
 - One row per symbol

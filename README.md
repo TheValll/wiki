@@ -36,23 +36,21 @@ Where concepts link across domains — follow these to get the full picture.
 
 ---
 
-## Review system
+## How practice happens
 
-1h-2h evening sessions blending spaced repetition, original practice, and articulated recall — see [`review/README.md`](review/README.md).
+There is **no review system in the wiki**. The wiki is a **reference**; practice happens elsewhere:
 
-- `review/AGENT.md` — session rules: opener (time + mode) → per-domain 6 steps → final check-in
-- `review/checklists/<domain>.md` — curriculum (ordered concept list)
-- `review/progress/<domain>.md` — current mastery levels (0 → 4) + intuition drills log
-- `review/external-tracking.md` — non-wiki state (book chapters, papers, projects, PhD prep)
+| Domain | Source of practice | Source of retention |
+|---|---|---|
+| **Maths** | [Mathematics for Machine Learning](https://mml-book.github.io) (Deisenroth, Faisal, Ong) — book + exercises | Re-reading + use in real ML projects |
+| **Rust** | The official [Rust book](https://doc.rust-lang.org/book/), then Rust embedded on DeepSight | Real project code = the best retention |
+| **ROS2** | No active practice for now | Re-reading wiki pages + the [`ros2/ros2-flows.md`](ros2/ros2-flows.md) atlas when needed |
 
-Start a session with *"review"* — Claude runs an **opener menu** (time available, which domains, which mode: `practice` / `intuition` / `mix`) before starting any block. Every session ends with a ~5 min check-in on external state.
+**Articulation drills on demand.** If I want to lock in a concept, I can ask Claude *"explique-moi X"* / *"drill-moi sur Y"*. Claude runs a focused mini-session (recap → I re-explain in my own words → Claude pinpoints the gap). No persistence, no levels, no progress tracking — ad hoc, see [`CLAUDE.md`](CLAUDE.md) §7.
 
-**Practice modes** (per domain, when supported):
-- `practice` — original exercises, formulas, computation
-- `intuition` — articulate the concept under-the-hood in your own words (no formulas), using the **Intuition** section of each concept page
-- `mix` — both
-
-**Key principle:** the wiki holds theory you've *written down*; the review system tracks what you've actually *practiced and internalized*. The agent never quizzes on concepts outside the active checklist.
+**Atlases** (built passively over time):
+- [`mathematics/notation.md`](mathematics/notation.md) — bilingual FR/EN math notation reference
+- [`ros2/ros2-flows.md`](ros2/ros2-flows.md) — multi-frame ASCII schemas of ROS2 mechanisms
 
 ---
 
@@ -84,12 +82,13 @@ wiki/
 ├── CLAUDE.md           ← agent schema + conventions
 ├── me.md               ← personal profile (identity, goals, roadmap)
 ├── how-i-learn.md      ← pedagogical profile (agent-maintained)
+├── domains.md          ← playbook for adding a new domain
 ├── README.md           ← this file
 ├── raw/                ← unprocessed sources
-├── review/             ← spaced-repetition system
-├── rust/               ← domain
-├── ros2/               ← domain
-├── mathematics/        ← domain (one folder per chapter, one file per concept)
+├── rust/               ← domain (incl. rust-intuition.md companion)
+├── ros2/               ← domain (incl. ros2-flows.md visual atlas)
+├── mathematics/        ← domain (incl. notation.md atlas)
+├── research/           ← meta-skills (reading/writing papers)
 └── …                   ← future domains
 ```
 

@@ -248,8 +248,7 @@ Use this when the user says *"I want to add a new domain X"*:
 - [ ] **Update root `README.md`** — add the domain to the Domains table + cross-domain connections.
 - [ ] **Update `CLAUDE.md` §1** Current domains table.
 - [ ] **Update `CLAUDE.md` §6** cross-domain table if applicable.
-- [ ] **Create review tracking** if the domain will be drilled (`review/checklists/<domain>.md` + `review/progress/<domain>.md`).
-- [ ] **Add domain to `external-tracking.md`** if non-wiki state needs to be checked at session end.
+- [ ] **Consider an atlas companion** if the domain has flows, schemas, or notation worth capturing as a long-term artifact (e.g. `<domain>/<domain>-flows.md`, `<domain>/notation.md`). Optional — only when there's a clear visual/symbolic payload to preserve.
 
 ---
 

@@ -3,6 +3,8 @@
 A structured deep-dive into ROS2, from basic concepts to ros2_control internals and MoveIt motion planning.
 
 > **At a glance:** [`RECAP.md`](./RECAP.md) — single-glance table of every page across all 24 parts.
+>
+> **Visual atlas:** [`ros2-flows.md`](./ros2-flows.md) — multi-frame ASCII schemas of ROS2 mechanisms (cycle read/update/write, lifecycle gating, planning vs control split, …). Grows session by session, train-readable.
 
 ---
 

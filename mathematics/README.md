@@ -5,6 +5,8 @@ Formulas used across robotics, graphics, ML, and AI — with concrete analogies,
 Each domain folder is a chapter; each `X.Y-...md` file inside is **one concept**. Course content (formula, examples) and intuition (physical image, step-by-step decomposition) live together.
 
 > **At a glance:** [`RECAP.md`](./RECAP.md) — single-glance table of every math concept, grouped by chapter.
+>
+> **Notation atlas:** [`notation.md`](./notation.md) — bilingual FR/EN reference for Greek letters, set notation, quantifiers, operators, linear algebra, calculus, probability symbols. Lookup, not drill.
 
 ---
 

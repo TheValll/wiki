@@ -2,11 +2,11 @@
 
 A growing collection of multi-frame ASCII schemas covering the **logic and flow** of core ROS2 mechanisms.
 
-**Role:** companion artifact for the Flow E review system (see [`review/AGENT.md`](../review/AGENT.md) §3.E). Each section captures one concept, decomposed frame-by-frame so the mental motion can be replayed offline (train ride, pre-sleep review, etc.).
+**Role:** companion artifact for ROS2 — captures the *logic and flow* of core mechanisms in a form that survives months without touching the code. Each section captures one concept, decomposed frame-by-frame so the mental motion can be replayed offline (train ride, pre-sleep review). Frames are added on demand during articulation drills (see [`CLAUDE.md`](../CLAUDE.md) §7) or when the user requests a recap.
 
 **Convention per concept:**
 
-- One `## N — Concept name` section, where `N` matches the number in [`review/checklists/ros2.md`](../review/checklists/ros2.md)
+- One `## N — Concept name` section, where `N` matches the page number in [`README.md`](./README.md) (e.g. `08` for ros2_control architecture)
 - Short orientation paragraph (1-2 sentences)
 - **Multi-frame ASCII schema** — one frame per step of the mechanism, not one dense diagram. Rounded boxes (`┌─────┐`)
 - Optional small comparative table for case analysis
