@@ -13,11 +13,11 @@ Agent instructions: see [`CLAUDE.md`](CLAUDE.md). Personal profile: [`me.md`](me
 | [**Rust**](rust/README.md) | The Rust language, based on the official book | Ch 1-15 ✓ |
 | [**ROS2**](ros2/README.md) | Robot Operating System 2 — nodes, control, MoveIt | 24 pages ✓ |
 | [**Mathematics**](mathematics/README.md) | Math for robotics, ML, graphics | 3 pages, growing |
+| [**ML / DL**](ml/README.md) | Machine learning + deep learning, classical → transformers → generative → RL | Skeleton, growing |
 | [**Research**](research/README.md) | Meta-skills (reading, writing, speaking) + PhD-prep field navigation | 2 pages, growing |
 | **Embedded** *(planned)* | Rust embedded, no_std, peripherals | — |
 | **Low-level** *(planned)* | Memory, pointers, OS internals | — |
 | **Electronics** *(planned)* | Circuits, protocols, signals | — |
-| **ML / DL** *(planned)* | Machine learning, deep learning | — |
 
 ---
 

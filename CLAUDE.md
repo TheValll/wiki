@@ -20,9 +20,10 @@ A **personal learning wiki** — structured notes synthesizing books, courses, v
 | [`rust/`](rust/README.md) | Rust language — based on the official Rust book | ch 1-15 ✓, 124 concept files |
 | [`ros2/`](ros2/README.md) | ROS2 — nodes, control, MoveIt, hardware drivers | 24 pages, 4 sub-folders |
 | [`mathematics/`](mathematics/README.md) | Math used in robotics / ML / graphics | 7 chapters, ~50 concept files |
+| [`ml/`](ml/README.md) | Machine learning + deep learning models (classical → DL → generative → RL) | Skeleton, growing |
 | [`research/`](research/README.md) | Meta-skills (reading, writing) for PhD prep | 2 pages |
 
-**Planned domains** (folders to be created as work begins): `embedded/` (Rust embedded, no_std), `low-level/` (memory, pointers, OS), `electronics/`, `ml/`, `dl/`, plus master/doctorate course material.
+**Planned domains** (folders to be created as work begins): `embedded/` (Rust embedded, no_std), `low-level/` (memory, pointers, OS), `electronics/`, plus master/doctorate course material.
 
 ---
 
@@ -52,6 +53,10 @@ wiki/
 │   ├── RECAP.md
 │   ├── notation.md     ← bilingual FR/EN math notation atlas
 │   └── 01-*/ … 07-*/   ← one folder per chapter, one file per concept
+├── ml/
+│   ├── README.md       ← domain index + per-page schema for model files
+│   ├── RECAP.md
+│   └── 01-*/ … 13-*/   ← one folder per family, one file per model
 └── <future-domain>/
     ├── README.md
     └── …
