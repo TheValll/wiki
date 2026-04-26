@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(git mv *)",
-      "Bash(curl *)"
+      "Bash(curl *)",
+      "Bash(git rm *)"
     ]
   }
 }

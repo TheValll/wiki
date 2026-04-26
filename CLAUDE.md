@@ -34,11 +34,6 @@ wiki/
 ├── README.md           ← global index, cross-domain map
 ├── raw/                ← unprocessed sources (articles, transcripts, notes)
 │   └── README.md       ← explains the ingest workflow
-├── review/             ← spaced-repetition practice system
-│   ├── AGENT.md        ← session framework (pedagogy rules)
-│   ├── README.md       ← user-facing doc
-│   ├── checklists/     ← curriculum per domain
-│   └── progress/       ← mastery state per domain
 ├── rust/
 │   ├── README.md       ← domain index
 │   ├── RECAP.md        ← single-glance table
@@ -47,6 +42,7 @@ wiki/
 ├── ros2/
 │   ├── README.md
 │   ├── RECAP.md
+│   ├── ros2-flows.md   ← visual atlas (multi-frame ASCII schemas of ROS2 flows)
 │   ├── setup/          ← 00
 │   ├── basics/         ← 01-07
 │   ├── ros2-control/   ← 08-16
@@ -54,11 +50,14 @@ wiki/
 ├── mathematics/
 │   ├── README.md
 │   ├── RECAP.md
+│   ├── notation.md     ← bilingual FR/EN math notation atlas
 │   └── 01-*/ … 07-*/   ← one folder per chapter, one file per concept
 └── <future-domain>/
     ├── README.md
     └── …
 ```
+
+**Note:** there is no `review/` system. The wiki is a learning reference; practice happens in books (Deisenroth for math, the official Rust book, etc.) and in real projects (DeepSight). Articulation drills are ad hoc on user demand — see §7.
 
 Each domain folder has its **own `README.md`** = index + syllabus with links to every page in that domain.
 
@@ -141,19 +140,15 @@ Known cross-domain connections to watch for:
 
 ---
 
-## 7. Review sessions
+## 7. Articulation drills on demand
 
-When the user says *"review"* (with or without a specific domain), switch to **review mode**. Sessions are **1h-2h evening blocks**, not 30 min.
+If the user explicitly asks for a drill / explainer / articulation on a concept (*"explique-moi X"*, *"drill-moi sur Y"*, *"fais-moi un schéma de Z"*), run a focused mini-session:
 
-1. Read `review/AGENT.md` — the full framework. Follow it strictly.
-2. **Run the Session Opener FIRST** (AGENT.md §2): ask time available, which domain(s), which mode (`practice` / `intuition` / `mix` where supported), focus. Propose a time allocation, let the user validate.
-3. For each chosen domain, follow the **6-step per-domain flow** (warm-up → lesson → challenge → STOP → correction → bonus → progress update).
-4. Never quiz on concepts marked "Not yet reached" in the checklist.
-5. Generate **original** exercises — never copy wiki examples. In **intuition mode**, the challenge is a single articulation drill (re-explain in own words, **no formulas allowed**).
-6. **Always run the Final Check-in** at the end (AGENT.md §5): 2-3 short questions from `review/external-tracking.md` on non-wiki state (Rust book chapter, papers, DeepSight, PhD prep). Update `external-tracking.md` on the spot if the user reports new state.
-7. At end of each domain block, update `review/progress/<domain>.md` directly (including the "Intuition drills" table when in intuition mode).
+1. **Recap** in 1-2 paragraphs — visual / intuitive: physical image first, mechanism second, formula last (cf [`how-i-learn.md`](how-i-learn.md) §1.1-1.2). For ROS2 flows, prefer a multi-frame ASCII schema and update [`ros2/ros2-flows.md`](ros2/ros2-flows.md) if a new frame lands. For math, surface the relevant symbols and update [`mathematics/notation.md`](mathematics/notation.md) if symbols are new.
+2. **Articulation** — ask the user to re-explain in his own words. **STOP. Wait.**
+3. **Correction** — pinpoint the precise gap (inversion, missing piece, wrong direction). Don't silently rewrite his draft (cf `how-i-learn.md` §2).
 
-The review system is separate from the wiki: the wiki is theory (what the user wrote), the checklist is practice (what the user is drilling), `external-tracking.md` is the rest of his world outside the wiki.
+No persistence, no levels, no progress tracking. This is **ad hoc**, not a system. Concept source = any wiki page, the atlases above, or off-wiki on user request.
 
 ---
 
