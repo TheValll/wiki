@@ -22,6 +22,7 @@ A **personal learning wiki** — structured notes synthesizing books, courses, v
 | [`mathematics/`](mathematics/README.md) | Math used in robotics / ML / graphics | 7 chapters, ~50 concept files |
 | [`ml/`](ml/README.md) | Machine learning + deep learning models (classical → DL → generative → RL) | Skeleton, growing |
 | [`research/`](research/README.md) | Meta-skills (reading, writing) for PhD prep | 2 pages |
+| [`school/`](school/README.md) | M1/M2 Efrei course notes (parent domain, one sub-folder per course) | Big Data Framework ✓ |
 
 **Planned domains** (folders to be created as work begins): `embedded/` (Rust embedded, no_std), `low-level/` (memory, pointers, OS), `electronics/`, plus master/doctorate course material.
 

@@ -15,6 +15,7 @@ Agent instructions: see [`CLAUDE.md`](CLAUDE.md). Personal profile: [`me.md`](me
 | [**Mathematics**](mathematics/README.md) | Math for robotics, ML, graphics | 3 pages, growing |
 | [**ML / DL**](ml/README.md) | Machine learning + deep learning, classical → transformers → generative → RL | Skeleton, growing |
 | [**Research**](research/README.md) | Meta-skills (reading, writing, speaking) + PhD-prep field navigation | 2 pages, growing |
+| [**School**](school/README.md) | M1/M2 Efrei courses (course-bound, exam-oriented) | Big Data Framework ✓ |
 | **Embedded** *(planned)* | Rust embedded, no_std, peripherals | — |
 | **Low-level** *(planned)* | Memory, pointers, OS internals | — |
 | **Electronics** *(planned)* | Circuits, protocols, signals | — |
@@ -89,6 +90,7 @@ wiki/
 ├── ros2/               ← domain (incl. ros2-flows.md visual atlas)
 ├── mathematics/        ← domain (incl. notation.md atlas)
 ├── research/           ← meta-skills (reading/writing papers)
+├── school/             ← M1/M2 course notes (parent domain, sub-folders per course)
 └── …                   ← future domains
 ```
 
