@@ -2,11 +2,11 @@
 
 A structured deep-dive into Rust, from installation to a full command-line project.
 
-Based on [The Rust Programming Language](https://doc.rust-lang.org/book/) (Chapters 1-15).
+Based on [The Rust Programming Language](https://doc.rust-lang.org/book/) (Chapters 1-17).
 
-> **At a glance:** [`RECAP.md`](./RECAP.md) — single-glance table of every concept across all 17 chapters.
+> **At a glance:** [`RECAP.md`](./RECAP.md) — single-glance table of every concept across all 19 chapters.
 >
-> **Companion:** [`rust-intuition.md`](./rust-intuition.md) — pure intuition of the language's tricky concepts (ownership, borrowing, lifetimes, traits, generics, errors, closures, iterators, cargo & crates.io, smart pointers), no code, no exercises. Covers chapters 1-15. Readable on a train.
+> **Companion:** [`rust-intuition.md`](./rust-intuition.md) — pure intuition of the language's tricky concepts (ownership, borrowing, lifetimes, traits, generics, errors, closures, iterators, cargo & crates.io, smart pointers, fearless concurrency, async/await), no code, no exercises. Covers chapters 1-17. Readable on a train.
 
 ---
 
@@ -104,3 +104,15 @@ Each chapter is a **folder**; each `X.Y-...md` file inside is **one concept**. A
 | # | Chapter | Rust Book |
 |---|---------|-----------|
 | 17 | [Smart Pointers](./17-smart-pointers/README.md) | Ch. 15 |
+
+### Block O — Fearless Concurrency
+
+| # | Chapter | Rust Book |
+|---|---------|-----------|
+| 18 | [Fearless Concurrency](./18-fearless-concurrency/README.md) | Ch. 16 |
+
+### Block P — Async / Await
+
+| # | Chapter | Rust Book |
+|---|---------|-----------|
+| 19 | [Async / Await](./19-async-await/README.md) | Ch. 17 |

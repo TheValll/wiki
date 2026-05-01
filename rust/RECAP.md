@@ -213,8 +213,29 @@ Single-glance table of every concept across the Rust domain, organized by chapte
 | 17.6 | `Rc<RefCell<T>>` | Shared mutable state | Many owners + write access through one |
 | 17.7 | Reference Cycles & `Weak<T>` | Avoid memory leaks from cyclic `Rc` graphs | A non-owning ref to break the cycle |
 
+## Ch 18 — [Fearless Concurrency](./18-fearless-concurrency/README.md)
+
+| § | Concept | What / for what | Intuition |
+|---|---|---|---|
+| 18.1 | `thread::spawn` & `JoinHandle` | Spawn an OS thread, wait via `.join()`, `move` to transfer ownership | Hand a closure to a real OS thread; `move` because the thread may outlive its caller |
+| 18.2 | Channels (`mpsc`) | Send/recv between threads, ownership transfers across the channel | Conveyor belt — once you put the box down, it's not yours anymore |
+| 18.3 | `Mutex<T>` | Mutual exclusion via a `MutexGuard` smart pointer; lock released on drop | Whiteboard with a single marker — only the holder can write |
+| 18.4 | `Arc<T>` | Atomically-counted shared ownership across threads | Like `Rc`, but with an atomic counter — combine with `Mutex` for shared mutation |
+| 18.5 | `Send` & `Sync` | Marker traits that gate what can cross threads | The compiler-enforced contract behind everything in `std::sync` |
+
+## Ch 19 — [Async / Await](./19-async-await/README.md)
+
+| § | Concept | What / for what | Intuition |
+|---|---|---|---|
+| 19.1 | Futures, `async`, `.await` | `async fn` returns a lazy state machine; `.await` is "yield until ready" | A paused recipe — nothing cooks until someone runs the future |
+| 19.2 | Executors & runtimes | `std` defines `Future`; the runtime (Tokio, smol) actually polls | The kitchen — the expediter (executor) calls tickets, the reactor watches the oven (OS events) |
+| 19.3 | `join!`, `select!`, `spawn` | Run futures in parallel, race them, or fire onto another task | Three concurrency dials: all-of, first-of, fire-and-forget |
+| 19.4 | `Stream` | Async `Iterator`: many values, eventually | Conveyor belt where each box arrives "eventually" |
+| 19.5 | Async vs threads | Async = waiting at scale (I/O); threads = computing in parallel (CPU) | One rule: if it spends time waiting → async; if it spends time computing → threads |
+| 19.6 | `Pin`, `Send`, async traits | Why `Pin<&mut Self>` in `poll`; spawn requires `Send`; AFIT stable since 1.75 | The rough edges; 95 % of code never sees them |
+
 ---
 
 ## Companion: [`rust-intuition.md`](./rust-intuition.md)
 
-Pure-intuition single-file companion (no formulas, no exercises) covering ownership, traits, generics, closures, iterators, smart pointers — read-on-the-train style.
+Pure-intuition single-file companion (no formulas, no exercises) covering ownership, traits, generics, closures, iterators, smart pointers, fearless concurrency, async/await — read-on-the-train style.

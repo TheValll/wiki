@@ -439,6 +439,141 @@ Everywhere you see *runtime*, you've paid for **flexibility** with a **panic ris
 
 ---
 
+## Part 8 — Fearless concurrency (chapter 16)
+
+### 8.1 — What "fearless" means
+
+Concurrency in C is a minefield: data races, dangling pointers across threads, locks acquired in the wrong order — and most of it isn't caught until production. Rust's bet is that the **same** ownership and borrowing rules that prevent bugs in single-threaded code also prevent **data races** in multi-threaded code. You don't learn a new system for threads; you reuse the one you already know. The compiler refuses to compile most of the racy patterns. That's why it's "fearless" — not because nothing can go wrong, but because the categories of bugs that haunt other languages are simply rejected at the door.
+
+The mental image: ownership in single-threaded Rust is a **traffic system inside one city**. Concurrency is the **same traffic system extended across cities** — same rules of right-of-way, but now there are highway markers (`Send`, `Sync`) that say which vehicles are allowed to cross the bridge between cities, and which must stay in their hometown.
+
+---
+
+### 8.2 — Threads: real OS threads, sent off with `move`
+
+`thread::spawn(|| { … })` hands a closure to a fresh OS thread — same primitive as `pthread_create`, just safe. The closure starts running in parallel; you get a `JoinHandle` you can `.join()` on later to wait for the result. Almost every spawn closure starts with `move` because the spawned thread might outlive the function that created it — capturing by reference would risk dangling, so the compiler insists you transfer ownership.
+
+The mental image: `thread::spawn` is **handing an envelope to a courier**. Once the courier walks out the door, you don't know when they'll be back. Anything inside the envelope must belong to the courier outright — you can't lend them something you might want back. `JoinHandle` is the **return receipt**: when you `join` it, you wait at the door until the courier comes back with whatever they were sent to fetch.
+
+---
+
+### 8.3 — Channels: share by communicating
+
+Instead of two threads poking at the same memory, what if one thread **sends** a value and the other **receives** it? The value's ownership transfers across the channel — once you've sent it, you can't read it anymore. No aliasing, no race. `mpsc::channel()` (multi-producer, single-consumer) gives you a `Sender` and a `Receiver`; `send` puts a value on the belt, `recv` waits at the other end.
+
+This is the Go-style philosophy that Rust embraces: *do not communicate by sharing memory; instead, share memory by communicating.* You almost never reach for raw shared state in well-designed Rust concurrency — you set up channels, and each thread owns its own slice of the world.
+
+The mental image: a **conveyor belt** between two workers. Worker A places boxes on the belt; worker B picks them up at the other end. Once a box leaves A's hand, it isn't theirs anymore — they can't reach back and modify the contents. The belt moves ownership, not just data. (And `tx.clone()` lets you have multiple workers feeding the same belt — many producers, one consumer.)
+
+---
+
+### 8.4 — `Mutex<T>`: shared state, one writer at a time
+
+Sometimes channels are wrong for the problem — you really do want **all threads looking at the same value** and taking turns writing. That's a `Mutex<T>`. Calling `m.lock()` blocks until the lock is free, then hands you a `MutexGuard` that acts like `&mut T`. When the guard goes out of scope, it drops, the lock releases automatically. There is no `.unlock()` — the type system enforces release.
+
+`Mutex` is the threaded sibling of `RefCell` (§7.5). Same idea: pretend you have shared access (`&Mutex<T>`), get back exclusive access (`&mut` to inner) at the cost of a runtime check. `RefCell` panics on violation; `Mutex` blocks until the violation can no longer happen.
+
+The mental image: a **shared whiteboard with a single marker**. Many people in the room, but only the one holding the marker can write on the board. Put the marker down (drop the guard), and the next person picks it up. There is exactly one marker; the type system makes sure of it.
+
+---
+
+### 8.5 — `Arc<T>`: shared ownership, but atomic
+
+`Mutex<T>` alone has one owner. To share it across threads you wrap it again: `Arc<Mutex<T>>` — many owners, each can briefly become **the** writer. `Arc` is `Rc` with one change: the reference counter is updated with **atomic CPU instructions**, so two threads can `clone` and `drop` simultaneously without corrupting the count. The API is identical; the only cost is that the atomic op is ~10× slower than a plain integer increment (still fast — single-digit nanoseconds).
+
+The pattern `Arc<Mutex<T>>` is the canonical shape for shared mutable state. Read inside-out: a value, wrapped in a Mutex so only one thread writes at a time, wrapped in an Arc so many threads can all hold a copy of the handle. Use `Arc<RwLock<T>>` when reads vastly outnumber writes — many readers OR one writer, instead of always one.
+
+The mental image: `Rc` is **a string with paper tally marks** — fine in a quiet room, but if two people try to add a mark at the same time, they smudge each other's. `Arc` is **a digital counter** — atomic increment, no smudging, slightly slower per click.
+
+---
+
+### 8.6 — `Send` and `Sync`: the contract behind everything
+
+Two **marker traits**, no methods, just labels:
+- **`Send`**: this type can be **transferred** to another thread.
+- **`Sync`**: this type can be **shared** between threads — a `&T` is `Send`.
+
+You almost never implement them by hand. The compiler auto-derives them for any type whose fields are all `Send` / `Sync`. The interesting types are the ones that **opt out**: `Rc<T>` is `!Send` (its counter isn't atomic), `RefCell<T>` is `!Sync` (its runtime check isn't thread-safe), raw pointers are neither.
+
+Every API in `std::sync` reads these marker traits as preconditions. `thread::spawn` takes `F: FnOnce() -> T + Send + 'static` — the closure must be sendable to the new thread. `tokio::spawn` does the same for futures. `Arc<T>` is `Send + Sync` only when `T: Send + Sync`. The whole concurrency stack is a network of these requirements; the compiler walks it for you and complains if any link is broken.
+
+The mental image: `Send` is a **passport** — this type is allowed to cross the border to another thread. `Sync` is a **shared library card** — many threads can simultaneously check this type out (read-only borrow). Most types have both passport and library card. The dangerous types (`Rc`, `RefCell`, raw pointers) are barred at the border, by name, by the compiler.
+
+---
+
+## Part 9 — Async / Await (chapter 17)
+
+### 9.1 — Threads vs async: two tools, two problems
+
+Threads (Part 8) give you **parallelism** — many things really happening at once on different cores. Async gives you **concurrency** — many things *making progress* without dedicating a whole OS thread to each. They're not interchangeable. The single rule: if your code spends most of its time **waiting** (network, disk, sensors, locks), use async. If your code spends most of its time **computing** (math, parsing, hashing), use threads.
+
+A web server holding 10 000 simultaneous TCP connections is the canonical async case — each connection is idle 99 % of the time, waiting on the network. 10 000 threads would burn 20 GB of stack space; 10 000 async tasks fit on one runtime, comfortably. A ray tracer is the canonical thread case — every CPU cycle is doing useful work, there's nothing to wait on, async would just add overhead.
+
+The mental image: threads are **employees** — each one gets their own desk and works one job at a time. Async tasks are **paper tickets** the same employees pass around — when a ticket says "wait for the oven," the employee sets it down and grabs another one. Many tickets per employee, no idle staff.
+
+---
+
+### 9.2 — Futures: lazy by default
+
+In most languages, calling an async function **starts** the work. In Rust, calling `async fn foo()` **does nothing**. It just hands you a `Future` — a struct representing the paused computation. Until something actually runs that future to completion, the body never executes.
+
+```rust
+let fut = fetch(url);   // nothing happens
+let r = fut.await;      // now the work runs
+```
+
+This is jarring at first ("I called the function, why didn't it run?") but it's the foundation of how async composes: futures are **values**, you can hold them, combine them with `join!` and `select!`, throw them away, restart them. Eager async (Python, JS) doesn't let you do that — the work has already started, you can't take it back.
+
+The mental image: an `async fn` is **a recipe card**. Calling it gives you the card; nothing cooks until you hand it to a chef and say "make this." `.await` is the chef pausing at a step that says "wait 20 minutes for the dough to rise" — they walk away, work on another order, come back when the timer rings. Each `.await` in your code is a **pause-and-resume point**.
+
+---
+
+### 9.3 — Executors: the chef Rust doesn't ship with
+
+A future is just a state machine. Something has to actually call `poll` in a loop, watch for I/O readiness, reschedule futures when they wake up. That something is the **executor**, and Rust's `std` does **not** provide one. You pick a runtime as a library — almost everyone picks Tokio.
+
+This is unusual: in Go, Python, JS, the runtime is the language. Rust split the language (`Future`, `.await`) from the runtime (Tokio, smol, async-std) so the same syntax can drive a 16-core production server **and** a microcontroller. The cost: you have to add `tokio = { version = "1", features = ["full"] }` to every async project, and `#[tokio::main]` decorates your `main`. The benefit: async Rust runs on bare metal too.
+
+The mental image: `std` ships you the **recipe cards and the pause-and-resume mechanism**, but not the kitchen. You import a kitchen (Tokio) — that brings the expediter (executor) calling out tickets, the workers (worker threads) cooking them, and the oven timer (reactor) listening for OS events and pinging the expediter when something is ready.
+
+---
+
+### 9.4 — `join!`, `select!`, `spawn`: three concurrency dials
+
+You have N futures and you want to run them in parallel. There are three flavors:
+
+- **`join!`** — *all of them, together.* Polls each, finishes when every one is `Ready`, returns a tuple of results. Same task, no spawning. Use this for parallel fetches that all need to complete.
+- **`select!`** — *first one wins, cancel the rest.* As soon as one branch is `Ready`, the others are dropped mid-flight. Use this for timeouts, racing the fastest mirror, cancellation.
+- **`spawn`** — *fire onto another task.* Returns a `JoinHandle`, like `thread::spawn`. The future may move to a different worker thread (so it must be `Send`). Use this for fire-and-forget, or when the work outlives the caller.
+
+The mental image: `join!` is **putting three tickets in a row on the rail and waiting for all three to come back**. `select!` is **a horse race** — the first finisher wins, the others are pulled off the track. `spawn` is **dropping a ticket into a separate kitchen** — you'll check on it later, and meanwhile both kitchens cook in parallel.
+
+---
+
+### 9.5 — `Stream`: many values, eventually
+
+A `Future` resolves to **one** value. A `Stream` produces **many** — it's the async equivalent of `Iterator`. `while let Some(item) = stream.next().await` is the async-for loop. Streams are everywhere I/O is: a TCP listener accepting connections, a database query yielding rows, a timer ticking every second, a channel receiver yielding messages.
+
+The same combinator vocabulary as iterators works on streams (`.map`, `.filter`, `.fold`), with the twist that the closures often return **futures** themselves — at every step, you might want to do more I/O. Backpressure falls out naturally: if no one polls the stream, the source doesn't run faster than the consumer collects.
+
+The mental image: an iterator is a **conveyor belt where every box is already on the belt** — you grab them as fast as you want. A stream is a **conveyor belt where each box arrives eventually** — sometimes you wait at the end, sometimes the box is already there. Empty belt = the producer hasn't sent anything yet, and isn't being asked to.
+
+---
+
+### 9.6 — The rough edges: `Pin`, `Send` across awaits, async traits
+
+Most of async Rust is just `async`/`.await` and Tokio. Three corners feel rough, and you'll see them mentioned:
+
+**`Pin<&mut Self>`** in `Future::poll`: the compiler-generated state machine of an `async fn` may hold self-referential pointers (a local borrowing another local, both in the same struct). If the runtime moved that struct in memory between polls, the pointers would dangle. `Pin` is the type-system promise *"this value will not move."* You almost never construct `Pin` by hand — `Box::pin`, `tokio::pin!` do it for you.
+
+**`Send` across `.await`**: spawning a future requires it to be `Send`, which means every value held across an `.await` must be `Send`. The classic offender is an `Rc` that survives an await — the compiler refuses to spawn that future. Fix: drop the `Rc` before the await, or swap it for `Arc`, or use `spawn_local` (which doesn't require `Send`).
+
+**Async in traits** was awkward until Rust 1.75 (Dec 2023). Before that, you needed the `#[async_trait]` macro, which boxed the future. Since 1.75, you can write `async fn foo(&self) -> T` directly in a trait — with caveats around `dyn Trait` dispatch and explicit `Send` bounds. For most code today, write it directly.
+
+The mental image: these three are the **concrete and rebar** behind the smooth wall. You usually don't see them. When the compiler error mentions one, find the load-bearing reference; either move it, drop it earlier, or wrap it in something `Send`.
+
+---
+
 ## What to remember
 
 | Concept cluster | The one-line picture |
@@ -471,3 +606,17 @@ Everywhere you see *runtime*, you've paid for **flexibility** with a **panic ris
 | `RefCell<T>` | no bouncer at the door, alarms inside — same rules, checked at runtime |
 | `Rc<RefCell<T>>` | shared whiteboard with one marker — many key-holders, one writer at a time |
 | `Weak<T>` | safety string, not a cable — doesn't hold the chandelier up, just tracks it |
+| `thread::spawn` | hand the courier an envelope — `move` is the only way to fill it |
+| `JoinHandle` | the return receipt — `.join()` waits at the door for the courier |
+| Channels (`mpsc`) | conveyor belt — once the box leaves your hand, it isn't yours anymore |
+| `Mutex<T>` | shared whiteboard with a single marker — drop the guard, next person picks it up |
+| `Arc<T>` | digital atomic counter — many threads click without smudging |
+| `Arc<Mutex<T>>` | many keyholders, one marker — the canonical shared-mutable-state shape |
+| `Send` / `Sync` | passport (cross threads) and library card (read concurrently) |
+| Threads vs async | employees with their own desks vs paper tickets they pass around |
+| Future | a recipe card — nothing cooks until a chef picks it up |
+| `.await` | the chef pausing for the timer — walks away, comes back when it rings |
+| Executor / runtime | Rust ships the cards, you bring the kitchen (Tokio) |
+| `join!` / `select!` / `spawn` | all-of / first-of / fire-onto-another-line |
+| `Stream` | conveyor belt where each box arrives eventually |
+| `Pin` | concrete-and-rebar — keeps self-referential futures from moving |
