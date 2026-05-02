@@ -17,7 +17,7 @@ A **personal learning wiki** — structured notes synthesizing books, courses, v
 
 | Folder | Scope | Status |
 |--------|-------|--------|
-| [`rust/`](rust/README.md) | Rust language — based on the official Rust book | ch 1-15 ✓, 124 concept files |
+| [`rust/`](rust/README.md) | Intuition layer over the official 2024 Rust book (no per-chapter pages) | `rust-intuition.md` ✓ |
 | [`ros2/`](ros2/README.md) | ROS2 — nodes, control, MoveIt, hardware drivers | 24 pages, 4 sub-folders |
 | [`mathematics/`](mathematics/README.md) | Math used in robotics / ML / graphics | 7 chapters, ~50 concept files |
 | [`ml/`](ml/README.md) | Machine learning + deep learning models (classical → DL → generative → RL) | Skeleton, growing |
@@ -37,10 +37,9 @@ wiki/
 ├── raw/                ← unprocessed sources (articles, transcripts, notes)
 │   └── README.md       ← explains the ingest workflow
 ├── rust/
-│   ├── README.md       ← domain index
-│   ├── RECAP.md        ← single-glance table
-│   ├── rust-intuition.md  ← global companion (train-readable)
-│   └── 01-*/ … 17-*/   ← one folder per chapter, one file per concept
+│   ├── README.md            ← short domain index
+│   └── rust-intuition.md    ← bookmark layer (every concept of book ch.1-21 in 2-4 lines)
+│                              ground truth = raw/rust-book/ (curl of doc.rust-lang.org/book)
 ├── ros2/
 │   ├── README.md
 │   ├── RECAP.md
