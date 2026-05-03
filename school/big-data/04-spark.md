@@ -61,7 +61,7 @@ A Big Data framework written in **Scala**, performing **distributed in-memory co
 └────┴─────┴────────┴────────┴────────┘
 ```
 
-> See also: Spark MLlib → [`../../ml/README.md`](../../ml/README.md) (machine learning).
+> See also: Spark MLlib (machine learning) — *`ml/` domain to be rebuilt*.
 
 ---
 
@@ -465,4 +465,4 @@ total memory cap  = cluster size
 > See also:
 > - YARN component → [`03-hadoop.md` §3.4](./03-hadoop.md#34--yarn-yet-another-resource-negotiator)
 > - HDFS underneath Spark → [`03-hadoop.md` §3.2](./03-hadoop.md#32--hdfs-hadoop-distributed-file-system)
-> - Spark MLlib → [`../../ml/README.md`](../../ml/README.md)
+> - Spark MLlib *(deferred — `ml/` domain to be rebuilt)*

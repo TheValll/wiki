@@ -16,7 +16,7 @@ Each page covers **one concept**.
 
 | Concept | Used in |
 |---------|---------|
-| **Linear regression** | [ML — Linear Regression](../../ml/02-supervised-classical/2.1-linear-regression.md) — full applied page (use cases, evaluation, variants), curve fitting, battery models, sensor calibration |
+| **Linear regression** | Curve fitting, battery models, sensor calibration. *(Full applied page in `ml/` deferred — domain to be rebuilt.)* |
 | **Sigmoid + cross-entropy** | Binary classifiers, logistic regression, neural network output layers |
 | **RMSE** | [ROS2 — Inverse Kinematics](../../ros2/moveit/20-inverse-kinematics.md) (residual error), Kalman filter tuning, GPS accuracy |
 | **Normalization** | Neural network preprocessing, sensor fusion |

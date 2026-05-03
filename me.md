@@ -8,7 +8,7 @@ This file tells any agent working in this wiki **who I am, what I'm working towa
 
 - **Name:** Valentin
 - **Language:** French native · English improving
-- **Studies:** M1 of *Mastère Intelligence Artificielle & Data Engineering* at **Efrei** — full alternance through M1 and M2 (no separate internships; M1 ends with a soutenance, M2 ends with a soutenance + mémoire + dossier professionnel)
+- **Studies:** M1 of _Mastère Intelligence Artificielle & Data Engineering_ at **Efrei** — full alternance through M1 and M2 (no separate internships; M1 ends with a soutenance, M2 ends with a soutenance + mémoire + dossier professionnel)
 - **Current role:** Alternance Ingénieur IA / Data Scientist at **Iceberg Data Lab** (2 years of alternance experience)
 - **Location:** France
 
@@ -33,14 +33,16 @@ I manage the multi-year roadmap myself; agents don't need to track it.
 
 ### Learning tracks
 
-| Track | Rhythm | State |
-|-------|--------|-------|
-| **Math (Mathematics for Machine Learning — Deisenroth, Faisal, Ong)** | 30-60 min / evening | In progress — currently chapter 2 (linear algebra) |
-| **Rust (official 2024 book)** | done | Finished — all 21 chapters |
-| **Embedded Rust (*Simplified Embedded Rust* — Omar Hiari)** | ongoing, for DeepSight-Nebula | In progress, alongside MML |
-| **ROS2 embedded** | in parallel with MML | Starting alongside the math book |
-| **Robotics papers** | 1 / week (Pass 1+2) | Starter pack defined (see `raw/papers/shortlist.md`) |
-| **English** | immersion at work | Natural progression |
+| Track                                                                 | Rhythm                                                                  | State                                                                  |
+| --------------------------------------------------------------------- | ----------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| **Math (Mathematics for Machine Learning — Deisenroth, Faisal, Ong)** | 2–3 concepts / evening                                                  | In progress — currently chapter 2 (linear algebra)                     |
+| **Rust (official 2024 book)**                                         | done                                                                    | Finished — all 21 chapters                                             |
+| **Embedded Rust (_Simplified Embedded Rust_ — Omar Hiari)**           | ~20 pages / day (train commute)                                         | In progress, for DeepSight-Nebula                                      |
+| **Robotics block (ROS2 review + DeepSight-Nebula)**                   | evenings, after train                                                   | ROS2 review bundled with DeepSight project work — single robotics slot |
+| **Rust katas**                                                        | as time / fatigue allows                                                | Side-fluency only; no fixed cadence                                    |
+| **Robotics papers**                                                   | 1 / week, weekends or free pockets                                      | Starter pack defined (see `raw/papers/shortlist.md`)                   |
+| **English**                                                           | immersion at work + daily journal entries (`daily/`) written in English | Natural progression                                                    |
+| **Daily journal** (`daily/`)                                          | 20 min / evening (log + articulation + gaps)                            | Started 2026-05-03                                                     |
 
 ---
 
@@ -48,7 +50,7 @@ I manage the multi-year roadmap myself; agents don't need to track it.
 
 - **Validation-driven:** I review every significant change before it lands. Propose before acting on non-trivial edits.
 - **Structured:** I use this wiki as my long-term memory — synthesize, don't dump.
-- **Learning orientation:** this wiki is a *learning tool*, not a reference database. Every page is manually validated.
+- **Learning orientation:** this wiki is a _learning tool_, not a reference database. Every page is manually validated.
 - **Concise responses preferred:** I read diffs myself; no need to re-explain what changed.
 - **French for conversation, English for wiki content.**
 

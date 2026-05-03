@@ -94,7 +94,7 @@ The wiki doesn't follow MML's chapter numbering 1-to-1 (it merges some, defers o
 | 5 — Vector Calculus | [`03-derivatives/`](./03-derivatives/README.md) |
 | 6 — Probability & Distributions | [`06-probability/`](./06-probability/README.md) + [`07-statistics/`](./07-statistics/README.md) |
 | 7 — Continuous Optimization | [`04-optimization/`](./04-optimization/README.md) |
-| 8–12 — Models & ML problems | [`../ml/`](../ml/README.md) |
+| 8–12 — Models & ML problems | *(planned — `ml/` domain to be rebuilt)* |
 
 > The exercises and tutorials of MML can be found at <https://mml-book.com>.
 

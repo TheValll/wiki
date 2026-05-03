@@ -58,7 +58,7 @@ Spark assumes you know HDFS, MapReduce, and YARN — read `03-hadoop.md` first.
 
 | Concept | Linked to |
 |---|---|
-| Spark MLlib, distributed ML | [`../../ml/README.md`](../../ml/README.md) |
+| Spark MLlib, distributed ML | *(planned — `ml/` domain to be rebuilt)* |
 | MapReduce shuffle, hash partitioning | (algorithmic — no current wiki page) |
 
 ---

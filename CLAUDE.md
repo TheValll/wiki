@@ -20,9 +20,10 @@ A **personal learning wiki** — structured notes synthesizing books, courses, v
 | [`rust/`](rust/README.md) | Intuition layer over the official 2024 Rust book (no per-chapter pages) | `rust-intuition.md` ✓ |
 | [`ros2/`](ros2/README.md) | ROS2 — nodes, control, MoveIt, hardware drivers | 24 pages, 4 sub-folders |
 | [`mathematics/`](mathematics/README.md) | Math used in robotics / ML / graphics | 7 chapters, ~50 concept files |
-| [`ml/`](ml/README.md) | Machine learning + deep learning models (classical → DL → generative → RL) | Skeleton, growing |
+| `ml/` *(planned)* | Machine learning + deep learning models (classical → DL → generative → RL) | — (to be rebuilt) |
 | [`research/`](research/README.md) | Meta-skills (reading, writing) for PhD prep | 2 pages |
 | [`school/`](school/README.md) | M1/M2 Efrei course notes (parent domain, one sub-folder per course) | Big Data Framework ✓ |
+| [`daily/`](daily/README.md) | Per-day learning journal (tracks log + articulation + gaps) — written in English | Started 2026-05-03 |
 
 **Planned domains** (folders to be created as work begins): `embedded/` (Rust embedded, no_std), `low-level/` (memory, pointers, OS), `electronics/`, plus master/doctorate course material.
 
@@ -53,10 +54,9 @@ wiki/
 │   ├── RECAP.md
 │   ├── notation.md     ← bilingual FR/EN math notation atlas
 │   └── 01-*/ … 07-*/   ← one folder per chapter, one file per concept
-├── ml/
-│   ├── README.md       ← domain index + per-page schema for model files
-│   ├── RECAP.md
-│   └── 01-*/ … 13-*/   ← one folder per family, one file per model
+├── daily/
+│   ├── README.md       ← convention + template + recent-entries index
+│   └── YYYY-MM-DD.md   ← one file per day (tracks log + articulation + gaps), English
 └── <future-domain>/
     ├── README.md
     └── …

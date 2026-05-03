@@ -13,9 +13,10 @@ Agent instructions: see [`CLAUDE.md`](CLAUDE.md). Personal profile: [`me.md`](me
 | [**Rust**](rust/README.md) | Intuition layer over the official 2024 book (no per-chapter pages) | `rust-intuition.md` ✓ |
 | [**ROS2**](ros2/README.md) | Robot Operating System 2 — nodes, control, MoveIt | 24 pages ✓ |
 | [**Mathematics**](mathematics/README.md) | Math for robotics, ML, graphics | 3 pages, growing |
-| [**ML / DL**](ml/README.md) | Machine learning + deep learning, classical → transformers → generative → RL | Skeleton, growing |
+| **ML / DL** *(planned)* | Machine learning + deep learning, classical → transformers → generative → RL | — (to be rebuilt) |
 | [**Research**](research/README.md) | Meta-skills (reading, writing, speaking) + PhD-prep field navigation | 2 pages, growing |
 | [**School**](school/README.md) | M1/M2 Efrei courses (course-bound, exam-oriented) | Big Data Framework ✓ |
+| [**Daily**](daily/README.md) | Per-day learning journal — tracks log + articulation + gaps. English (practice). | Started 2026-05-03 |
 | **Embedded** *(planned)* | Rust embedded, no_std, peripherals | — |
 | **Low-level** *(planned)* | Memory, pointers, OS internals | — |
 | **Electronics** *(planned)* | Circuits, protocols, signals | — |
@@ -91,6 +92,7 @@ wiki/
 ├── mathematics/        ← domain (incl. notation.md atlas)
 ├── research/           ← meta-skills (reading/writing papers)
 ├── school/             ← M1/M2 course notes (parent domain, sub-folders per course)
+├── daily/              ← per-day learning journal
 └── …                   ← future domains
 ```
 
