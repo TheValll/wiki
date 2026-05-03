@@ -23,7 +23,7 @@ Single-glance table of every concept across the math domain. One row per concept
 | Concept | What / for what | Intuition |
 |---|---|---|
 | [2.1 Discriminant](./02-algebra-solving/2.1-discriminant.md) | Number of real roots of `ax²+bx+c` before solving | Does the parabola cross / kiss / miss the ground? |
-| [2.2 2×2 Linear System](./02-algebra-solving/2.2-linear-system-2x2.md) | Find `(x, y)` from two equations (substitution / Cramer) | Where do two roads on a map cross? |
+| [2.2 Linear Systems (2×2 + general)](./02-algebra-solving/2.2-linear-system-2x2.md) | Solve 2 eqs in `(x, y)` (substitution / Cramer); generalizes to `Ax = b` for `m × n` systems | Two roads cross on a map; same idea scales to planes & hyperplanes |
 | [2.3 Gaussian Elimination](./02-algebra-solving/2.3-gaussian-elimination.md) | Solve `n×n` linear systems via row-reduction + back-substitution | Reshape into a staircase, climb back up |
 | [2.4 Remarkable Identities](./02-algebra-solving/2.4-remarkable-identities.md) | `(a+b)²`, `a²−b²`, `(a+b+c)²` — pre-cut algebraic blocks | Squared sums = pure squares + cross terms counted twice |
 

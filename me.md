@@ -35,9 +35,10 @@ I manage the multi-year roadmap myself; agents don't need to track it.
 
 | Track | Rhythm | State |
 |-------|--------|-------|
-| **Math (Mathematics for Machine Learning — Deisenroth, Faisal, Ong)** | 30-60 min / evening | Starting the book in a few days |
-| **Rust** | ongoing | Chapter 17 of the Rust book (async/await) |
-| **ROS2 embedded** | in parallel with MFML | Starting alongside the math book |
+| **Math (Mathematics for Machine Learning — Deisenroth, Faisal, Ong)** | 30-60 min / evening | In progress — currently chapter 2 (linear algebra) |
+| **Rust (official 2024 book)** | done | Finished — all 21 chapters |
+| **Embedded Rust (*Simplified Embedded Rust* — Omar Hiari)** | ongoing, for DeepSight-Nebula | In progress, alongside MML |
+| **ROS2 embedded** | in parallel with MML | Starting alongside the math book |
 | **Robotics papers** | 1 / week (Pass 1+2) | Starter pack defined (see `raw/papers/shortlist.md`) |
 | **English** | immersion at work | Natural progression |
 
@@ -62,4 +63,4 @@ I manage the multi-year roadmap myself; agents don't need to track it.
 
 ---
 
-**Last updated:** 2026-04-30
+**Last updated:** 2026-05-03
