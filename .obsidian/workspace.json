@@ -4,17 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "1b13815f367db5a8",
+        "id": "41e1085d2e31f401",
         "type": "tabs",
         "children": [
           {
-            "id": "653b2c8b3c38232e",
+            "id": "9f582b8189a5536f",
             "type": "leaf",
             "state": {
-              "type": "graph",
+              "type": "empty",
               "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "icon": "lucide-file",
+              "title": "New tab"
             }
           }
         ]
@@ -74,7 +74,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 297.5004348754883
   },
   "right": {
     "id": "956cdb6199f6364f",
@@ -173,11 +173,23 @@
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
-      "bases:Create new base": false
+      "bases:Create new base": false,
+      "obsidian-to-anki-plugin:Obsidian_to_Anki - Scan Vault": false
     }
   },
-  "active": "653b2c8b3c38232e",
+  "active": "9f582b8189a5536f",
   "lastOpenFiles": [
+    "anki/init.md",
+    "CLAUDE.md.tmp.16844.1777929876748",
+    "anki-test.md",
+    "anki/init.md.tmp.16844.1777929797005",
+    "anki",
+    "Untitled.canvas",
+    "CLAUDE.md.tmp.16844.1777925771568",
+    "mathematics/README.md.tmp.16844.1777925635097",
+    "CLAUDE.md.tmp.16844.1777925623383",
+    "raw/rust-book/SUMMARY.md",
+    "raw/papers/template.md",
     "raw/2026-04-29_HowtoReadPaper.md",
     "raw/2026-04-17_karpathy-llm-wiki-tutorial.md",
     "raw/How to Write a Great Research Paper.md",
@@ -198,22 +210,10 @@
     "mathematics/intuition/1.8-det-inverse.md.tmp.19688.1776631321255",
     "mathematics/02-algebra-solving.md",
     "rust/rust-intuition.md",
-    "mathematics/intuition/1.7-det-product.md.tmp.19688.1776631308688",
-    "mathematics/intuition/1.5-inverse.md.tmp.19688.1776631293447",
     "mathematics/intuition/1.2-dot-product.md",
     "mathematics/05-ml-basics.md",
     "mathematics/04-optimization.md",
     "mathematics/03-derivatives.md",
-    "mathematics/01-linear-algebra-intuition.md",
-    "mathematics/01-linear-algebra-intuition.md.tmp.3788.1776621964978",
-    "mathematics/01-linear-algebra-intuition.md.tmp.3788.1776621190742",
-    "mathematics/06-probability.md",
-    "review/external-tracking.md.tmp.54512.1776543494313",
-    "review/external-tracking.md.tmp.54512.1776543492374",
-    "raw/papers/README.md",
-    "raw/papers/shortlist.md",
-    "raw/papers/template.md",
-    "rust/12-generics-traits-lifetimes.md",
-    "Untitled.canvas"
+    "mathematics/01-linear-algebra-intuition.md"
   ]
 }

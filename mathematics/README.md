@@ -130,5 +130,6 @@ Mean, variance, skewness, kurtosis, quantiles, covariance, correlation, multivar
 - **One concept = one file.** File name = `<chapter>-<concept-slug>/<X.Y-slug>.md`.
 - **Cross-references** use relative paths: `[ROS2 — IK](../../ros2/moveit/20-inverse-kinematics.md)`.
 - **Intuition** sections live inside each concept file (no separate companion folder).
+- **Anki cards** for math concepts live in [`../anki/<chapter>.md`](../anki/README.md) (one file per chapter, mirroring this folder), not inline. Self-made by Valentin (generation effect), synced to Anki via the Obsidian-to-Anki plugin. Format spec in [`../CLAUDE.md`](../CLAUDE.md) §8.
 
 For the broader wiki structure and agent rules, see [`../CLAUDE.md`](../CLAUDE.md).

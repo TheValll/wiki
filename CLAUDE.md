@@ -24,8 +24,9 @@ A **personal learning wiki** — structured notes synthesizing books, courses, v
 | [`research/`](research/README.md) | Meta-skills (reading, writing) for PhD prep | 2 pages |
 | [`school/`](school/README.md) | M1/M2 Efrei course notes (parent domain, one sub-folder per course) | Big Data Framework ✓ |
 | [`daily/`](daily/README.md) | Per-day learning journal (tracks log + articulation + gaps) — written in English | Started 2026-05-03 |
+| [`embedded/`](embedded/README.md) | Embedded systems + embedded Rust on ESP32 (Hiari ESP Core Library, no_std, esp-hal) | Pilot 2026-05-04 — chapter 2 in progress |
 
-**Planned domains** (folders to be created as work begins): `embedded/` (Rust embedded, no_std), `low-level/` (memory, pointers, OS), `electronics/`, plus master/doctorate course material.
+**Planned domains** (folders to be created as work begins): `low-level/` (memory, pointers, OS), `electronics/`, plus master/doctorate course material.
 
 ---
 
@@ -57,6 +58,13 @@ wiki/
 ├── daily/
 │   ├── README.md       ← convention + template + recent-entries index
 │   └── YYYY-MM-DD.md   ← one file per day (tracks log + articulation + gaps), English
+├── embedded/
+│   ├── README.md       ← domain index, Pattern B (layered), book = Hiari ESP Core Library
+│   └── 02-*/ … NN-*/   ← one folder per book chapter, files mirror book §X.Y numbering
+├── anki/
+│   ├── README.md       ← convention + per-chapter file index
+│   ├── init.md         ← template / reference (working example)
+│   └── NN-<chapter>.md ← one file per math chapter, all cards for that chapter
 └── <future-domain>/
     ├── README.md
     └── …
@@ -140,7 +148,7 @@ Known cross-domain connections to watch for:
 |------|----|----|
 | `ros2/moveit/20-inverse-kinematics.md` | `mathematics/01-linear-algebra/` | Jacobian, rotation matrices |
 | `ros2/moveit/19-motion-planning.md` | `mathematics/` | Distance metrics, sampling |
-| `rust/` (embedded future) | `low-level/`, `electronics/` | Registers, GPIO, protocols |
+| `embedded/` | `rust/` (no_std patterns), `low-level/` (planned), `electronics/` (planned) | Registers, GPIO, protocols, ESP HAL |
 | `ml/`, `dl/` (future) | `mathematics/03-derivatives/` | Gradients, backprop |
 
 ---
@@ -157,16 +165,61 @@ No persistence, no levels, no progress tracking. This is **ad hoc**, not a syste
 
 ---
 
-## 8. Anki card generation (future)
+## 8. Anki cards — markdown source → Anki
 
-The user plans to generate Anki decks from wiki pages. When asked, output a CSV with this format:
+**Scope: math only.** Anki is used for declarative knowledge (formulas, definitions, identities, theorems). Rust / ROS2 / embedded use practice instead — no Anki for procedural knowledge.
 
-```
-front,back,tags
-"What does `wrapping_add` do on overflow?","Wraps around (255u8.wrapping_add(1) = 0). Explicit, works in both debug and release.",rust::ch3::overflow
-```
+**Authorship: self-made.** Valentin writes his own cards (generation effect). The agent does NOT propose, generate, or pre-fill Anki cards by default, even when atomic facts surface. If explicitly asked *"give me a card on X"*, comply.
 
-Keep cards **atomic** (one concept per card), include code snippets in the back when relevant, and tag by `domain::chapter::concept`.
+**Language: English.** Front and back of every card are written in English — same convention as the rest of the wiki (cf. §3) and as `daily/` entries. Doubles as English practice.
+
+### Workflow
+
+1. **Tooling**: [Obsidian-to-Anki](https://github.com/Pseudonium/Obsidian_to_Anki) plugin in Obsidian + AnkiConnect addon (code `2055492159`) in Anki desktop.
+2. **Source of truth**: markdown files in this wiki. Anki = read-only consumer that handles spaced-repetition scheduling.
+3. **Direction**: Markdown → Anki, uni-directional. Modifications made in Anki do not propagate back to markdown.
+4. **Trigger**: Obsidian command `Obsidian_to_Anki: Scan vault` pushes new/modified cards. Anki desktop must be running.
+
+### Card placement
+
+Cards live in a dedicated [`anki/`](anki/README.md) folder, **one file per chapter**, mirroring the `mathematics/<chapter>/` structure. Example: `anki/01-linear-algebra.md` ↔ `mathematics/01-linear-algebra/`. Each file contains all cards for concepts in that chapter, with a single `TARGET DECK: Mathematics::<chapter>` at the top. Confirmed 2026-05-04 (Option B over inline placement).
+
+### Card format
+
+- **Note type**: `Basic` only. The `Basic (and reversed card)` note type does **not** behave correctly in this setup (Card 2 ends up identical to Card 1 instead of swapping Front/Back), so reverse cards are written **manually** — one `START / Basic / END` block per direction.
+- **Default deck**: `Mathematics`. Override per file via a `TARGET DECK: Mathematics::<chapter>` line at the top of the `## Anki` section to land cards in a sub-deck.
+- **No per-card tags** for now — the deck hierarchy handles navigation.
+- **LaTeX**: `$...$` inline, `$$...$$` display. Renders identically in Anki and Obsidian.
+
+### Format spec — one concept, two manually-reversed cards
+
+````markdown
+## 1.1.X — Anki
+
+TARGET DECK: Mathematics::01-linear-algebra
+
+START
+Basic
+Front: What is the formula of the Euclidean norm in $\mathbb{R}^n$?
+Back: $\|v\| = \sqrt{\sum_{i=1}^n v_i^2}$ — Pythagoras cascaded across $n$ perpendicular axes.
+END
+
+START
+Basic
+Front: $\|v\| = \sqrt{\sum_{i=1}^n v_i^2}$ — what concept does this formula represent?
+Back: Euclidean norm in $\mathbb{R}^n$.
+END
+````
+
+### Card-writing conventions
+
+- **Front**: one line ending with `?`. A simple question on the concept (definition / formula / property).
+- **Back**: one to two lines max. LaTeX formula + short intuition.
+- **Atomic**: one fact per card. A page with 5 atomic concepts → 10 cards (5 Q→A + 5 A→Q).
+- **Two directions per concept**: write the reverse manually. Reformulating the question forces a second pass of generation effect, which is in fact better for retention than mechanically auto-generated reverses.
+- **Avoid open-ended questions** ("explain the dot product") — articulation happens in `daily/`, not in Anki.
+- **Source lens**: the card reflects how the currently-read source frames the concept (typically MML for math).
+- **English only**, both front and back. No mixed-language cards.
 
 ---
 

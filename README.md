@@ -17,7 +17,7 @@ Agent instructions: see [`CLAUDE.md`](CLAUDE.md). Personal profile: [`me.md`](me
 | [**Research**](research/README.md) | Meta-skills (reading, writing, speaking) + PhD-prep field navigation | 2 pages, growing |
 | [**School**](school/README.md) | M1/M2 Efrei courses (course-bound, exam-oriented) | Big Data Framework ✓ |
 | [**Daily**](daily/README.md) | Per-day learning journal — tracks log + articulation + gaps. English (practice). | Started 2026-05-03 |
-| **Embedded** *(planned)* | Rust embedded, no_std, peripherals | — |
+| [**Embedded**](embedded/README.md) | Embedded systems concepts + embedded Rust on ESP32 (Hiari book, no_std, esp-hal) | Pilot 2026-05-04 — chapter 2 in progress |
 | **Low-level** *(planned)* | Memory, pointers, OS internals | — |
 | **Electronics** *(planned)* | Circuits, protocols, signals | — |
 
@@ -93,6 +93,8 @@ wiki/
 ├── research/           ← meta-skills (reading/writing papers)
 ├── school/             ← M1/M2 course notes (parent domain, sub-folders per course)
 ├── daily/              ← per-day learning journal
+├── embedded/           ← embedded systems + embedded Rust (Hiari book)
+├── anki/               ← self-made Anki cards (markdown → Anki via Obsidian-to-Anki)
 └── …                   ← future domains
 ```
 
