@@ -194,7 +194,7 @@ You convert a field you don't know into a small set of must-reads.
 
 ## 1.6 — Connecting to the PhD path
 
-For the PhD trajectory (see [`../me.md`](../me.md)), this is not a one-off skill — it is a **weekly muscle**. Three concrete pay-offs:
+For the PhD trajectory (see [`../CLAUDE.md`](../CLAUDE.md) Part I), this is not a one-off skill — it is a **weekly muscle**. Three concrete pay-offs:
 
 | Pay-off | How |
 |---------|-----|

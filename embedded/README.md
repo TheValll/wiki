@@ -21,7 +21,7 @@ Companion material (free):
 
 ## Conventions
 
-- **Pattern**: Layered (Pattern B in [`domains.md`](../domains.md)) — each file is a topic with internal facets (analogy / concept / diagram / details / quick reference).
+- **Pattern**: Layered (Pattern B in [`CLAUDE.md`](../CLAUDE.md) §15) — each file is a topic with internal facets (analogy / concept / diagram / details / quick reference).
 - **File naming**: `X.Y-slug.md` mirroring the book's chapter.section numbering directly. Example: book §2.6 → `02-microcontroller-concepts/2.6-polling-interrupts.md`. This way, while reading the book, you find the matching wiki file in seconds.
 - **Internal sections**: `## X.Y.Z — title` to keep granularity readable on dense topics.
 - **Source ground truth**: `raw/embedded-book/`. If the wiki page contradicts the book, the book wins.
@@ -46,7 +46,7 @@ See [`02-microcontroller-concepts/README.md`](./02-microcontroller-concepts/READ
 
 | From | To | Why |
 |---|---|---|
-| **Embedded Rust no_std patterns** | [`../rust/rust-intuition.md`](../rust/rust-intuition.md) | `core` vs `std`, `#![no_std]`, panic handlers (advanced Rust topics) |
+| **Embedded Rust no_std patterns** | [`../rust/RECAP.md`](../rust/RECAP.md) | `core` vs `std`, `#![no_std]`, panic handlers (advanced Rust topics) |
 | **Memory layout, registers, MCU architecture** | *(planned `low-level/`)* | Memory, pointers, OS internals overlap |
 | **Pin protocols (UART, SPI, I²C)** | *(planned `electronics/`)* | Signal-level details |
 | **Interrupts, real-time control** | DeepSight-Nebula project (off-wiki) | Direct application of these concepts |

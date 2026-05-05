@@ -32,6 +32,6 @@ Distilled from talks, articles, and authors known for the craft of scholarship (
 
 ## Why this domain
 
-The PhD path (EPFL 2028 target — see [`../me.md`](../me.md)) is not only about technical mastery. A large share of the work is **communicating** the research: writing papers, giving talks, reviewing, reading the literature. These meta-skills are almost never taught explicitly, and they compound over years.
+The PhD path (EPFL 2028 target — see [`../CLAUDE.md`](../CLAUDE.md) Part I) is not only about technical mastery. A large share of the work is **communicating** the research: writing papers, giving talks, reviewing, reading the literature. These meta-skills are almost never taught explicitly, and they compound over years.
 
 This domain is the place to capture what the best researchers say about their own craft.

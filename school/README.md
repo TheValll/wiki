@@ -22,4 +22,4 @@ Different from the long-term technical wikis (`rust/`, `mathematics/`, …): the
 - **QCM-oriented**: heavy use of tables, definitions, key terms, code snippets. Optimized for end-of-course MCQ.
 - French course content rendered in **English** (standard wiki convention).
 
-See [`../domains.md`](../domains.md) for the structural playbook.
+See [`../CLAUDE.md`](../CLAUDE.md) Part IV for the structural playbook.

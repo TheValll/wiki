@@ -1,10 +1,10 @@
-# Rust — Intuition
+# Rust — RECAP
 
-Bookmark layer for [The Rust Programming Language](https://doc.rust-lang.org/book/) (2024 edition). Every concept in 2-4 lines: **what** it does, **how** it works. No code, no exercises — for the full explanation, read the corresponding chapter (mirrored locally in [`../raw/rust-book/`](../raw/rust-book/)).
+Bookmark layer for [The Rust Programming Language](https://doc.rust-lang.org/book/) (2024 edition). Every concept in 2-4 lines: **what** it does, **how** it works. For the full explanation, read the corresponding chapter (mirrored locally in [`../raw/rust-book/`](../raw/rust-book/)). Hand-written code examples for early chapters live in [`./code_example/`](./code_example/) and are linked next to each chapter heading below.
 
 ---
 
-## Ch.1 — Getting Started
+## Ch.1 — Getting Started · [`hello_world.rs`](./code_example/hello_world.rs) · [`hello_cargo.rs`](./code_example/hello_cargo.rs)
 
 - **`rustup`** — toolchain installer + manager. *What:* single CLI to install and switch Rust versions (stable/nightly). *How:* drops `rustc`, `cargo`, etc. into `~/.cargo/bin`; `rustup update` keeps them current.
 - **Cargo** — build tool + package manager + runner. *What:* compiles, fetches deps, runs tests, generates docs. *How:* reads `Cargo.toml` (manifest) + `Cargo.lock` (resolved versions).
@@ -12,14 +12,14 @@ Bookmark layer for [The Rust Programming Language](https://doc.rust-lang.org/boo
 - **Cargo.lock** — lockfile pinning exact dep versions. *What:* reproducibility — same build everywhere. *How:* auto-updated by Cargo on dep resolution; commit it for binaries, optionally for libs.
 - **`println!`** — formatted output macro. *What:* prints to stdout with placeholders. *How:* macro (not function) because it parses the format string at compile time.
 
-## Ch.2 — Programming a Guessing Game
+## Ch.2 — Programming a Guessing Game · [`guessing_game.rs`](./code_example/guessing_game.rs)
 
 - **`io::stdin().read_line(&mut s)`** — read a line of input. *What:* reads from stdin, appends to a `String`. *How:* mutable borrow of the buffer; the function fills it.
 - **External crate (`rand`)** — pull deps from crates.io. *What:* add to `Cargo.toml` (or `cargo add rand`), import in code. *How:* `rand::thread_rng().gen_range(1..=100)`.
 - **`match`** — pattern-matching switch. *What:* branch on a value's variant or pattern. *How:* compiler enforces exhaustiveness — every case must be handled.
 - **`loop { … break; }`** — explicit infinite loop. *What:* no condition; exit via `break`, can return a value (`break val;`). *How:* the only loop form that's also an expression.
 
-## Ch.3 — Common Programming Concepts
+## Ch.3 — Common Programming Concepts · [`variables.rs`](./code_example/variables.rs) · [`functions.rs`](./code_example/functions.rs) · [`branches.rs`](./code_example/branches.rs) · [`loops.rs`](./code_example/loops.rs) · [`temperature_converter.rs`](./code_example/temperature_converter.rs)
 
 - **`let` + immutability default** — bindings read-only by default. *What:* `let x = 5;` cannot be reassigned. *How:* `let mut x = 5;` opts in to mutation.
 - **`const`** — compile-time constant. *What:* inlined everywhere it's used; type required. *How:* `const MAX: u32 = 100_000;` — `SCREAMING_CASE` by convention.
@@ -42,7 +42,7 @@ Bookmark layer for [The Rust Programming Language](https://doc.rust-lang.org/boo
 - **Borrowing rules** — at any moment, EITHER many `&T` OR one `&mut T`. *What:* aliasing XOR mutation. *How:* compiler refuses code that violates this; data races eliminated at compile time.
 - **Slices** — `&[T]`, `&str`. *What:* pointer + length, view into someone else's buffer. *How:* no ownership; valid as long as the source buffer is.
 
-## Ch.5 — Using Structs
+## Ch.5 — Using Structs · [`structs.rs`](./code_example/structs.rs) · [`rectangles.rs`](./code_example/rectangles.rs) · [`methods.rs`](./code_example/methods.rs)
 
 - **`struct`** — named record. *What:* `struct Point { x: i32, y: i32 }`. *How:* `Point { x: 1, y: 2 }`; field shorthand if local var has same name.
 - **Tuple struct** — `struct Pair(i32, i32);`. *What:* newtype pattern; gives the type identity without naming fields. *How:* `p.0`, `p.1` to access.
@@ -52,7 +52,7 @@ Bookmark layer for [The Rust Programming Language](https://doc.rust-lang.org/boo
 - **Associated functions** — no `self`. *What:* `Point::new(...)` — constructor / utility. *How:* called via `Type::fn`, not `instance.fn`.
 - **Derived traits** — `#[derive(Debug, Clone, PartialEq)]`. *What:* compiler auto-generates the impl. *How:* available for traits the compiler knows how to derive (Debug, Clone, Copy, Eq, Hash, …).
 
-## Ch.6 — Enums and Pattern Matching
+## Ch.6 — Enums and Pattern Matching · [`enums.rs`](./code_example/enums.rs)
 
 - **`enum`** — sum type. *What:* a value that is *one of* several variants. *How:* `enum Shape { Circle(f64), Square { side: f64 } }` — variants can carry different data.
 - **`Option<T>`** — `Some(T)` or `None`. *What:* replaces null; absence is a typed value. *How:* compiler forces you to handle both arms.

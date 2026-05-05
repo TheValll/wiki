@@ -2,7 +2,7 @@
 
 This domain is a thin layer on top of the official [Rust book](https://doc.rust-lang.org/book/) (2024 edition). The book is canonical, free, and well-structured — re-summarising every chapter would just create drift. So this folder holds only what's **additive**:
 
-- **[`rust-intuition.md`](./rust-intuition.md)** — every concept of the 21 chapters in 2-4 lines (what + how). A bookmark layer for spot-checks, recaps, and drills.
+- **[`RECAP.md`](./RECAP.md)** — every concept of the 21 chapters in 2-4 lines (what + how). A bookmark layer for spot-checks, recaps, and drills. Includes links to hand-written code examples in [`./code_example/`](./code_example/).
 - **[`../raw/rust-book/`](../raw/rust-book/)** — local mirror of the 2024-edition source markdown (cloned from [rust-lang/book](https://github.com/rust-lang/book)). Ground truth for any synthesis.
 
 For the full content — examples, error walkthroughs, exercises — open the book directly.

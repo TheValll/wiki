@@ -1,6 +1,6 @@
 # Daily — Learning Journal
 
-Per-day log of what was worked on, what is worth retaining, and gaps to revisit. Built around the **20-min end-of-day ritual** (cf. [`how-i-learn.md`](../how-i-learn.md)).
+Per-day log of what was worked on, what is worth retaining, and gaps to revisit. Built around the **20-min end-of-day ritual** (cf. [`CLAUDE.md`](../CLAUDE.md) Part II).
 
 **Language: English** — the user writes daily entries in English as a deliberate language-practice exercise. The agent follows the same convention when pre-filling or scaffolding entries. Chat conversation stays in French as usual; only the journal files are English.
 
