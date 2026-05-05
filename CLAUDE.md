@@ -243,9 +243,11 @@ When a concept spans domains, add a **"See also"** line at the end of the releva
 ### Format spec — one concept, two manually-reversed cards
 
 ````markdown
-## 1.1.X — Anki
-
 TARGET DECK: Mathematics::01-linear-algebra
+
+## 1.1 — Vector norm
+
+> Source: [1.1 — Vector Norm (Euclidean)](../mathematics/01-linear-algebra/1.1-norm.md)
 
 START
 Basic
@@ -262,6 +264,8 @@ END
 
 ### Card-writing conventions
 
+- **Source line, mandatory**: every `## X.Y — Concept` block starts with a `> Source: [page title](../<domain>/<chapter>/<file>.md)` line linking the wiki page the card derives from. One source line per concept block, before the `START` markers.
+- **Zero invention**: Front and Back must come *directly* from the linked source page — same definition, same formula, same intuition phrasing where possible. If a fact isn't on the source page, don't card it — extend the source page first, then card it. This keeps the wiki the single source of truth and prevents card-vs-page drift.
 - **Front**: one line ending with `?`. A simple question on the concept (definition / formula / property).
 - **Back**: one to two lines max. LaTeX formula + short intuition.
 - **Atomic**: one fact per card. A page with 5 atomic concepts → 10 cards (5 Q→A + 5 A→Q).

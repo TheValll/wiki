@@ -4,17 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "41e1085d2e31f401",
+        "id": "24f0340cbcd9ed1a",
         "type": "tabs",
         "children": [
           {
-            "id": "9f582b8189a5536f",
+            "id": "c15c64e1cd01c8b9",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "anki/01-linear-algebra.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "01-linear-algebra"
             }
           }
         ]
@@ -177,7 +181,7 @@
       "obsidian-to-anki-plugin:Obsidian_to_Anki - Scan Vault": false
     }
   },
-  "active": "9f582b8189a5536f",
+  "active": "c15c64e1cd01c8b9",
   "lastOpenFiles": [
     "anki/init.md",
     "CLAUDE.md.tmp.16844.1777929876748",

@@ -41,18 +41,26 @@ TARGET DECK: Mathematics::01-linear-algebra
 
 ## 1.1 — Vector norm
 
+> Source: [1.1 — Vector Norm (Euclidean)](../mathematics/01-linear-algebra/1.1-norm.md)
+
 START
 Basic
 Front: What is the formula of the Euclidean norm in $\mathbb{R}^n$?
 Back: $\|v\| = \sqrt{\sum_{i=1}^n v_i^2}$ — Pythagoras cascaded across $n$ perpendicular axes.
+<!--ID: 1777974570537-->
 END
 
 START
 Basic
 Front: $\|v\| = \sqrt{\sum_{i=1}^n v_i^2}$ — what concept does this formula represent?
 Back: Euclidean norm in $\mathbb{R}^n$.
+<!--ID: 1777974494404-->
 END
 ````
+
+Each `## X.Y — Concept` heading is followed by a `> Source:` line linking to the matching wiki page. One source line per concept block, before the `START` markers.
+
+**Zero invention rule:** the Front and Back of every card must come *directly* from the linked source page — same definition, same formula, same intuition phrasing where possible. If a fact isn't on the source page, don't write a card for it; extend the source page first, then card it.
 
 The plugin injects a `<!--ID: ...-->` comment inside each `START / END` block once the card is created in Anki. **Don't delete those** — they're how the plugin knows which markdown card maps to which Anki note for incremental sync.
 
@@ -62,6 +70,6 @@ The plugin injects a `<!--ID: ...-->` comment inside each `START / END` block on
 
 1. Read a math concept (e.g. MML §3.1 on norms).
 2. Open `anki/<matching-chapter>.md`.
-3. Add a `## X.Y — Concept name` heading + 2 `START / Basic / END` blocks (Q→A and A→Q).
+3. Add a `## X.Y — Concept name` heading + a `> Source:` line linking the matching wiki page + 2 `START / Basic / END` blocks (Q→A and A→Q).
 4. Save → `Ctrl+P → Scan Vault`.
 5. Review the cards in Anki desktop / AnkiDroid / AnkiMobile via Anki sync.
